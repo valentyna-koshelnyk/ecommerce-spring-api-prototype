@@ -23,9 +23,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Optional<User> findByUserId(Long userId) {
-        return Optional.ofNullable(userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found")));
-    }
+
 
     @Override
     public List<User> findAllUsers() {

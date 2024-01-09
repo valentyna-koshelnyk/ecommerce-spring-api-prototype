@@ -1,11 +1,19 @@
 package com.startsteps.ecommerceapi.user.payload.request;
 
+import com.startsteps.ecommerceapi.user.validation.PasswordMatching;
+import com.startsteps.ecommerceapi.user.validation.ValidEmail;
+import com.startsteps.ecommerceapi.user.validation.ValidPassword;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@PasswordMatching(message = "Passowrds do not match")
+@PasswordMatching(message = "Passwords do not match")
+@Getter
+@Setter
+@NoArgsConstructor
 public class SignUpRequest {
     String userId;
     @NotNull (message = "Username cannot be null")
