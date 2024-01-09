@@ -1,0 +1,37 @@
+package com.startsteps.ecommerceapi.user.service;
+
+import com.startsteps.ecommerceapi.user.model.User;
+import com.startsteps.ecommerceapi.user.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
+
+import java.util.List;
+import java.util.Optional;
+
+public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
+
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+
+    @Override
+    public Optional<User> findByUserId(Long userId) {
+        return Optional.ofNullable(userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found")));
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User addUser(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+}
