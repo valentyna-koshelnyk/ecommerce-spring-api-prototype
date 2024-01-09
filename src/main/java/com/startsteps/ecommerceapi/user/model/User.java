@@ -33,6 +33,7 @@ public class User{
 
    @NonNull
    @Column(name = "User_Role")
+   @Enumerated
    private UserRoles UserRole;
 
    @CreationTimestamp
