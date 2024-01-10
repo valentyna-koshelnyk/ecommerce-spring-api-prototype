@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
 
+    public String encodePassword(String password)
+
 
     @Override
     public List<User> findAllUsers() {

@@ -13,6 +13,7 @@ import lombok.Setter;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "roleID")
     private Integer id;
     @Enumerated
     @Column(length = 20)
