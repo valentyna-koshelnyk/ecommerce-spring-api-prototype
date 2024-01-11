@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @Table(name = "roles")
 @NoArgsConstructor
 @Getter
@@ -14,7 +13,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "roleID")
-    private Integer id;
+    private Long roleId;
     @Enumerated
     @Column(length = 20)
     private UserRoles roleName;
