@@ -55,6 +55,12 @@ public class User{
    @Column(name = "Pending")
    Boolean pending;
 
+   @ManyToMany(fetch = FetchType.EAGER)
+   @JoinTable(name = "roles",
+           joinColumns = @JoinColumn(name = "userID"),
+           inverseJoinColumns = @JoinColumn(name = "roleID"))
+   private Set<Role> roleSet;
+
 
 
 
