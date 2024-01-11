@@ -8,8 +8,6 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -22,8 +20,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     PasswordEncoder passwordEncoder;
-
-
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
