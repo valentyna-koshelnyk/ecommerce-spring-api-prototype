@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -40,12 +41,24 @@ public class User{
 
    @CreationTimestamp
    @Column(name = "Registration_Date", nullable = false, updatable = false)
-   LocalTime updated;
+   LocalDateTime registrationDate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "roles",
-            joinColumns = @JoinColumn(name = "userID"),
-            inverseJoinColumns = @JoinColumn(name = "roleID"))
-    private Set<Role> roles = new HashSet<>();
+   @CreationTimestamp
+   @Column(name = "Update_Date")
+   LocalDateTime updateDate;
+
+   @NonNull             //TODO: user confirmed email
+   @Column(name = "Approved")
+   Boolean approved;
+
+   @NonNull
+   @Column(name = "Pending")
+   Boolean pending;
+
+
+
+
+
+
 
 }
