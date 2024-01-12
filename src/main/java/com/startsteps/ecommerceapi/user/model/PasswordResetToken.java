@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -12,7 +13,6 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class PasswordResetToken {
-    private static final int EXPIRATION = 60 * 24; // token will be valid for 24 hrs
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,12 +21,13 @@ public class PasswordResetToken {
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "UserID")
     private User user;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date expiryDate;
+    @CreationTimestamp
+    private Date createdDate;
 
     public PasswordResetToken(String token, User user) {
         this.token = token;
         this.user = user;
     }
+
 }
 

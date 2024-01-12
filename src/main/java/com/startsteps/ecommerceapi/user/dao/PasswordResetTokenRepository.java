@@ -4,8 +4,10 @@ import com.startsteps.ecommerceapi.user.model.PasswordResetToken;
 import com.startsteps.ecommerceapi.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, Long> {
-    PasswordResetToken findByToken(String token);
-    PasswordResetToken findByUser(User user);
+import java.util.Optional;
 
+public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, Long> {
+    Optional<PasswordResetToken> findByToken(String token);
+    Optional<PasswordResetToken> findByUser(User user);
+    void delete(PasswordResetToken entity);
 }

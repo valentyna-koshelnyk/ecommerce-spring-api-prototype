@@ -13,6 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.Temporal;
+import java.util.Date;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,13 +32,14 @@ import java.util.UUID;
 @Transactional
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private PasswordResetTokenRepository passwordResetTokenRepository;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
    @Autowired
-   public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
+   public UserServiceImpl(UserRepository userRepository, PasswordResetTokenRepository passwordResetTokenRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+       this.passwordResetTokenRepository = passwordResetTokenRepository;
+       this.passwordEncoder = passwordEncoder;
        this.emailService = emailService;
    }
 
@@ -63,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User resetPassword(String userEmail) {
+    public User resetPasswordSendEmail(String userEmail) {
         if(!userRepository.existsByEmail(userEmail) ) {
             throw new UserNotFoundException("User with the email " + userEmail + " not found");
         }
@@ -84,9 +92,33 @@ public class UserServiceImpl implements UserService {
         final PasswordResetToken myToken = new PasswordResetToken(token, user);
         passwordResetTokenRepository.save(myToken);
     }
+
     @Override
-    public PasswordResetToken getPasswordResetToken(final String token) {
+    public boolean changePassword(String token, String newPassword){
+       PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token)
+               .orElseThrow(() -> new NoSuchElementException("Token not found: " + token));
+       Date tokenCreationDate = passwordResetToken.getCreatedDate();
+       if(isTokenExpired(tokenCreationDate)){
+           System.out.println("Token has been expired. Try again");
+           return false;
+       }
+       User user = passwordResetToken.getUser();
+       user.setPassword(passwordEncoder.encode(newPassword));
+       userRepository.save(user);
+       passwordResetTokenRepository.delete(passwordResetToken);
+       return true;
+   }
+    @Override
+    public Optional<PasswordResetToken> getPasswordResetToken(final String token) {
         return passwordResetTokenRepository.findByToken(token);
+    }
+    public boolean isTokenExpired(final Date tokenCreationDate) {
+        LocalDateTime tokenCreationDateTime = tokenCreationDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+        LocalDateTime now = LocalDateTime.now();
+        Duration diff = Duration.between(tokenCreationDateTime, now);
+        return diff.toMinutes() >= 30;
     }
 
     private String generateResetToken() {
