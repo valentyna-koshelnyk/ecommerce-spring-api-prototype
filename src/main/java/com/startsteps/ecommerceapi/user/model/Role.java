@@ -21,6 +21,5 @@ public class Role {
     private UserRoles roleName;
     String description;
     String permission;
-    @ManyToMany(mappedBy = "roles")
     Set<User> users;
 }

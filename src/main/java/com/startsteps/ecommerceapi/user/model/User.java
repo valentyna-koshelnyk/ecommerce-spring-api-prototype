@@ -56,11 +56,11 @@ public class User{
    @Column(name = "Pending")
    Boolean pending;
 
-   @ManyToMany(fetch = FetchType.EAGER)
-   @JoinTable(name = "roles",
-           joinColumns = @JoinColumn(name = "userID"),
-           inverseJoinColumns = @JoinColumn(name = "roleID"))
-   private Set<Role> roleSet;
+//   @ManyToMany(fetch = FetchType.EAGER)
+//   @JoinTable(name = "roles",
+//           joinColumns = @JoinColumn(name = "userID"),
+//           inverseJoinColumns = @JoinColumn(name = "roleID"))
+//   private Set<Role> roleSet;
 
    public User(@NonNull Long userId, @NonNull String username, @NonNull String email, @NonNull String password, @NonNull Boolean approved, @NonNull Boolean pending) {
       this.userId = userId;
