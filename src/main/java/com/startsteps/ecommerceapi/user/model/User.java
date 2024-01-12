@@ -3,6 +3,7 @@ package com.startsteps.ecommerceapi.user.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -43,7 +44,7 @@ public class User{
    @Column(name = "Registration_Date", nullable = false, updatable = false)
    LocalDateTime registrationDate;
 
-   @CreationTimestamp
+   @UpdateTimestamp
    @Column(name = "Update_Date")
    LocalDateTime updateDate;
 
