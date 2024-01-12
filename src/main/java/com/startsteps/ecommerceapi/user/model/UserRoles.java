@@ -1,5 +1,5 @@
 package com.startsteps.ecommerceapi.user.model;
 
 public enum UserRoles {
-    CUSTOMER, SELLER, ADMIN
+    ROLE_CUSTOMER, ROLE_SELLER, ROLE_ADMIN
 }
