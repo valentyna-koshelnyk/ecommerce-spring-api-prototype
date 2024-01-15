@@ -1,4 +1,4 @@
-package com.startsteps.ecommerceapi.user.payload.request;
+package com.startsteps.ecommerceapi.user.service.dto;
 
 import com.startsteps.ecommerceapi.user.validation.PasswordMatching;
 import com.startsteps.ecommerceapi.user.validation.ValidEmail;
@@ -6,34 +6,34 @@ import com.startsteps.ecommerceapi.user.validation.ValidPassword;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@PasswordMatching(message = "Passwords do not match")
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-public class SignUpRequest {
-    String userId;
+@PasswordMatching(message = "Passwords do not match")
+public class UserDTO {
+
+    private Long userId;
+
     @NotNull (message = "Username cannot be null")
     @NotEmpty (message = "Username cannot be empty")
-    String userName;
+    private String username;
 
     @ValidEmail(message = "Email is not valid")
     @NotNull(message = "Email cannot be null")
     @NotEmpty(message = "Email cannot be empty")
-    String email;
+    private String email;
 
     @NotNull(message = "Password cannot be null")
     @NotEmpty(message = "Password cannot be empty")
     @Size(min = 8, message = "Password must be at least 8 characters long")
     @ValidPassword
-    String password;
+    private String password;
 
     @NotNull(message = "Matching password cannot be null")
     @NotEmpty(message = "Matching password cannot be empty")
-    String matchingPassword;
-
+    private String matchingPassword;
 
 }
