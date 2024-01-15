@@ -29,5 +29,8 @@ public class PasswordResetToken {
         this.user = user;
     }
 
+    public PasswordResetToken(String token) {
+        this.token = token;
+    }
 }
 

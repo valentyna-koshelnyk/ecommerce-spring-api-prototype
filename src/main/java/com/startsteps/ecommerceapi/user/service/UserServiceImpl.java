@@ -14,13 +14,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.Instant;
+import java.util.*;
+
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 /**
  * service layer class for serving "api/users" endpoints
@@ -95,11 +92,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean changePassword(String token, String newPassword){
+    public boolean changePassword(PasswordResetToken token, String newPassword){
        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token)
                .orElseThrow(() -> new NoSuchElementException("Token not found: " + token));
        Date tokenCreationDate = passwordResetToken.getCreatedDate();
-       if(isTokenExpired(tokenCreationDate)){
+       if(isTokenExpired(token)){
            log.error("Token has been expired. Try again");
            return false;
        }
@@ -113,14 +110,12 @@ public class UserServiceImpl implements UserService {
     public Optional<PasswordResetToken> getPasswordResetToken(final String token) {
         return passwordResetTokenRepository.findByToken(token);
     }
-    public boolean isTokenExpired(final Date tokenCreationDate) {
-       LocalDateTime tokenCreationDateTime = tokenCreationDate.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-        LocalDateTime now = LocalDateTime.now();
-        Duration diff = Duration.between(tokenCreationDateTime, now);
-        return diff.toMinutes() >= PASS_THRESHOLD;
-    }
+    public boolean isTokenExpired(PasswordResetToken token) {
+        Instant createdDate = token.getCreatedDate().toInstant();
+        Instant now = Instant.now();
+        long diff = MINUTES.between(createdDate, now);
+        return diff >= PASS_THRESHOLD;
+        }
 
     private String generateResetToken() {
         return UUID.randomUUID().toString();

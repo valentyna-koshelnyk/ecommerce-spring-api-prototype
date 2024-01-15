@@ -16,8 +16,7 @@ public interface UserService {
     User registerAdmin(UserDTO user);
     User resetPasswordSendEmail(String userEmail);
     void createPasswordResetTokenForUser(User user, String token);
-
-    boolean changePassword(String token, String newPassword);
+    boolean changePassword(PasswordResetToken token, String newPassword);
 
     Optional<PasswordResetToken> getPasswordResetToken(String token);
 }
