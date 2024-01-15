@@ -7,15 +7,13 @@ import com.startsteps.ecommerceapi.user.model.PasswordResetToken;
 import com.startsteps.ecommerceapi.user.model.User;
 import com.startsteps.ecommerceapi.user.repository.UserRepository;
 import com.startsteps.ecommerceapi.user.service.dto.UserDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
-import lombok.Getter;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -34,16 +32,16 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
-    private  PasswordEncoder passwordEncoder;
-
-    @Getter
- //   private final EmailService emailService;
+    private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
     final int PASS_THRESHOLD = 30;
 
     @Autowired
-   public UserServiceImpl(UserRepository userRepository, PasswordResetTokenRepository passwordResetTokenRepository) {
+   public UserServiceImpl(UserRepository userRepository, PasswordResetTokenRepository passwordResetTokenRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userRepository = userRepository;
        this.passwordResetTokenRepository = passwordResetTokenRepository;
+       this.passwordEncoder = passwordEncoder;
+       this.emailService = emailService;
    }
 
     @Override
@@ -102,7 +100,7 @@ public class UserServiceImpl implements UserService {
                .orElseThrow(() -> new NoSuchElementException("Token not found: " + token));
        Date tokenCreationDate = passwordResetToken.getCreatedDate();
        if(isTokenExpired(tokenCreationDate)){
-           log.info("Token has been expired. Try again");
+           System.out.println("Token has been expired. Try again");
            return false;
        }
        User user = passwordResetToken.getUser();
@@ -125,9 +123,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private String generateResetToken() {
-        return UUID.randomUUID().toString();
+        String token = UUID.randomUUID().toString();
+        return token;
     }
-
 }
 
 

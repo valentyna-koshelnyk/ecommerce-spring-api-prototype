@@ -12,14 +12,22 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "RoleID")
     private Long id;
-    @Enumerated
-    @Column(length = 20)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Role_name",length = 20)
     private UserRoles roleName;
+    @Column(name = "Decription")
     String description;
+    @Column(name = "Permission")
     String permission;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "RoleID"),
+            inverseJoinColumns = @JoinColumn(name = "UserID"))
     Set<User> users;
 }
