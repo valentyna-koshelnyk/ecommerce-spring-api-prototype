@@ -1,4 +1,5 @@
 package com.startsteps.ecommerceapi.user.service;
+import com.startsteps.ecommerceapi.user.model.Role;
 import com.startsteps.ecommerceapi.user.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,9 +14,10 @@ public class EcomUserAdapter implements UserDetails {
         this.user = user;
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(user.getAuthority()));
+        return List.of(new SimpleGrantedAuthority(user.getUserRole().name()));
     }
 
     @Override

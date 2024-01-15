@@ -1,4 +1,6 @@
 HELP.md
+.env
+.properties
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -14,8 +16,7 @@ target/
 .springBeans
 .sts4-cache
 .env
-.yml
-
+.properties
 ### IntelliJ IDEA ###
 .idea
 *.iws

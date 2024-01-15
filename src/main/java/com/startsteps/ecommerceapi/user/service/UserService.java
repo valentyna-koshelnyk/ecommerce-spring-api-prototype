@@ -18,5 +18,5 @@ public interface UserService {
     void createPasswordResetTokenForUser(User user, String token);
     boolean changePassword(PasswordResetToken token, String newPassword);
 
-    Optional<PasswordResetToken> getPasswordResetToken(String token);
+    Optional<PasswordResetToken> getPasswordResetToken(PasswordResetToken token);
 }
