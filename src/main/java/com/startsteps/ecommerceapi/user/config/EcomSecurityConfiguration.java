@@ -18,18 +18,6 @@ public class EcomSecurityConfiguration {
         return httpSecurity.build();
     }
 
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .httpBasic(Customizer.withDefaults())     // Default Basic auth config
-//                .csrf(configurer -> configurer.disable()) // for POST requests via Postman
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers(HttpMethod.POST, "/register").permitAll()
-//                        .requestMatchers(HttpMethod.GET, "/test").hasRole("USER")
-//                        .anyRequest().denyAll()
-//                );
-//
-//        return http.build();
-//    }
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

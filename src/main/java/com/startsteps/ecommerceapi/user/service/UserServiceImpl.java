@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
                .orElseThrow(() -> new NoSuchElementException("Token not found: " + token));
        Date tokenCreationDate = passwordResetToken.getCreatedDate();
        if(isTokenExpired(tokenCreationDate)){
-           System.out.println("Token has been expired. Try again");
+           log.error("Token has been expired. Try again");
            return false;
        }
        User user = passwordResetToken.getUser();
@@ -123,8 +123,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private String generateResetToken() {
-        String token = UUID.randomUUID().toString();
-        return token;
+        return UUID.randomUUID().toString();
     }
 }
 
