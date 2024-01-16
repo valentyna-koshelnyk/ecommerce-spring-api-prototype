@@ -1,5 +1,6 @@
 package com.startsteps.ecommerceapi.user.service;
 
+import com.startsteps.ecommerceapi.user.payload.request.SignupRequest;
 import com.startsteps.ecommerceapi.user.repository.PasswordResetTokenRepository;
 import com.startsteps.ecommerceapi.user.exceptions.UserAlreadyExistsException;
 import com.startsteps.ecommerceapi.user.exceptions.UserNotFoundException;
@@ -29,17 +30,17 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final EmailService emailService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    private  final EmailService emailService;
     final int PASS_THRESHOLD = 30;
 
     @Autowired
-   public UserServiceImpl(UserRepository userRepository, PasswordResetTokenRepository passwordResetTokenRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
+   public UserServiceImpl(UserRepository userRepository, PasswordResetTokenRepository passwordResetTokenRepository, EmailService emailService) {
         this.userRepository = userRepository;
-       this.passwordResetTokenRepository = passwordResetTokenRepository;
-       this.passwordEncoder = passwordEncoder;
-       this.emailService = emailService;
-   }
+        this.passwordResetTokenRepository = passwordResetTokenRepository;
+        this.emailService = emailService;
+    }
 
     @Override
     public Optional<User> findUserByEmail(String emailAddress) {
@@ -52,15 +53,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerUser(UserDTO user) {
+    public User registerUser(SignupRequest user) {
         if(userRepository.existsByEmail(user.getEmail())){
             throw new UserAlreadyExistsException("This email " + user.getEmail() + " already exists");
         }
         else if(userRepository.existsByUsername(user.getUsername())){
             throw new UserAlreadyExistsException("This username " + user.getUsername() + " is already used");
         }
-        User newUser = new User((user.getUserId()), user.getUsername(), passwordEncoder.encode(user.getPassword()),
-                user.getEmail(),false, true);
+        User newUser = new User((user.getUserId()), user.getUsername(),user.getEmail(), passwordEncoder.encode(user.getPassword())
+               , false, true);
         return userRepository.save(newUser);
     }
     @Override //TODO: authorized method
@@ -95,7 +96,6 @@ public class UserServiceImpl implements UserService {
     public boolean changePassword(PasswordResetToken token, String newPassword){
        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token)
                .orElseThrow(() -> new NoSuchElementException("Token not found: " + token));
-       Date tokenCreationDate = passwordResetToken.getCreatedDate();
        if(isTokenExpired(token)){
            log.error("Token has been expired. Try again");
            return false;
@@ -106,8 +106,11 @@ public class UserServiceImpl implements UserService {
        passwordResetTokenRepository.delete(passwordResetToken);
        return true;
    }
+
+
+
     @Override
-    public Optional<PasswordResetToken> getPasswordResetToken(final String token) {
+    public Optional<PasswordResetToken> getPasswordResetToken(final PasswordResetToken token) {
         return passwordResetTokenRepository.findByToken(token);
     }
     public boolean isTokenExpired(PasswordResetToken token) {

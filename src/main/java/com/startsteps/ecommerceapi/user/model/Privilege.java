@@ -14,18 +14,10 @@ import java.util.Collection;
 public class Privilege {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "PrivilegeID")
     private Long id;
     @Column(name = "Privilege_name")
     private String name;
-
-    @ManyToMany
-    @JoinTable(
-            name = "role_privileges", // name of the join table
-            joinColumns = @JoinColumn(name = "privilege_id"), // column referring to the owning side (Privilege)
-            inverseJoinColumns = @JoinColumn(name = "role_id") // column referring to the non-owning side (Role)
-    )
-    private Collection<Role> roles;
-
     public Privilege(String name) {
         this.name = name;
     }

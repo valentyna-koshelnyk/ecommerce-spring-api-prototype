@@ -30,4 +30,16 @@ public class Role {
             joinColumns = @JoinColumn(name = "RoleID"),
             inverseJoinColumns = @JoinColumn(name = "UserID"))
     Set<User> users;
+    @ManyToMany
+    @JoinTable(
+            name = "Roles_privileges",
+            joinColumns = @JoinColumn(
+                    name = "RoleId", referencedColumnName = "RoleId"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "privilegeId", referencedColumnName = "privilegeId"))
+    private Collection<Privilege> privileges;
+
+    public Role(UserRoles roleName) {
+        this.roleName = roleName;
+    }
 }

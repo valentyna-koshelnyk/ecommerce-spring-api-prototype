@@ -13,9 +13,10 @@ public class EcomUserAdapter implements UserDetails {
         this.user = user;
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(user.getAuthority()));
+        return List.of(new SimpleGrantedAuthority(user.getUserRoles().name()));
     }
 
     @Override

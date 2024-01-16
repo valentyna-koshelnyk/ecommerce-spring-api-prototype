@@ -1,4 +1,5 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/ecommerce-api-app
-
+  profiles:
+    active: dev
