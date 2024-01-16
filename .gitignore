@@ -17,6 +17,8 @@ target/
 .sts4-cache
 .env
 .properties
+.yml
+node_modules/
 ### IntelliJ IDEA ###
 .idea
 *.iws

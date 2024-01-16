@@ -31,6 +31,7 @@ public class EcomSecurityConfiguration {
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/api/v1/app/user/auth/",
+            "/api/auth/signin/**",
             "swagger-resources/**", "/webjars/"
     };
 
