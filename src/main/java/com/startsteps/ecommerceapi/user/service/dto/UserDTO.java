@@ -1,5 +1,6 @@
 package com.startsteps.ecommerceapi.user.service.dto;
 
+import com.startsteps.ecommerceapi.user.model.Role;
 import com.startsteps.ecommerceapi.user.validation.PasswordMatching;
 import com.startsteps.ecommerceapi.user.validation.ValidEmail;
 import com.startsteps.ecommerceapi.user.validation.ValidPassword;
@@ -7,6 +8,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,4 +39,15 @@ public class UserDTO {
     @NotEmpty(message = "Matching password cannot be empty")
     private String matchingPassword;
 
+    @NotNull
+    private Set<Role> role;
+
+
+    public UserDTO(Long userId, String username, String email, String password, String matchingPassword) {
+        this.userId = userId;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.matchingPassword = matchingPassword;
+    }
 }

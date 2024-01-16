@@ -1,5 +1,7 @@
 package com.startsteps.ecommerceapi.user.service;
 
+import com.startsteps.ecommerceapi.user.model.UserRoles;
+import com.startsteps.ecommerceapi.user.payload.request.SignupRequest;
 import com.startsteps.ecommerceapi.user.repository.PasswordResetTokenRepository;
 import com.startsteps.ecommerceapi.user.exceptions.UserAlreadyExistsException;
 import com.startsteps.ecommerceapi.user.exceptions.UserNotFoundException;
@@ -29,6 +31,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     private  final EmailService emailService;
     final int PASS_THRESHOLD = 30;
@@ -51,15 +54,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerUser(UserDTO user) {
+    public User registerUser(SignupRequest user) {
         if(userRepository.existsByEmail(user.getEmail())){
             throw new UserAlreadyExistsException("This email " + user.getEmail() + " already exists");
         }
         else if(userRepository.existsByUsername(user.getUsername())){
             throw new UserAlreadyExistsException("This username " + user.getUsername() + " is already used");
         }
-        User newUser = new User((user.getUserId()), user.getUsername(), passwordEncoder.encode(user.getPassword()),
-                user.getEmail(),false, true);
+        User newUser = new User((user.getUserId()), user.getUsername(),user.getEmail(), passwordEncoder.encode(user.getPassword())
+               , false, true);
         return userRepository.save(newUser);
     }
     @Override //TODO: authorized method

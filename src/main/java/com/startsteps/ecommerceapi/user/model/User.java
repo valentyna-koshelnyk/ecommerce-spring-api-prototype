@@ -5,12 +5,15 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
+import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "user")
 public class User{
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +36,7 @@ public class User{
    @NonNull
    @Column(name = "User_Role")
    @Enumerated(EnumType.STRING)
-   private UserRoles UserRole;
+   private UserRoles userRoles;
 
    @CreationTimestamp
    @Column(name = "Registration_Date", nullable = false, updatable = false)
@@ -51,7 +54,7 @@ public class User{
    @Column(name = "Pending")
    Boolean pending;
    
-   public User(@NonNull Long userId, @NonNull String username, @NonNull String email, @NonNull String password, @NonNull Boolean approved, @NonNull Boolean pending) {
+   public User(@NonNull Long userId, @NonNull String username, @NonNull String email, @NonNull String password,  @NonNull Boolean approved, @NonNull Boolean pending) {
       this.userId = userId;
       this.username = username;
       this.email = email;
@@ -59,4 +62,11 @@ public class User{
       this.approved = approved;
       this.pending = pending;
    }
+
+   public User(@NonNull String username, @NonNull String email, @NonNull String password) {
+      this.username = username;
+      this.email = email;
+      this.password = password;
+   }
+
 }
