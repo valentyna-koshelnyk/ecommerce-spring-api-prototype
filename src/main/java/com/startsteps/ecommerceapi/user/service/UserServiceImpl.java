@@ -1,6 +1,5 @@
 package com.startsteps.ecommerceapi.user.service;
 
-import com.startsteps.ecommerceapi.user.model.UserRoles;
 import com.startsteps.ecommerceapi.user.payload.request.SignupRequest;
 import com.startsteps.ecommerceapi.user.repository.PasswordResetTokenRepository;
 import com.startsteps.ecommerceapi.user.exceptions.UserAlreadyExistsException;
