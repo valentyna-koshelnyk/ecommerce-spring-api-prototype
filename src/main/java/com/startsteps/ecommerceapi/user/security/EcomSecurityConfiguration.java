@@ -25,6 +25,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity(prePostEnabled = true)
 public class EcomSecurityConfiguration {
 
+    private static final String[] AUTH_WHITELIST = {
+            "/authenticate",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/api/v1/app/user/auth/",
+            "swagger-resources/**", "/webjars/"
+    };
+
+
     @Autowired
     EcomUserDetailService userDetailsService;
 
@@ -64,12 +74,11 @@ public class EcomSecurityConfiguration {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/**").permitAll()
                                 .requestMatchers("/api/**").permitAll()
-                                .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("register/**").permitAll()
                                 .requestMatchers("/auth").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/user/**").hasRole("USER")
-
+                                .requestMatchers(AUTH_WHITELIST).permitAll()
                                 .anyRequest().authenticated()
                 );
 

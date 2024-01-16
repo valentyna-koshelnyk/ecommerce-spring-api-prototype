@@ -1,5 +1,6 @@
 package com.startsteps.ecommerceapi.user.model;
 
+import io.swagger.annotations.ApiModel;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,6 +14,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+@ApiModel
 @Table(name = "user")
 public class User{
    @Id
