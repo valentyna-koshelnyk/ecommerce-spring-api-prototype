@@ -1,4 +1,4 @@
-package com.startsteps.ecommerceapi.user.dao;
+package com.startsteps.ecommerceapi.user.repository;
 
 import com.startsteps.ecommerceapi.user.model.PasswordResetToken;
 import com.startsteps.ecommerceapi.user.model.User;

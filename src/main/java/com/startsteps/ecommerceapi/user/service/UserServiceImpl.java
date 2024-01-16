@@ -1,11 +1,11 @@
 package com.startsteps.ecommerceapi.user.service;
 
-import com.startsteps.ecommerceapi.user.dao.PasswordResetTokenRepository;
+import com.startsteps.ecommerceapi.user.repository.PasswordResetTokenRepository;
 import com.startsteps.ecommerceapi.user.exceptions.UserAlreadyExistsException;
 import com.startsteps.ecommerceapi.user.exceptions.UserNotFoundException;
 import com.startsteps.ecommerceapi.user.model.PasswordResetToken;
 import com.startsteps.ecommerceapi.user.model.User;
-import com.startsteps.ecommerceapi.user.dao.UserRepository;
+import com.startsteps.ecommerceapi.user.repository.UserRepository;
 import com.startsteps.ecommerceapi.user.service.dto.UserDTO;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -14,14 +14,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.temporal.Temporal;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.Instant;
+import java.util.*;
+
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 /**
  * service layer class for serving "api/users" endpoints
@@ -35,7 +31,9 @@ public class UserServiceImpl implements UserService {
     private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
-   @Autowired
+    final int PASS_THRESHOLD = 30;
+
+    @Autowired
    public UserServiceImpl(UserRepository userRepository, PasswordResetTokenRepository passwordResetTokenRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userRepository = userRepository;
        this.passwordResetTokenRepository = passwordResetTokenRepository;
@@ -94,12 +92,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean changePassword(String token, String newPassword){
+    public boolean changePassword(PasswordResetToken token, String newPassword){
        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token)
                .orElseThrow(() -> new NoSuchElementException("Token not found: " + token));
        Date tokenCreationDate = passwordResetToken.getCreatedDate();
-       if(isTokenExpired(tokenCreationDate)){
-           System.out.println("Token has been expired. Try again");
+       if(isTokenExpired(token)){
+           log.error("Token has been expired. Try again");
            return false;
        }
        User user = passwordResetToken.getUser();
@@ -112,18 +110,15 @@ public class UserServiceImpl implements UserService {
     public Optional<PasswordResetToken> getPasswordResetToken(final String token) {
         return passwordResetTokenRepository.findByToken(token);
     }
-    public boolean isTokenExpired(final Date tokenCreationDate) {
-        LocalDateTime tokenCreationDateTime = tokenCreationDate.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-        LocalDateTime now = LocalDateTime.now();
-        Duration diff = Duration.between(tokenCreationDateTime, now);
-        return diff.toMinutes() >= 30;
-    }
+    public boolean isTokenExpired(PasswordResetToken token) {
+        Instant createdDate = token.getCreatedDate().toInstant();
+        Instant now = Instant.now();
+        long diff = MINUTES.between(createdDate, now);
+        return diff >= PASS_THRESHOLD;
+        }
 
     private String generateResetToken() {
-        String token = UUID.randomUUID().toString();
-        return token;
+        return UUID.randomUUID().toString();
     }
 }
 

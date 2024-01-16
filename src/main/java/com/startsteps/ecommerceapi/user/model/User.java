@@ -4,12 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Set;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -37,7 +32,7 @@ public class User{
 
    @NonNull
    @Column(name = "User_Role")
-   @Enumerated
+   @Enumerated(EnumType.STRING)
    private UserRoles UserRole;
 
    @CreationTimestamp
@@ -55,13 +50,7 @@ public class User{
    @NonNull
    @Column(name = "Pending")
    Boolean pending;
-
-   @ManyToMany(fetch = FetchType.EAGER)
-   @JoinTable(name = "roles",
-           joinColumns = @JoinColumn(name = "userID"),
-           inverseJoinColumns = @JoinColumn(name = "roleID"))
-   private Set<Role> roleSet;
-
+   
    public User(@NonNull Long userId, @NonNull String username, @NonNull String email, @NonNull String password, @NonNull Boolean approved, @NonNull Boolean pending) {
       this.userId = userId;
       this.username = username;
