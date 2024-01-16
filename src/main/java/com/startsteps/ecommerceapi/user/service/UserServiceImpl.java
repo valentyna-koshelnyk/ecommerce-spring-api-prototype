@@ -64,10 +64,6 @@ public class UserServiceImpl implements UserService {
                , false, true);
         return userRepository.save(newUser);
     }
-    @Override //TODO: authorized method
-    public User registerAdmin(UserDTO user) {
-        return null;
-    }
 
     @Override
     public User resetPasswordSendEmail(String userEmail) {

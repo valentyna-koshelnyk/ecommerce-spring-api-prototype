@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 @Configuration
-@EnableMethodSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class EcomSecurityConfiguration {
 
     @Autowired
@@ -67,6 +67,9 @@ public class EcomSecurityConfiguration {
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("register/**").permitAll()
                                 .requestMatchers("/auth").permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/user/**").hasRole("USER")
+
                                 .anyRequest().authenticated()
                 );
 
