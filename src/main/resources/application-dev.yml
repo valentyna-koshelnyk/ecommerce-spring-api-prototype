@@ -10,3 +10,6 @@ ecom:
     userName: test
     userPassword: tesT2&!@kdfK
     userEmail: test@gmail.com
+  server:
+    forward-headers-strategy: framework
+
