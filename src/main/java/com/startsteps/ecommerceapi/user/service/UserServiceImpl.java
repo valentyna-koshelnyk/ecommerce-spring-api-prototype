@@ -12,7 +12,6 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,7 @@ import java.util.*;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 /**
- * service layer class for serving "api/users" endpoints
+ * service layer class for serving "/signin and /register" endpoints
  */
 
 @Service
@@ -33,11 +32,11 @@ public class UserServiceImpl implements UserService {
     private final PasswordResetTokenRepository passwordResetTokenRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    private  final EmailService emailService;
+    private final EmailService emailService;
     final int PASS_THRESHOLD = 30;
 
     @Autowired
-   public UserServiceImpl(UserRepository userRepository, PasswordResetTokenRepository passwordResetTokenRepository, EmailService emailService) {
+    public UserServiceImpl(UserRepository userRepository, PasswordResetTokenRepository passwordResetTokenRepository, EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
         this.emailService = emailService;
@@ -55,35 +54,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(SignupRequest user) {
-        if(userRepository.existsByEmail(user.getEmail())){
+        if (userRepository.existsByEmail(user.getEmail())) {
             throw new UserAlreadyExistsException("This email " + user.getEmail() + " already exists");
-        }
-        else if(userRepository.existsByUsername(user.getUsername())){
+        } else if (userRepository.existsByUsername(user.getUsername())) {
             throw new UserAlreadyExistsException("This username " + user.getUsername() + " is already used");
         }
-        User newUser = new User((user.getUserId()), user.getUsername(),user.getEmail(), passwordEncoder.encode(user.getPassword())
-               , false, true);
-        newUser.setUserRoles(UserRoles.user);
+        User newUser = new User(user.getEmail(), user.getUsername(), passwordEncoder.encode(user.getPassword())
+                , false, true);
+        newUser.setUserRoles(UserRoles.ROLE_USER);
         return userRepository.save(newUser);
     }
 
     @Override
     public User registerAdmin(SignupRequest user) {
-        if(userRepository.existsByEmail(user.getEmail())){
+        if (userRepository.existsByEmail(user.getEmail())) {
             throw new UserAlreadyExistsException("This email " + user.getEmail() + " already exists");
-        }
-        else if(userRepository.existsByUsername(user.getUsername())){
+        } else if (userRepository.existsByUsername(user.getUsername())) {
             throw new UserAlreadyExistsException("This username " + user.getUsername() + " is already used");
         }
-        User newUser = new User((user.getUserId()), user.getUsername(),user.getEmail(), passwordEncoder.encode(user.getPassword())
+        User newUser = new User(user.getUsername(), user.getEmail(), passwordEncoder.encode(user.getPassword())
                 , false, true);
-        newUser.setUserRoles(UserRoles.admin);
+        newUser.setUserRoles(UserRoles.ROLE_ADMIN);
         return userRepository.save(newUser);
     }
 
     @Override
     public User resetPasswordSendEmail(String userEmail) {
-        if(!userRepository.existsByEmail(userEmail) ) {
+        if (!userRepository.existsByEmail(userEmail)) {
             throw new UserNotFoundException("User with the email " + userEmail + " not found");
         }
         User user = userRepository.findByEmail(userEmail).orElseThrow(() ->
@@ -105,33 +102,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean changePassword(PasswordResetToken token, String newPassword){
-       PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token)
-               .orElseThrow(() -> new NoSuchElementException("Token not found: " + token));
-       if(isTokenExpired(token)){
-           log.error("Token has been expired. Try again");
-           return false;
-       }
-       User user = passwordResetToken.getUser();
-       user.setPassword(passwordEncoder.encode(newPassword));
-       userRepository.save(user);
-       passwordResetTokenRepository.delete(passwordResetToken);
-       return true;
-   }
-
+    public boolean changePassword(PasswordResetToken token, String newPassword) {
+        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token)
+                .orElseThrow(() -> new NoSuchElementException("Token not found: " + token));
+        if (isTokenExpired(token)) {
+            log.error("Token has been expired. Try again");
+            return false;
+        }
+        User user = passwordResetToken.getUser();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        passwordResetTokenRepository.delete(passwordResetToken);
+        return true;
+    }
 
 
     @Override
     public Optional<PasswordResetToken> getPasswordResetToken(final PasswordResetToken token) {
         return passwordResetTokenRepository.findByToken(token);
     }
+
     public boolean isTokenExpired(PasswordResetToken token) {
         Instant createdDate = token.getCreatedDate().toInstant();
         Instant now = Instant.now();
         long diff = MINUTES.between(createdDate, now);
         return diff >= PASS_THRESHOLD;
-        }
-
+    }
 
 
     private String generateResetToken() {
