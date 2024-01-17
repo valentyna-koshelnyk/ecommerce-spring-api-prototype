@@ -77,8 +77,8 @@ public class EcomSecurityConfiguration {
                                 .requestMatchers("/api/**").permitAll()
                                 .requestMatchers("register/**").permitAll()
                                 .requestMatchers("/auth").permitAll()
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/user/**").hasRole("USER")
+                                .requestMatchers("/admin/**").hasRole("ROLE_ADMIN")
+                                .requestMatchers("/user/**").hasRole("ROLE_USER")
                                 .requestMatchers(AUTH_WHITELIST).permitAll()
                                 .anyRequest().authenticated()
                 );

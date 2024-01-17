@@ -3,14 +3,14 @@ package com.startsteps.ecommerceapi.payload.request;
 import com.startsteps.ecommerceapi.validation.ValidEmail;
 import com.startsteps.ecommerceapi.validation.ValidPassword;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
 @Getter
 @Setter
+@AllArgsConstructor
 public class SignupRequest {
-    private Long userId;
 
     @NotNull(message = "Username cannot be null")
     @NotEmpty(message = "Username cannot be empty")
@@ -31,7 +31,6 @@ public class SignupRequest {
     @NotEmpty(message = "Matching password cannot be empty")
     private String matchingPassword;
 
-    private Set<String> role;
 }
   
 
