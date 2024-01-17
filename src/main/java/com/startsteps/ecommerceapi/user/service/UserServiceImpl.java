@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +64,20 @@ public class UserServiceImpl implements UserService {
         User newUser = new User((user.getUserId()), user.getUsername(),user.getEmail(), passwordEncoder.encode(user.getPassword())
                , false, true);
         newUser.setUserRoles(UserRoles.user);
+        return userRepository.save(newUser);
+    }
+
+    @Override
+    public User registerAdmin(SignupRequest user) {
+        if(userRepository.existsByEmail(user.getEmail())){
+            throw new UserAlreadyExistsException("This email " + user.getEmail() + " already exists");
+        }
+        else if(userRepository.existsByUsername(user.getUsername())){
+            throw new UserAlreadyExistsException("This username " + user.getUsername() + " is already used");
+        }
+        User newUser = new User((user.getUserId()), user.getUsername(),user.getEmail(), passwordEncoder.encode(user.getPassword())
+                , false, true);
+        newUser.setUserRoles(UserRoles.admin);
         return userRepository.save(newUser);
     }
 
