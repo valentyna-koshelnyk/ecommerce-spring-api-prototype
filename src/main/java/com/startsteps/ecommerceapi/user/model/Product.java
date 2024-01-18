@@ -1,6 +1,7 @@
 package com.startsteps.ecommerceapi.user.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -20,17 +21,18 @@ public class Product {
     @NonNull
     @Column(name= "Product_Name")
     private String productName;
-    @NonNull
+    @NotEmpty
     @Column(name = "Price")
     private double price;
     @Column(name = "Description")
     private String description;
-    @NonNull
+    @NotEmpty
     @Column(name = "Stock")
     private long stock;
     @CreationTimestamp
     @Column(name = "Add_Date", nullable = false, updatable = false)
     LocalDateTime addedAtDate;
-
-    //TODO: to add product category
+    @NonNull
+    @Column(name = "Product_Category")
+    private ProductCategory category;
 }
