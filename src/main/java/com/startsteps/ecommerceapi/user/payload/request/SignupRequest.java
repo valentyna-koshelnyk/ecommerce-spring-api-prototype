@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
@@ -32,7 +31,6 @@ public class SignupRequest {
     @NotEmpty(message = "Matching password cannot be empty")
     private String matchingPassword;
 
-    private Set<String> role;
 }
   
 
