@@ -1,7 +1,10 @@
-package com.startsteps.ecommerceapi.product.model;
+package com.startsteps.ecommerceapi.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,4 +28,9 @@ public class Product {
     @NonNull
     @Column(name = "Stock")
     private long stock;
+    @CreationTimestamp
+    @Column(name = "Add_Date", nullable = false, updatable = false)
+    LocalDateTime addedAtDate;
+
+    //TODO: to add product category
 }
