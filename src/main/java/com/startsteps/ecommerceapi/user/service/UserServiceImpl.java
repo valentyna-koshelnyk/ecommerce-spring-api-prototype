@@ -1,5 +1,6 @@
 package com.startsteps.ecommerceapi.user.service;
 
+import com.startsteps.ecommerceapi.user.model.UserRoles;
 import com.startsteps.ecommerceapi.user.payload.request.SignupRequest;
 import com.startsteps.ecommerceapi.user.repository.PasswordResetTokenRepository;
 import com.startsteps.ecommerceapi.user.exceptions.UserAlreadyExistsException;
@@ -7,7 +8,6 @@ import com.startsteps.ecommerceapi.user.exceptions.UserNotFoundException;
 import com.startsteps.ecommerceapi.user.model.PasswordResetToken;
 import com.startsteps.ecommerceapi.user.model.User;
 import com.startsteps.ecommerceapi.user.repository.UserRepository;
-import com.startsteps.ecommerceapi.user.service.dto.UserDTO;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +62,7 @@ public class UserServiceImpl implements UserService {
         }
         User newUser = new User(user.getUsername(),user.getEmail(), passwordEncoder.encode(user.getPassword())
                , false, true);
+        newUser.setUserRoles(UserRoles.user);
         return userRepository.save(newUser);
     }
 
@@ -115,6 +116,8 @@ public class UserServiceImpl implements UserService {
         long diff = MINUTES.between(createdDate, now);
         return diff >= PASS_THRESHOLD;
         }
+
+
 
     private String generateResetToken() {
         return UUID.randomUUID().toString();

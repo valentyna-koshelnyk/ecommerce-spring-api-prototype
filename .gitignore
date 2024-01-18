@@ -1,11 +1,11 @@
 HELP.md
 .env
-.properties
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+.properties
+.yml
 
 ### STS ###
 .apt_generated
@@ -15,8 +15,10 @@ target/
 .settings
 .springBeans
 .sts4-cache
-.env
-.properties
+/src/main/resources/application-dev.yml
+/src/main/resources/application-dev.properties
+
+node_modules/
 ### IntelliJ IDEA ###
 .idea
 *.iws

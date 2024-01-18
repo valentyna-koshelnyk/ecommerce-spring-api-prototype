@@ -2,6 +2,7 @@ package com.startsteps.ecommerceapi.user.service;
 
 import com.startsteps.ecommerceapi.user.model.PasswordResetToken;
 import com.startsteps.ecommerceapi.user.model.User;
+import com.startsteps.ecommerceapi.user.payload.request.LoginRequest;
 import com.startsteps.ecommerceapi.user.payload.request.SignupRequest;
 import com.startsteps.ecommerceapi.user.service.dto.UserDTO;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,5 @@ public interface UserService {
     User resetPasswordSendEmail(String userEmail);
     void createPasswordResetTokenForUser(User user, String token);
     boolean changePassword(PasswordResetToken token, String newPassword);
-
     Optional<PasswordResetToken> getPasswordResetToken(PasswordResetToken token);
 }
