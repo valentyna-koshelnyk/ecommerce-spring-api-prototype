@@ -32,7 +32,6 @@ public class SignupRequest {
     @NotEmpty(message = "Matching password cannot be empty")
     private String matchingPassword;
 
-    private Set<String> role;
 }
   
 

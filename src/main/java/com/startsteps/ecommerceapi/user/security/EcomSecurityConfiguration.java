@@ -3,6 +3,7 @@ package com.startsteps.ecommerceapi.user.security;
 import com.startsteps.ecommerceapi.user.security.jwt.AuthEntryPointJwt;
 import com.startsteps.ecommerceapi.user.security.jwt.AuthTokenFilter;
 import com.startsteps.ecommerceapi.user.service.EcomUserDetailService;
+import jakarta.servlet.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,11 +38,10 @@ public class EcomSecurityConfiguration {
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
+   @Autowired
+   private AuthTokenFilter authTokenFilter;
 
-    @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter();
-    }
+
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -73,16 +73,17 @@ public class EcomSecurityConfiguration {
                                 .requestMatchers("/api/**").permitAll()
                                 .requestMatchers("register/**").permitAll()
                                 .requestMatchers("/auth").permitAll()
-                                .requestMatchers("/admin/**").hasRole("ROLE_ADMIN")
-                                .requestMatchers("/user/**").hasRole("ROLE_USER")
+                                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/user/**").hasAuthority("ROLE_USER")
                                 .requestMatchers(AUTH_WHITELIST).permitAll()
                                 .anyRequest().authenticated()
                 );
 
         http.headers(headers -> headers.frameOptions(frameOption -> frameOption.sameOrigin()));
         http.authenticationProvider(authenticationProvider());
-        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
 }

@@ -1,6 +1,5 @@
 package com.startsteps.ecommerceapi.user.model;
 
-import io.swagger.annotations.ApiModel;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,16 +12,13 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
-@RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
-@ApiModel
 @Table(name = "user")
 @Component
 public class User{
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @NonNull
    @Column(name = "UserID")
    private Long userId;
 
@@ -58,19 +54,12 @@ public class User{
    @NonNull
    @Column(name = "Pending")
    Boolean pending;
-   
-   public User(@NonNull String username, @NonNull String email, @NonNull String password,  @NonNull Boolean approved, @NonNull Boolean pending) {
+
+   public User(@NonNull String username, @NonNull String email, @NonNull String password, @NonNull Boolean approved, @NonNull Boolean pending) {
       this.username = username;
       this.email = email;
       this.password = password;
       this.approved = approved;
       this.pending = pending;
    }
-
-   public User(@NonNull String username, @NonNull String email, @NonNull String password) {
-      this.username = username;
-      this.email = email;
-      this.password = password;
-   }
-
 }

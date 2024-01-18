@@ -2,14 +2,18 @@ package com.startsteps.ecommerceapi.user.security.jwt;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import com.startsteps.ecommerceapi.user.service.EcomUserAdapter;
+import com.startsteps.ecommerceapi.user.service.EcomUserDetailService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
@@ -29,6 +33,7 @@ public class JwtUtil {
 
     @Value("${ecom.jwt.jwtCookie}")
     private String jwtCookie;
+    EcomUserDetailService userDetailService;
 
     public String getJwtFromCookies(HttpServletRequest request) {
         Cookie cookie = WebUtils.getCookie(request, jwtCookie);
@@ -76,12 +81,28 @@ public class JwtUtil {
         return false;
     }
 
+//    public String generateTokenFromUsername(String username) {
+//        return Jwts.builder()
+//                .setSubject(username)
+//                .setIssuedAt(new Date())
+//                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+//                .signWith(key(), SignatureAlgorithm.HS256)
+//                .compact();
+//    }
+
     public String generateTokenFromUsername(String username) {
+        UserDetails userDetails = userDetailService.loadUserByUsername(username);
+        Claims claims = Jwts.claims().setSubject(username);
+        claims.put("roles", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList()));
+
         return Jwts.builder()
-                .setSubject(username)
+                .setClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
 }

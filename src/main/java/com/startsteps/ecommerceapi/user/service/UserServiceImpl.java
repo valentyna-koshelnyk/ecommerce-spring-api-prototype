@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
@@ -59,9 +61,10 @@ public class UserServiceImpl implements UserService {
         } else if (userRepository.existsByUsername(user.getUsername())) {
             throw new UserAlreadyExistsException("This username " + user.getUsername() + " is already used");
         }
-        User newUser = new User(user.getEmail(), user.getUsername(), passwordEncoder.encode(user.getPassword())
-                , false, true);
+        User newUser = new User(user.getUsername(), user.getEmail(), passwordEncoder.encode(user.getPassword()),
+                false, true);
         newUser.setUserRoles(UserRoles.ROLE_USER);
+        newUser.setRegistrationDate(LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
         return userRepository.save(newUser);
     }
 
@@ -72,9 +75,10 @@ public class UserServiceImpl implements UserService {
         } else if (userRepository.existsByUsername(user.getUsername())) {
             throw new UserAlreadyExistsException("This username " + user.getUsername() + " is already used");
         }
-        User newUser = new User(user.getUsername(), user.getEmail(), passwordEncoder.encode(user.getPassword())
-                , false, true);
+        User newUser = new User(user.getUsername(), user.getEmail(), passwordEncoder.encode(user.getPassword()),
+                false, true);
         newUser.setUserRoles(UserRoles.ROLE_ADMIN);
+        newUser.setRegistrationDate(LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
         return userRepository.save(newUser);
     }
 

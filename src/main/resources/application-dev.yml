@@ -6,7 +6,10 @@ ecom:
     expiresIn: 30
     refresh-token: 30
     jwtCookie: cookie
-  onApp:
-    userName: test
-    userPassword: tesT2&!@kdfK
-    userEmail: test@gmail.com
+  security:
+    username: test
+    password: tesT2&!@kdfK
+    email: test@gmail.com
+  spring:
+   jpa:
+     open-in-view: false
