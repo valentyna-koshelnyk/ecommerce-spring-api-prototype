@@ -3,15 +3,21 @@ package com.startsteps.ecommerceapi.user.security;
 import com.startsteps.ecommerceapi.user.security.jwt.AuthEntryPointJwt;
 import com.startsteps.ecommerceapi.user.security.jwt.AuthTokenFilter;
 import com.startsteps.ecommerceapi.user.service.EcomUserDetailService;
-import jakarta.servlet.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,10 +31,10 @@ public class EcomSecurityConfiguration {
 
     private static final String[] AUTH_WHITELIST = {
             "/authenticate",
+            "/swagger-resources/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/api/v1/app/user/auth/",
-            "/api/auth/signin/**",
             "swagger-resources/**", "/webjars/"
     };
 
@@ -38,10 +44,11 @@ public class EcomSecurityConfiguration {
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
-   @Autowired
-   private AuthTokenFilter authTokenFilter;
 
-
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
+    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -62,6 +69,24 @@ public class EcomSecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http.csrf(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
+//                        authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+//                                .requestMatchers("/registerAdmin/**").hasAnyRole("ADMIN")
+//                                .requestMatchers("/signin/**").permitAll()
+//                                .requestMatchers("/register/**").permitAll()
+//                                .anyRequest().authenticated())
+//                .httpBasic(Customizer.withDefaults())
+//                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//
+//        return http.build();
+//    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return web -> web.debug(securityDe).ignoring().requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/favicon.ico");
+//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -70,20 +95,18 @@ public class EcomSecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/**").permitAll()
-                                .requestMatchers("/api/**").permitAll()
-                                .requestMatchers("register/**").permitAll()
+                                .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/auth").permitAll()
-                                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                                .requestMatchers("/user/**").hasAuthority("ROLE_USER")
+                                .requestMatchers("/registerAdmin/**").hasRole("ADMIN")
+                                .requestMatchers("/user/**").hasRole("USER")
                                 .requestMatchers(AUTH_WHITELIST).permitAll()
                                 .anyRequest().authenticated()
                 );
 
         http.headers(headers -> headers.frameOptions(frameOption -> frameOption.sameOrigin()));
         http.authenticationProvider(authenticationProvider());
-        http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
 }

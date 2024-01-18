@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @PasswordMatching(message = "Passwords do not match")
+@Component
 public class UserDTO {
 
     private Long userId;

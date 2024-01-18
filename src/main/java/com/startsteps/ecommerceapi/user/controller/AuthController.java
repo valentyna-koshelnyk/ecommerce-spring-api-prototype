@@ -5,11 +5,9 @@ import com.startsteps.ecommerceapi.user.model.User;
 import com.startsteps.ecommerceapi.user.payload.request.LoginRequest;
 import com.startsteps.ecommerceapi.user.payload.request.SignupRequest;
 import com.startsteps.ecommerceapi.user.security.jwt.JwtUtil;
-import com.startsteps.ecommerceapi.user.service.EcomUserAdapter;
 import com.startsteps.ecommerceapi.user.service.EcomUserDetailService;
 import com.startsteps.ecommerceapi.user.service.UserServiceImpl;
 import com.startsteps.ecommerceapi.user.payload.response.MessageResponse;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,19 +26,18 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    private final UserServiceImpl userService;
-    @Autowired
     private EcomUserDetailService userDetailsService;
     @Autowired
-    private EcomUserAdapter userDetails;
+    private UserServiceImpl userService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @Autowired
     private JwtUtil jwtUtil;
 
     @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired
-    public AuthController(UserServiceImpl userService) {
-        this.userService = userService;
+    public AuthController(EcomUserDetailService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     @PostMapping("/register")
@@ -53,7 +50,6 @@ public class AuthController {
         }
     }
     @PostMapping("/registerAdmin")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> registerAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
         try {
             User registeredAdmin = userService.registerAdmin(signUpRequest);
@@ -72,24 +68,12 @@ public class AuthController {
                         loginRequest.getPassword()
                 )
         );
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
         final String jwt = jwtUtil.generateTokenFromUsername(userDetails.getUsername());
         return ResponseEntity.ok(Collections.singletonMap("token", jwt));
     }
-//    private void doAutoLogin(String username, String password, HttpServletRequest request) {
-//
-//        try {
-//            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-//            token.setDetails(new WebAuthenticationDetails(request));
-//            Authentication authentication = this.authenticationManager.authenticate(token);
-//            log.debug("Logging in with [{}]", authentication.getPrincipal());
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//        } catch (Exception e) {
-//            SecurityContextHolder.getContext().setAuthentication(null);
-//            log.error("Failure in autoLogin", e);
-//        }
-//    }
     @GetMapping("/checkUser")
     public String checkUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

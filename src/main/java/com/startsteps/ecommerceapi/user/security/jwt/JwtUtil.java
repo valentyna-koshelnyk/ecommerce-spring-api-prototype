@@ -10,6 +10,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,6 +34,7 @@ public class JwtUtil {
 
     @Value("${ecom.jwt.jwtCookie}")
     private String jwtCookie;
+    @Autowired
     EcomUserDetailService userDetailService;
 
     public String getJwtFromCookies(HttpServletRequest request) {
