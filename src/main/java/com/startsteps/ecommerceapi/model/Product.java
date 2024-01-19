@@ -35,4 +35,12 @@ public class Product {
     @NonNull
     @Column(name = "Product_Category")
     private ProductCategory category;
+
+    public Product(@NonNull String productName, double price, String description, long stock, @NonNull ProductCategory category) {
+        this.productName = productName;
+        this.price = price;
+        this.description = description;
+        this.stock = stock;
+        this.category = category;
+    }
 }

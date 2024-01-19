@@ -16,7 +16,9 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
     boolean existsByProductName(@NonNull String productName);
-    Optional<Product> findById(Long aLong);
+    boolean existsByProductId(long id);
+
+    Optional<Product> findByProductId(Long aLong);
     List<Product> findProductByPriceBetween(double priceMin, double priceMax);
     List<Product> findAllByPrice(double price, Pageable pageable);
     List<Product> findProductByAddedAtDateBetween(LocalDateTime addedAtDate, LocalDateTime addedAtDate2);
@@ -30,6 +32,4 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     void deleteAll();
     void deleteByProductId(long id);
     void deleteByProductNameIgnoreCase(String name);
-
-
 }
