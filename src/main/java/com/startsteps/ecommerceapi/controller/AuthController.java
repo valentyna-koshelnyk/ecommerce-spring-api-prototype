@@ -1,7 +1,6 @@
 package com.startsteps.ecommerceapi.controller;
 
 import com.startsteps.ecommerceapi.service.EcomUserDetailService;
-import com.startsteps.ecommerceapi.exceptions.UserAlreadyExistsException;
 import com.startsteps.ecommerceapi.model.User;
 import com.startsteps.ecommerceapi.payload.request.LoginRequest;
 import com.startsteps.ecommerceapi.payload.request.SignupRequest;
@@ -12,7 +11,6 @@ import com.startsteps.ecommerceapi.payload.response.MessageResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,22 +38,16 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        try {
             User registeredUser = userService.registerUser(signUpRequest);
             return ResponseEntity.ok(new MessageResponse("User registered successfully! UserID: " + registeredUser.getUserId()));
-        } catch (UserAlreadyExistsException e) {
-            return ResponseEntity.badRequest().body(new MessageResponse("User already exists"));
-        }
     }
+
     @PostMapping("/registerAdmin")
     public ResponseEntity<?> registerAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
-        try {
-            User registeredAdmin = userService.registerAdmin(signUpRequest);
+            User registeredAdmin = userService.registerUser(signUpRequest);
             return ResponseEntity.ok(new MessageResponse("Admin registered successfully! UserID: " + registeredAdmin.getUserId()));
-        } catch (UserAlreadyExistsException e) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Admin already exists"));
-        }
     }
+
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
