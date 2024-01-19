@@ -21,7 +21,7 @@ import java.util.*;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 /**
- * service layer class for serving "api/users" endpoints
+ * service layer class for serving "api/auth" endpoints
  */
 
 @Service
@@ -78,6 +78,8 @@ public class UserServiceImpl implements UserService {
         User newUser = new User(user.getUsername(),user.getEmail(), passwordEncoder.encode(user.getPassword())
                 , false, true);
         newUser.setUserRoles(UserRoles.ROLE_ADMIN);
+               , false, true);
+        newUser.setUserRoles(UserRoles.user);
         return userRepository.save(newUser);
     }
 

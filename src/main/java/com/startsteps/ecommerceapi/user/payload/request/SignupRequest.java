@@ -9,6 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class SignupRequest {
 
     @NotNull(message = "Username cannot be null")
