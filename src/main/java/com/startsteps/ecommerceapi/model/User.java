@@ -58,8 +58,7 @@ public class User{
    @Column(name = "Pending")
    Boolean pending;
    
-   public User(@NonNull Long userId, @NonNull String username, @NonNull String email, @NonNull String password,  @NonNull Boolean approved, @NonNull Boolean pending) {
-      this.userId = userId;
+   public User(@NonNull String username, @NonNull String email, @NonNull String password,  @NonNull Boolean approved, @NonNull Boolean pending) {
       this.username = username;
       this.email = email;
       this.password = password;

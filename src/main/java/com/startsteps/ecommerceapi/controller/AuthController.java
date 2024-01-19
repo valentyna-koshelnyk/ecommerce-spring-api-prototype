@@ -12,7 +12,6 @@ import com.startsteps.ecommerceapi.payload.response.MessageResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,6 +32,7 @@ public class AuthController {
 
     @Autowired
     AuthenticationManager authenticationManager;
+
     @Autowired
     public AuthController(UserServiceImpl userService) {
         this.userService = userService;
@@ -47,8 +47,8 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("User already exists"));
         }
     }
+
     @PostMapping("/registerAdmin")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> registerAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
         try {
             User registeredAdmin = userService.registerAdmin(signUpRequest);

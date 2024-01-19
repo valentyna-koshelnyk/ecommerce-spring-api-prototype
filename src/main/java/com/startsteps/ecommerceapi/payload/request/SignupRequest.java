@@ -10,7 +10,6 @@ import java.util.Set;
 @Getter
 @Setter
 public class SignupRequest {
-    private Long userId;
 
     @NotNull(message = "Username cannot be null")
     @NotEmpty(message = "Username cannot be empty")
@@ -31,7 +30,6 @@ public class SignupRequest {
     @NotEmpty(message = "Matching password cannot be empty")
     private String matchingPassword;
 
-    private Set<String> role;
 }
   
 
