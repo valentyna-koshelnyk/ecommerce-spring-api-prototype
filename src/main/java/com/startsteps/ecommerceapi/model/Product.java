@@ -15,25 +15,26 @@ import java.time.LocalDateTime;
 @Table(name="Product")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="Product_ID")
     private Long productId;
     @NonNull
-    @Column(name= "Product_Name")
+    @Column(name= "Product_Name", length = 255)
     private String productName;
-    @NotEmpty
+    @NonNull
     @Column(name = "Price")
     private double price;
-    @Column(name = "Description")
+    @Column(name = "Description", length = 255)
     private String description;
-    @NotEmpty
+    @NonNull
     @Column(name = "Stock")
     private long stock;
     @CreationTimestamp
     @Column(name = "Add_Date", nullable = false, updatable = false)
     LocalDateTime addedAtDate;
     @NonNull
-    @Column(name = "Product_Category")
+    @Column(name = "Product_Category", length = 255)
+    @Enumerated(EnumType.STRING)
     private ProductCategory category;
 
     public Product(@NonNull String productName, double price, String description, long stock, @NonNull ProductCategory category) {
