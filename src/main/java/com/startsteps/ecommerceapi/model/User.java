@@ -1,19 +1,23 @@
 package com.startsteps.ecommerceapi.model;
 
-import com.startsteps.ecommerceapi.utils.Default;
+import io.swagger.annotations.ApiModel;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+@ApiModel
 @Table(name = "user")
+@Component
 public class User{
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
