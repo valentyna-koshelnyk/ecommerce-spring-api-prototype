@@ -16,14 +16,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 /**
- * service layer class for serving "api/users" endpoints
+ * service layer class for serving "api/auth/" endpoints
  */
 
+// TODO: implement endpoints for all the mentioned methods (excepts ones used for functional decomposition purposes)
 @Service
 @Slf4j
 @Transactional
@@ -55,6 +57,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(SignupRequest user) {
+        User newUser = createUser(user);
+        newUser.setUserRoles(UserRoles.ROLE_USER);
+        return userRepository.save(newUser);
+    }
+    @Override
+    public User registerAdmin(SignupRequest user) {
+        User newUser = createUser(user);
+        newUser.setUserRoles(UserRoles.ROLE_ADMIN);
+        return userRepository.save(newUser);
+    }
+
+    public User createUser(SignupRequest user){
         if(userRepository.existsByEmail(user.getEmail())){
             throw new UserAlreadyExistsException("This email " + user.getEmail() + " already exists");
         }
@@ -62,23 +76,9 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException("This username " + user.getUsername() + " is already used");
         }
         User newUser = new User(user.getUsername(),user.getEmail(), passwordEncoder.encode(user.getPassword())
-               , false, true);
-        newUser.setUserRoles(UserRoles.user);
-        return userRepository.save(newUser);
-    }
-
-    @Override
-    public User registerAdmin(SignupRequest user) {
-        if(userRepository.existsByEmail(user.getEmail())){
-            throw new UserAlreadyExistsException("This email " + user.getEmail() + " already exists");
-        }
-        else if(userRepository.existsByUsername(user.getUsername())){
-            throw new UserAlreadyExistsException("This username " + user.getUsername() + " is already used");
-        }
-        User newUser = new User((user.getUserId()), user.getUsername(),user.getEmail(), passwordEncoder.encode(user.getPassword())
                 , false, true);
-        newUser.setUserRoles(UserRoles.admin);
-        return userRepository.save(newUser);
+        newUser.setRegistrationDate(LocalDateTime.now());
+        return newUser;
     }
 
     @Override
@@ -106,20 +106,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean changePassword(PasswordResetToken token, String newPassword){
-       PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token)
-               .orElseThrow(() -> new NoSuchElementException("Token not found: " + token));
-       if(isTokenExpired(token)){
-           log.error("Token has been expired. Try again");
-           return false;
-       }
-       User user = passwordResetToken.getUser();
-       user.setPassword(passwordEncoder.encode(newPassword));
-       userRepository.save(user);
-       passwordResetTokenRepository.delete(passwordResetToken);
-       return true;
-   }
-
-
+        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token)
+                .orElseThrow(() -> new NoSuchElementException("Token not found: " + token));
+        if(isTokenExpired(token)){
+            log.error("Token has been expired. Try again");
+            return false;
+        }
+        User user = passwordResetToken.getUser();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        passwordResetTokenRepository.delete(passwordResetToken);
+        return true;
+    }
 
     @Override
     public Optional<PasswordResetToken> getPasswordResetToken(final PasswordResetToken token) {
@@ -130,9 +128,8 @@ public class UserServiceImpl implements UserService {
         Instant now = Instant.now();
         long diff = MINUTES.between(createdDate, now);
         return diff >= PASS_THRESHOLD;
-        }
 
-
+    }
 
     private String generateResetToken() {
         return UUID.randomUUID().toString();
