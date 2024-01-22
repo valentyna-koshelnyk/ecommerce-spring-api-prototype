@@ -1,14 +1,12 @@
 package com.startsteps.ecommerceapi.service;
 
 import com.startsteps.ecommerceapi.exceptions.ProductAlreadyExistsException;
-import com.startsteps.ecommerceapi.exceptions.ProductNotFoundException;
 import com.startsteps.ecommerceapi.model.Product;
 import com.startsteps.ecommerceapi.persistence.ProductRepository;
 import com.startsteps.ecommerceapi.service.dto.ProductDTO;
 import jakarta.transaction.Transactional;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -16,28 +14,23 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+import java.util.Optional;
 @Slf4j
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService{
-@Autowired
-    public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
-    private final ProductRepository productRepository;
+    ProductRepository productRepository;
 
     @Override
     public Product addProduct(ProductDTO product) {
-        if (productRepository.existsByProductName(product.getProductName())){
-            throw new ProductAlreadyExistsException("The product with the name \"" + product.getProductName() +
-                    "\" already exists");
-        }
+       if (productRepository.existsByProductName(product.getProductName())){
+           throw new ProductAlreadyExistsException("The product with the name \"" + product.getProductName() +
+                   "\" already exists");
+       }
         Product newProduct = new Product(product.getProductName(), product.getPrice(), product.getDescription(),
-                product.getStock(), product.getProductCategory());
-        newProduct.setAddedAtDate(LocalDateTime.now());
-        return productRepository.save(newProduct);
+                 product.getStock(), product.getProductCategory());
+       return productRepository.save(newProduct);
     }
 
     @Override
@@ -47,71 +40,38 @@ public class ProductServiceImpl implements ProductService{
                     "The minimum price must be less than the maximum price.");
         }
         if(priceMax < 0 || priceMin < 0){
-            throw new IllegalArgumentException("Price cannot be negative. But you can check our charity project ;)");
+            throw new IllegalArgumentException("Price cannot be negative. But you can check our charity project :)");
         }
         return productRepository.findProductByPriceBetween(priceMin, priceMax);
     }
 
     @Override
-    public Page<Product> findAll(Pageable pageable){
-        return productRepository.findAll(pageable);
-    };
-
-    @Override
-    public Page<Product> findProductByProductNameContainingIgnoreCase(String name, Pageable paging){
-        return productRepository.findProductByProductNameContainingIgnoreCase(name, paging);
-   };
-
-    @Override
-    public Page<Product> findProductsWithSorting(int offset, int pageSize, String field){
-        Page<Product> products =  productRepository.findAll(PageRequest.of(offset, pageSize)
-                .withSort(Sort.by(field)));
-        return products;
-
-    }
-
-
+    public List<Product> findAllSortedByPrice(double price, Pageable pageable) {
+        Pageable sortedByPriceDesc = PageRequest.of(0,3, Sort.by("price").descending());
+    return (List<Product>) sortedByPriceDesc;} // todo: update the method
 
     @Override
     public void deleteProductById(long id) {
-        productRepository.deleteByProductId(id);
-        log.info("Product with id " + id + " was deleted");
+
     }
 
     @Override
     public void deleteByProductByName(String name) {
-        productRepository.deleteByProductNameIgnoreCase(name);
+
     }
 
     @Override
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public List<Product> findAllSortedByDate() {
+        return null;
     }
 
     @Override
     public void deleteAllByAddedAtDate(LocalDateTime date) {
-         productRepository.deleteAllByAddedAtDate(date);
+
     }
 
     @Override
-    public Product updateProductByPrice(long id, double price) {
-        if(!productRepository.existsByProductId(id)){
-            throw new ProductNotFoundException("Product with the id: " + id + " not found");
-        }
-        Product product = productRepository.findByProductId(id).orElseThrow(() ->
-                new ProductNotFoundException("Product with the id " + id + " not found"));
-        product.setPrice(price);
-        return product;
+    public Optional<Product> updateProductByPrice(long id, double price) {
+        return Optional.empty();
     }
-
-    @Override
-    public Product findByProductId(Long id){
-        if(!productRepository.existsByProductId(id)){
-            throw new ProductNotFoundException("Product with the id: " + id + " not found");
-        }
-           Product product = productRepository.findByProductId(id).orElseThrow(() ->
-                    new ProductNotFoundException("Product with the id " + id + " not found"));
-        return product;
-    }
-
 }

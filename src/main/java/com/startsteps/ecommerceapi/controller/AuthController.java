@@ -31,6 +31,7 @@ public class AuthController {
 
     @Autowired
     AuthenticationManager authenticationManager;
+
     @Autowired
     public AuthController(UserServiceImpl userService) {
         this.userService = userService;

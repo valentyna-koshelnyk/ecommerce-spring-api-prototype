@@ -106,18 +106,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean changePassword(PasswordResetToken token, String newPassword){
-        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token)
-                .orElseThrow(() -> new NoSuchElementException("Token not found: " + token));
-        if(isTokenExpired(token)){
-            log.error("Token has been expired. Try again");
-            return false;
-        }
-        User user = passwordResetToken.getUser();
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
-        passwordResetTokenRepository.delete(passwordResetToken);
-        return true;
-    }
+       PasswordResetToken passwordResetToken = passwordResetTokenRepository.findByToken(token)
+               .orElseThrow(() -> new NoSuchElementException("Token not found: " + token));
+       if(isTokenExpired(token)){
+           log.error("Token has been expired. Try again");
+           return false;
+       }
+       User user = passwordResetToken.getUser();
+       user.setPassword(passwordEncoder.encode(newPassword));
+       userRepository.save(user);
+       passwordResetTokenRepository.delete(passwordResetToken);
+       return true;
+   }
 
     @Override
     public Optional<PasswordResetToken> getPasswordResetToken(final PasswordResetToken token) {

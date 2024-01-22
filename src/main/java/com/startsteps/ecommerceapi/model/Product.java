@@ -9,33 +9,36 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name="Product")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="Product_ID")
     private Long productId;
     @NonNull
-    @Column(name= "Product_Name", length = 255)
+    @Column(name= "Product_Name")
     private String productName;
-    @NonNull
+    @NotEmpty
     @Column(name = "Price")
     private double price;
-    @Column(name = "Description", length = 255)
+    @Column(name = "Description")
     private String description;
-    @NonNull
+    @NotEmpty
     @Column(name = "Stock")
     private long stock;
     @CreationTimestamp
     @Column(name = "Add_Date", nullable = false, updatable = false)
     LocalDateTime addedAtDate;
+
     @NonNull
-    @Column(name = "Product_Category", length = 255)
-    @Enumerated(EnumType.STRING)
+    @Column(name = "Product_Category")
+    @Enumerated
     private ProductCategory category;
+
 
     public Product(@NonNull String productName, double price, String description, long stock, @NonNull ProductCategory category) {
         this.productName = productName;
