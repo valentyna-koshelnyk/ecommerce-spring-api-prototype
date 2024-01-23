@@ -109,15 +109,5 @@ public class JwtUtil {
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
     }
-//    public String generateTokenFromUsername(String username) {
-//        Claims claims = Jwts.claims().setSubject(user.getUsername());
-//        claims.put("userId", u.getId() + "");
-//        claims.put("role", u.getRole());
-//        return Jwts.builder()
-//                .setClaims(claims)
-//                .setIssuedAt(new Date())
-//                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-//                .signWith(key(), SignatureAlgorithm.HS256)
-//                .compact();
-//    }
+
 }
