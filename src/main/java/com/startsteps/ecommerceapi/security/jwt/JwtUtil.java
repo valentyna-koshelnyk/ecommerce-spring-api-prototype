@@ -2,14 +2,22 @@ package com.startsteps.ecommerceapi.security.jwt;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.startsteps.ecommerceapi.service.EcomUserAdapter;
+import com.startsteps.ecommerceapi.model.User;
+import com.startsteps.ecommerceapi.persistence.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
@@ -24,11 +32,16 @@ public class JwtUtil {
     @Value("${ecom.jwt.key}")
     private String jwtSecret;
 
-    @Value("${ecom.jwt.expiresIn}")
+    @Value("${ecom.jwt.jwtExpirationMs}")
     private int jwtExpirationMs;
 
     @Value("${ecom.jwt.jwtCookie}")
     private String jwtCookie;
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     public String getJwtFromCookies(HttpServletRequest request) {
         Cookie cookie = WebUtils.getCookie(request, jwtCookie);
@@ -39,7 +52,7 @@ public class JwtUtil {
         }
     }
 
-    public ResponseCookie generateJwtCookie(EcomUserAdapter userPrincipal) {
+    public ResponseCookie generateJwtCookie(UserDetails userPrincipal) {
         String jwt = generateTokenFromUsername(userPrincipal.getUsername());
         ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
         return cookie;
@@ -76,12 +89,35 @@ public class JwtUtil {
         return false;
     }
 
+    public String getUserRoleByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
+
+        return user.getUserRoles().name();
+    }
     public String generateTokenFromUsername(String username) {
+        String role = getUserRoleByUsername(username);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role);
+
         return Jwts.builder()
+                .setClaims(claims) // Set the custom claims
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
     }
+//    public String generateTokenFromUsername(String username) {
+//        Claims claims = Jwts.claims().setSubject(user.getUsername());
+//        claims.put("userId", u.getId() + "");
+//        claims.put("role", u.getRole());
+//        return Jwts.builder()
+//                .setClaims(claims)
+//                .setIssuedAt(new Date())
+//                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+//                .signWith(key(), SignatureAlgorithm.HS256)
+//                .compact();
+//    }
 }
