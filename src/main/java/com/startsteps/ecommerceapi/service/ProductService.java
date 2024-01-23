@@ -5,5 +5,4 @@ import org.springframework.data.domain.PageRequest;
 
 public interface ProductService {
     ProductResponse findAllProducts(PageRequest pageable);
-
 }

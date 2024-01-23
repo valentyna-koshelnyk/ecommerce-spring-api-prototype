@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -32,9 +33,12 @@ public class Product {
     @CreationTimestamp
     @Column(name = "Add_Date", nullable = false, updatable = false)
     LocalDateTime addedAtDate;
+
     @NonNull
     @Column(name = "Product_Category")
+    @Enumerated
     private ProductCategory category;
+
 
     public Product(@NonNull String productName, double price, String description, long stock, @NonNull ProductCategory category) {
         this.productName = productName;

@@ -2,7 +2,7 @@ package com.startsteps.ecommerceapi.security;
 
 import com.startsteps.ecommerceapi.security.jwt.AuthEntryPointJwt;
 import com.startsteps.ecommerceapi.security.jwt.AuthTokenFilter;
-import com.startsteps.ecommerceapi.service.EcomUserDetailService;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 //import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 //import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -26,18 +28,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class EcomSecurityConfiguration {
 
     private static final String[] AUTH_WHITELIST = {
-            "/authenticate",
             "/swagger-resources/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/api/v1/app/user/auth/",
             "/api/auth/signin/**",
-            "swagger-resources/**", "/webjars/"
+            "/api/auth/register/**",
+            "/webjars/",
+            "/api/v1/products"
     };
 
 
-    @Autowired
-    EcomUserDetailService userDetailsService;
+    @Resource
+    UserDetailsService userDetailsService;
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
@@ -73,12 +75,9 @@ public class EcomSecurityConfiguration {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/**").permitAll()
-                                .requestMatchers("/api/**").permitAll()
-                                .requestMatchers("register/**").permitAll()
-                                .requestMatchers("/auth").permitAll()
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/user/**").hasRole("USER")
+                        auth
+                                .requestMatchers("/api/auth/registerAdmin").hasAnyAuthority("ROLE_ADMIN")
+                                .requestMatchers("/api/v1/products/admin").hasAnyAuthority("ROLE_ADMIN")
                                 .requestMatchers(AUTH_WHITELIST).permitAll()
                                 .anyRequest().authenticated()
                 );

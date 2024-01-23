@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDTO {
+    private long productId;
     private String productName;
     private double price;
     private String description;
@@ -18,7 +19,8 @@ public class ProductDTO {
     private ProductCategory productCategory;
     private LocalDateTime createdDate;
 
-    public ProductDTO(String productName, double price, String description, long stock, ProductCategory productCategory) {
+    public ProductDTO(long productId, String productName, double price, String description, long stock, ProductCategory productCategory) {
+        this.productId = productId;
         this.productName = productName;
         this.price = price;
         this.description = description;

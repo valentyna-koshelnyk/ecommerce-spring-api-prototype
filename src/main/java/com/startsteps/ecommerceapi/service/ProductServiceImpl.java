@@ -1,28 +1,31 @@
 package com.startsteps.ecommerceapi.service;
 
 import com.startsteps.ecommerceapi.payload.response.ProductResponse;
+import com.startsteps.ecommerceapi.model.Product;
 import com.startsteps.ecommerceapi.persistence.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @Transactional
-public class ProductServiceImpl{
+public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
+    
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
+    
+    @Override
     public ProductResponse findAllProducts(PageRequest pageable) {
         var productsPage= this.productRepository.findAll(pageable);
         return buildResponse(productsPage);
     }
+    
     private ProductResponse buildResponse(Page productsPage){
         return ProductResponse.builder()
                 .pageNumber(productsPage.getNumber() + 1)
@@ -32,5 +35,5 @@ public class ProductServiceImpl{
                 .products(productsPage.toList())
                 .isLastPage(productsPage.isLast())
                 .build();
-    }
+           }
 }

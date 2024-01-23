@@ -45,7 +45,7 @@ public class ProductController {
     ) {
         var pageRequestData = PageRequest.of(pageNumber - 1, size, Sort.Direction.valueOf(direction), sort);
         return new ResponseEntity<>(productService.findAllProducts(pageRequestData), HttpStatus.PARTIAL_CONTENT);
-    }
+
 }
 
 
