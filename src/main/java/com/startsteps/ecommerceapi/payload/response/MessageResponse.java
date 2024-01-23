@@ -9,5 +9,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MessageResponse {
     private String message;
+    private String jwt;
 
+    public MessageResponse(String message) {
+        this.message = message;
+    }
 }

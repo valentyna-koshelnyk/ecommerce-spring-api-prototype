@@ -14,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +44,7 @@ public class ProductController {
         Pageable paging = PageRequest.of(page, size);
         Page<Product> pageProducts;
         if (name == null || name.isBlank()) {
-            pageProducts = productService.findAll(paging);
+            pageProducts = (Page<Product>) productService.findAllSortedByPrice(paging);
         } else {
             pageProducts = productService.findProductByProductNameContainingIgnoreCase(name.trim(), paging);
         }
@@ -64,7 +62,7 @@ public class ProductController {
     public ResponseEntity<?> getAllProductsSortedByField(@PathVariable int offset,
                                                         @PathVariable int pageSize,
                                                         @PathVariable String field){
-        Page<Product> products = productService.findProductsWithSorting(offset, pageSize, field);
+        Page<Product> products = productService.fin(offset, pageSize, field);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
     @PostMapping("/admin/add")

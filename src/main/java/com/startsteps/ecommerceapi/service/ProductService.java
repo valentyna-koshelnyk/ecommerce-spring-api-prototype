@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface ProductService {
     Product addProduct(ProductDTO product);
     List<Product> findProductInPriceRange(double priceMin, double priceMax);
-    List<Product> findAllSortedByPrice(double price, Pageable pageable);
+    List<Product> findAllSortedByPrice(Pageable pageable);
     void deleteProductById(long id);
     void deleteByProductByName(String name);
     List<Product> findAllSortedByDate();

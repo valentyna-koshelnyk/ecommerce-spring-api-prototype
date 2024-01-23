@@ -1,31 +1,37 @@
 package com.startsteps.ecommerceapi.controller;
 
-import com.startsteps.ecommerceapi.service.EcomUserDetailService;
 import com.startsteps.ecommerceapi.model.User;
 import com.startsteps.ecommerceapi.payload.request.LoginRequest;
 import com.startsteps.ecommerceapi.payload.request.SignupRequest;
+import com.startsteps.ecommerceapi.payload.response.UserInfoResponse;
 import com.startsteps.ecommerceapi.security.jwt.JwtUtil;
-import com.startsteps.ecommerceapi.service.EcomUserAdapter;
+import com.startsteps.ecommerceapi.service.UserDetailsImpl;
+import com.startsteps.ecommerceapi.service.UserDetailsServiceImpl;
 import com.startsteps.ecommerceapi.service.UserServiceImpl;
 import com.startsteps.ecommerceapi.payload.response.MessageResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
     private final UserServiceImpl userService;
     @Autowired
-    private EcomUserDetailService userDetailsService;
-    @Autowired
-    private EcomUserAdapter userDetails;
+    private UserDetailsService userDetailsService;
+    private UserDetails userDetails;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -53,16 +59,23 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        ResponseCookie jwtCookie = jwtUtil.generateJwtCookie(userDetails);
         final String jwt = jwtUtil.generateTokenFromUsername(userDetails.getUsername());
-        return ResponseEntity.ok(new MessageResponse("User logged in successfully"));
+        System.out.println("JWT Token: " + jwt);
+
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                .body(new UserInfoResponse(userDetails.getId(),
+                        userDetails.getUsername(),
+                        userDetails.getEmail(),
+                        roles));
     }
 
     @GetMapping("/checkUser")
