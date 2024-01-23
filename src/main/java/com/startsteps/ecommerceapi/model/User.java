@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -58,7 +60,7 @@ public class User{
    @Column(name = "Pending")
    Boolean pending;
    
-   public User(@NonNull String username, @NonNull String email, @NonNull String password,  @NonNull Boolean approved, @NonNull Boolean pending) {
+   public User(@NonNull String username, @NonNull String email, @NonNull String password, @NonNull Boolean approved, Boolean pending) {
       this.username = username;
       this.email = email;
       this.password = password;

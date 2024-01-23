@@ -46,14 +46,14 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> findAllSortedByPrice(double price, Pageable pageable) {
+    public List<Product> findAllSortedByPrice(Pageable pageable) {
         Pageable sortedByPriceDesc = PageRequest.of(0,3, Sort.by("price").descending());
     return (List<Product>) sortedByPriceDesc;} // todo: update the method
 
     @Override
     public void deleteProductById(long id) {
-
     }
+    public Product findProductByProductNameContainingIgnoreCase()
 
     @Override
     public void deleteByProductByName(String name) {
