@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 /** for arrays use pagination
  * for identifiers use strings
@@ -53,6 +54,12 @@ public class ProductController {
     ) {
         var pageRequestData = PageRequest.of(pageNumber - 1, size, Sort.Direction.valueOf(direction), sort);
         return new ResponseEntity<>(productService.findAllAvailableProducts(pageRequestData), HttpStatus.PARTIAL_CONTENT);
+    }
+
+    @GetMapping("/search/{productName}")
+    public ResponseEntity<?> searchProduct(@PathVariable String productName) {
+       Optional<Product> product = productService.findProductByName(productName);
+        return ResponseEntity.ok(new MessageResponse("Product found: " + product.toString()));
     }
 
     @PostMapping("/admin/add")
