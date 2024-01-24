@@ -10,4 +10,6 @@ public interface ProductService {
     ProductResponse findAllProducts(PageRequest pageable);
     Product addProduct(ProductDTO productDTO);
     void deleteProductByCriteria(SearchCriteria searchCriteria);
+
+    void updateProductByCriteria(SearchCriteria searchCriteria, ProductDTO product);
 }
