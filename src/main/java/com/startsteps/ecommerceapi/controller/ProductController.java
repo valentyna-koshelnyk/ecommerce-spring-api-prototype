@@ -55,7 +55,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/admin/delete")
-    public ResponseEntity<String> deleteUserByCriteria(
+    public ResponseEntity<String> deleteProductByCriteria(
             @RequestParam String field,
             @RequestParam String operator,
             @RequestParam String value) {
