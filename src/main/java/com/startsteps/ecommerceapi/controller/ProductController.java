@@ -32,7 +32,8 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/all")
+    //to fetch ALL products even if stock = 0 (availble for admin only)
+    @GetMapping("/admin/all")
     public ResponseEntity<?> fetchAllProducts(
             @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size,
@@ -42,6 +43,18 @@ public class ProductController {
         var pageRequestData = PageRequest.of(pageNumber - 1, size, Sort.Direction.valueOf(direction), sort);
         return new ResponseEntity<>(productService.findAllProducts(pageRequestData), HttpStatus.PARTIAL_CONTENT);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> fetchAllAvailableProducts(
+            @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size,
+            @RequestParam(name = "sort", required = false, defaultValue = "productName") String sort,
+            @RequestParam(name = "direction", required = false, defaultValue = "ASC") String direction
+    ) {
+        var pageRequestData = PageRequest.of(pageNumber - 1, size, Sort.Direction.valueOf(direction), sort);
+        return new ResponseEntity<>(productService.findAllAvailableProducts(pageRequestData), HttpStatus.PARTIAL_CONTENT);
+    }
+
     @PostMapping("/admin/add")
     public ResponseEntity<?> addProduct(@Valid @RequestBody ProductDTO productDTO) {
         Product product = productService.addProduct(productDTO);
@@ -84,6 +97,8 @@ public class ProductController {
         String criteriaString = searchCriteria.toString();
         return ResponseEntity.ok("Product matching criteria " + criteriaString + " has been updated.");
     }
+
+
 }
 
 

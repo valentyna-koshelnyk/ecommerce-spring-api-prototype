@@ -35,6 +35,13 @@ public class ProductServiceImpl implements ProductService{
         var productsPage= this.productRepository.findAll(pageable);
         return buildResponse(productsPage);
     }
+
+    @Override
+    public ProductResponse findAllAvailableProducts(PageRequest pageable) {
+        var productsPage = this.productRepository.findAllByStockGreaterThanEqual(1, pageable);
+        return buildResponse(productsPage);
+    }
+
     private ProductResponse buildResponse(Page productsPage){
         return ProductResponse.builder()
                 .pageNumber(productsPage.getNumber() + 1)
@@ -76,10 +83,10 @@ public class ProductServiceImpl implements ProductService{
             if (product.getDescription() != null) {
                 product1.setDescription(product.getDescription());
             }
-            if (product.getPrice() != 0) {
+            if (product.getPrice() > 0) {
                 product1.setPrice(product.getPrice());
             }
-            if (product.getStock() != 0) {
+            if (product.getStock() > 0) {
                 product1.setPrice(product.getPrice());
             }
             if (product.getProductCategory() != null) {

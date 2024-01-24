@@ -8,6 +8,9 @@ import org.springframework.data.domain.PageRequest;
 
 public interface ProductService {
     ProductResponse findAllProducts(PageRequest pageable);
+
+    ProductResponse findAllAvailableProducts(PageRequest pageable);
+
     Product addProduct(ProductDTO productDTO);
     void deleteProductByCriteria(SearchCriteria searchCriteria);
 
