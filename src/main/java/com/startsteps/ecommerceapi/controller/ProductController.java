@@ -2,6 +2,7 @@ package com.startsteps.ecommerceapi.controller;
 
 import com.startsteps.ecommerceapi.exceptions.ProductNotFoundException;
 import com.startsteps.ecommerceapi.model.Product;
+import com.startsteps.ecommerceapi.payload.request.SearchCriteria;
 import com.startsteps.ecommerceapi.payload.response.MessageResponse;
 import com.startsteps.ecommerceapi.service.ProductServiceImpl;
 import com.startsteps.ecommerceapi.service.dto.ProductDTO;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
@@ -45,8 +47,35 @@ public class ProductController {
     ) {
         var pageRequestData = PageRequest.of(pageNumber - 1, size, Sort.Direction.valueOf(direction), sort);
         return new ResponseEntity<>(productService.findAllProducts(pageRequestData), HttpStatus.PARTIAL_CONTENT);
+    }
+    @PostMapping("/admin/add")
+    public ResponseEntity<?> addProduct(@Valid @RequestBody ProductDTO productDTO) {
+        Product product = productService.addProduct(productDTO);
+        return ResponseEntity.ok(new MessageResponse("Product added successfully! ProductID: " + product.getProductId()));
+    }
+
+    @DeleteMapping("/admin/delete")
+    public ResponseEntity<String> deleteUserByCriteria(
+            @RequestParam String field,
+            @RequestParam String operator,
+            @RequestParam String value) {
+
+        SearchCriteria searchCriteria = SearchCriteria.builder()
+                .filters(List.of(SearchCriteria.Filter.builder()
+                        .field(field)
+                        .operator(SearchCriteria.Filter.QueryOperator.valueOf(operator))
+                        .value(value)
+                        .build()))
+                .build();
+
+        productService.deleteProductByCriteria(searchCriteria);
+        String criteriaString = searchCriteria.toString();
+        return ResponseEntity.ok("Product matching criteria " + criteriaString + " has been deleted.");
+    }
+
 
 }
+
 
 
 
