@@ -1,6 +1,5 @@
 package com.startsteps.ecommerceapi.controller;
 
-import com.startsteps.ecommerceapi.exceptions.ProductNotFoundException;
 import com.startsteps.ecommerceapi.model.Product;
 import com.startsteps.ecommerceapi.payload.request.SearchCriteria;
 import com.startsteps.ecommerceapi.payload.response.MessageResponse;
@@ -9,17 +8,12 @@ import com.startsteps.ecommerceapi.service.dto.ProductDTO;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /** for arrays use pagination
  * for identifiers use strings
@@ -73,7 +67,23 @@ public class ProductController {
         return ResponseEntity.ok("Product matching criteria " + criteriaString + " has been deleted.");
     }
 
-
+    @PutMapping("/admin/update")
+    public ResponseEntity<String> updateProductByCriteria(
+            @RequestParam String field,
+            @RequestParam String operator,
+            @RequestParam String value,
+            @RequestBody ProductDTO product) {
+        SearchCriteria searchCriteria = SearchCriteria.builder()
+                .filters(List.of(SearchCriteria.Filter.builder()
+                        .field(field)
+                        .operator(SearchCriteria.Filter.QueryOperator.valueOf(operator))
+                        .value(value)
+                        .build()))
+                .build();
+        productService.updateProductByCriteria(searchCriteria, product);
+        String criteriaString = searchCriteria.toString();
+        return ResponseEntity.ok("Product matching criteria " + criteriaString + " has been updated.");
+    }
 }
 
 

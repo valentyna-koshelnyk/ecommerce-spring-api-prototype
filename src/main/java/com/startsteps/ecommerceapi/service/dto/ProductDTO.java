@@ -27,4 +27,20 @@ public class ProductDTO {
         this.stock = stock;
         this.productCategory = productCategory;
     }
+
+    public ProductDTO(String productName) {
+        this.productName = productName;
+    }
+
+    public ProductDTO(double price) {
+        this.price = price;
+    }
+
+    public ProductDTO(ProductCategory productCategory) {
+        this.productCategory = productCategory;
+    }
+
+    public ProductDTO(long stock) {
+        this.stock = stock;
+    }
 }

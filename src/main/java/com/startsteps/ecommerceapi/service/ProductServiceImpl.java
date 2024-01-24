@@ -65,5 +65,27 @@ public class ProductServiceImpl implements ProductService{
         productRepository.deleteAll(productsToDelete);
     }
 
-
+    @Override
+    public void updateProductByCriteria(SearchCriteria searchCriteria, ProductDTO product) {
+        Specification<Product> spec = entitySpecification.specificationBuilder(searchCriteria);
+        List<Product> productsToUpdate = productRepository.findAll(spec);
+        for (Product product1 : productsToUpdate) {
+            if (product.getProductName() != null) {
+                product1.setProductName(product.getProductName());
+            }
+            if (product.getDescription() != null) {
+                product1.setDescription(product.getDescription());
+            }
+            if (product.getPrice() != 0) {
+                product1.setPrice(product.getPrice());
+            }
+            if (product.getStock() != 0) {
+                product1.setPrice(product.getPrice());
+            }
+            if (product.getProductCategory() != null) {
+                product1.setCategory(product.getProductCategory());
+            }
+        }
+        productRepository.saveAll(productsToUpdate);
+    }
 }
