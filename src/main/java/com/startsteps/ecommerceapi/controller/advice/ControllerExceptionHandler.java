@@ -1,9 +1,6 @@
 package com.startsteps.ecommerceapi.controller.advice;
 
-import com.startsteps.ecommerceapi.exceptions.ErrorMessage;
-import com.startsteps.ecommerceapi.exceptions.UnauthorizedException;
-import com.startsteps.ecommerceapi.exceptions.UserAlreadyExistsException;
-import com.startsteps.ecommerceapi.exceptions.UserNotFoundException;
+import com.startsteps.ecommerceapi.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,8 +27,16 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<ErrorMessage> handleUnauthorizedException(UnauthorizedException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(HttpStatus.UNAUTHORIZED.value(), new Date(), ex.getMessage(), request.getDescription(false));
+        ErrorMessage message = new ErrorMessage(HttpStatus.UNAUTHORIZED.value(), new Date(),
+                ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<ErrorMessage>(message, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleProductNotFoundException(ProductNotFoundException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.NO_CONTENT.value(), new Date(),
+                ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<ErrorMessage>(message, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
