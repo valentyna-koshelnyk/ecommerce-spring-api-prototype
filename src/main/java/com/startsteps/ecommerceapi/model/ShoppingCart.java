@@ -1,0 +1,40 @@
+package com.startsteps.ecommerceapi.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Getter
+@Setter
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "ShoppingCart")
+public class ShoppingCart {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CartID")
+    private Long cartId;
+    @OneToOne(mappedBy = "shoppingCart") // One simple cart for one user,
+    private User user;      // for a complex app multiple carts for one user (wishlist, favourite items etc)
+
+    @ManyToMany
+    @JoinTable(
+            name = "cart_product",
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> productList;
+    @Column(name = "Quantity")
+    private Long quantity;
+    @CreationTimestamp
+    @Column(name = "Created_Date", nullable = false, updatable = false)
+    private LocalDateTime cartCreatedAt;
+
+}
