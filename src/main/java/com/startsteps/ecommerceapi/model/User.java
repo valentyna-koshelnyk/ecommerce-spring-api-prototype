@@ -77,4 +77,7 @@ public class User{
       this.password = password;
    }
 
+   public User(@NonNull Long userId) {
+      this.userId = userId;
+   }
 }

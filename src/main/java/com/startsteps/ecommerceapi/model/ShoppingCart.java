@@ -1,10 +1,7 @@
 package com.startsteps.ecommerceapi.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -21,9 +18,10 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CartID")
     private Long cartId;
-    @OneToOne(mappedBy = "shoppingCart") // One simple cart for one user,
-    private User user;      // for a complex app multiple carts for one user (wishlist, favourite items etc)
-
+    // One simple cart for one user, or a complex app multiple carts for one user (wishlist, favourite items etc)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @NonNull
+    private User user;
     @ManyToMany
     @JoinTable(
             name = "cart_product",

@@ -1,8 +1,10 @@
 package com.startsteps.ecommerceapi.service;
 
+import com.startsteps.ecommerceapi.model.ShoppingCart;
 import com.startsteps.ecommerceapi.model.User;
 import com.startsteps.ecommerceapi.model.UserRoles;
 import com.startsteps.ecommerceapi.payload.request.SignupRequest;
+import com.startsteps.ecommerceapi.persistence.ShoppingCartRepository;
 import com.startsteps.ecommerceapi.persistence.UserRepository;
 import com.startsteps.ecommerceapi.persistence.PasswordResetTokenRepository;
 import com.startsteps.ecommerceapi.exceptions.UserAlreadyExistsException;
@@ -31,6 +33,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 @Transactional
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
 
     @Autowired
@@ -39,8 +42,9 @@ public class UserServiceImpl implements UserService {
     final int PASS_THRESHOLD = 30;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordResetTokenRepository passwordResetTokenRepository, EmailService emailService) {
+    public UserServiceImpl(UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, PasswordResetTokenRepository passwordResetTokenRepository, EmailService emailService) {
         this.userRepository = userRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
         this.emailService = emailService;
     }
@@ -59,7 +63,14 @@ public class UserServiceImpl implements UserService {
     public User registerUser(SignupRequest user) {
         User newUser = createUser(user);
         newUser.setUserRoles(UserRoles.ROLE_USER);
-        return userRepository.save(newUser);
+
+        ShoppingCart shoppingCart = new ShoppingCart();
+        userRepository.save(newUser);
+        shoppingCart.setUser(newUser);
+        newUser.setShoppingCart(shoppingCart);
+        shoppingCartRepository.save(shoppingCart);
+
+        return newUser;
     }
     @Override
     public User registerAdmin(SignupRequest user) {
