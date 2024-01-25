@@ -46,20 +46,23 @@ public class User{
 
    @CreationTimestamp
    @Column(name = "Registration_Date", nullable = false, updatable = false)
-   LocalDateTime registrationDate;
+   private LocalDateTime registrationDate;
 
    @UpdateTimestamp
    @Column(name = "Update_Date")
-   LocalDateTime updateDate;
+   private LocalDateTime updateDate;
 
    @NonNull             //TODO: user confirmed email
    @Column(name = "Approved")
-   Boolean approved;
+   private Boolean approved;
 
    @NonNull
    @Column(name = "Pending")
-   Boolean pending;
-   
+   private Boolean pending;
+
+   @OneToOne
+   @JoinColumn(name = "cart_id")
+   private ShoppingCart shoppingCart;
    public User(@NonNull String username, @NonNull String email, @NonNull String password, @NonNull Boolean approved, Boolean pending) {
       this.username = username;
       this.email = email;
@@ -74,4 +77,7 @@ public class User{
       this.password = password;
    }
 
+   public User(@NonNull Long userId) {
+      this.userId = userId;
+   }
 }
