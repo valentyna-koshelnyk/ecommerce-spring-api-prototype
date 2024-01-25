@@ -34,5 +34,7 @@ public class ShoppingCart {
     @CreationTimestamp
     @Column(name = "Created_Date", nullable = false, updatable = false)
     private LocalDateTime cartCreatedAt;
+    @Column(name = "total_price")
+    private double priceTotal;
 
 }
