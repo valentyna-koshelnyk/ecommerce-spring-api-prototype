@@ -15,7 +15,10 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
     boolean existsByProductName(@NonNull String productName);
 
     void deleteProductByProductName(String name);
+    Product findProductByProductId(long productId);
     Page<Product> findAllByStockGreaterThanEqual(int amount, Pageable pageable);
+    Optional<Product> findProductByProductIdAndStockGreaterThanEqual(int amount, Long id);
+
     @Query("SELECT p FROM Product p WHERE LOWER(p.productName) LIKE LOWER(CONCAT('%', :name, '%')) AND p.stock > :stock")
 
     Optional<Product> findByProductNameContainingIgnoreCaseAndStockGreaterThan(@Param("stock") long stock, @Param("name") String name);

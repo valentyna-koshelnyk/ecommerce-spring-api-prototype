@@ -7,6 +7,7 @@ import com.startsteps.ecommerceapi.payload.request.SearchCriteria;
 import com.startsteps.ecommerceapi.payload.response.ProductResponse;
 import com.startsteps.ecommerceapi.persistence.ProductRepository;
 import com.startsteps.ecommerceapi.service.dto.ProductDTO;
+import com.startsteps.ecommerceapi.service.dto.ProductMapper;
 import com.startsteps.ecommerceapi.utils.EntitySpecification;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,8 @@ public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
     private final EntitySpecification<Product> entitySpecification;
-    private final long MIN_STOCK = 1;
+    private ProductMapper productMapper;
+    private final int MIN_STOCK = 1;
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository, EntitySpecification<Product> entitySpecification) {
         this.productRepository = productRepository;
@@ -39,8 +41,18 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    public ProductDTO findAvailableProductById(Long productId) {
+        Product product = productRepository.findProductByProductIdAndStockGreaterThanEqual(MIN_STOCK, productId)
+                .orElseThrow(() -> new ProductNotFoundException("Product with the id " + productId +
+                        " has not been found"));
+        ProductDTO productDTO = productMapper.toDTO(product);
+
+        return productDTO;
+    }
+
+    @Override
     public ProductResponse findAllAvailableProducts(PageRequest pageable) {
-        var productsPage = this.productRepository.findAllByStockGreaterThanEqual(1, pageable);
+        var productsPage = this.productRepository.findAllByStockGreaterThanEqual(MIN_STOCK, pageable);
         return buildResponse(productsPage);
     }
 
@@ -57,14 +69,14 @@ public class ProductServiceImpl implements ProductService{
 
 
     @Override
-    public Product addProduct(ProductDTO product) {
-        if (productRepository.existsByProductName(product.getProductName())){
-            throw new ProductAlreadyExistsException("The product with the name \"" + product.getProductName() +
+    public ProductDTO addProduct(ProductDTO productDTO) {
+        if (productRepository.existsByProductName(productDTO.getProductName())){
+            throw new ProductAlreadyExistsException("The product with the name \"" + productDTO.getProductName() +
                     "\" already exists");
         }
-        Product newProduct = new Product(product.getProductName(), product.getPrice(), product.getDescription(),
-                product.getStock(), product.getProductCategory());
-        return productRepository.save(newProduct);
+        Product product = productMapper.toEntity(productDTO);
+        Product savedProduct = productRepository.save(product);
+        return productDTO;
     }
 
     @Override
@@ -89,7 +101,7 @@ public class ProductServiceImpl implements ProductService{
                 product1.setPrice(product.getPrice());
             }
             if (product.getStock() > 0) {
-                product1.setPrice(product.getPrice());
+                product1.setStock(product.getStock());
             }
             if (product.getProductCategory() != null) {
                 product1.setCategory(product.getProductCategory());
@@ -99,10 +111,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Optional<Product> findProductByName(String productName) {
-        return Optional.ofNullable(productRepository.findByProductNameContainingIgnoreCaseAndStockGreaterThan(MIN_STOCK, productName)
-                .orElseThrow(() -> new ProductNotFoundException("Product with the name " +
-                        productName + " was not found")));
-
+    public Optional<ProductDTO> findProductByName(String productName) {
+        return productRepository.findByProductNameContainingIgnoreCaseAndStockGreaterThan(MIN_STOCK, productName)
+                .map(productMapper::toDTO);
     }
 }

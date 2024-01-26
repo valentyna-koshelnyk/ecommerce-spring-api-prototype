@@ -58,13 +58,13 @@ public class ProductController {
 
     @GetMapping("/search/{productName}")
     public ResponseEntity<?> searchProduct(@PathVariable String productName) {
-       Optional<Product> product = productService.findProductByName(productName);
+       Optional<ProductDTO> product = productService.findProductByName(productName);
         return ResponseEntity.ok(new MessageResponse("Product found: " + product.toString()));
     }
 
     @PostMapping("/admin/add")
     public ResponseEntity<?> addProduct(@Valid @RequestBody ProductDTO productDTO) {
-        Product product = productService.addProduct(productDTO);
+        ProductDTO product = productService.addProduct(productDTO);
         return ResponseEntity.ok(new MessageResponse("Product added successfully! ProductID: " + product.getProductId()));
     }
 
