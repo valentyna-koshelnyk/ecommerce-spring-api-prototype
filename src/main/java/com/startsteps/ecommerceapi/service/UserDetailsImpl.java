@@ -1,21 +1,17 @@
 package com.startsteps.ecommerceapi.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.startsteps.ecommerceapi.model.User;
+import com.startsteps.ecommerceapi.persistence.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-
-import com.startsteps.ecommerceapi.model.User;
-import com.startsteps.ecommerceapi.persistence.UserRepository;
-import com.startsteps.ecommerceapi.service.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;

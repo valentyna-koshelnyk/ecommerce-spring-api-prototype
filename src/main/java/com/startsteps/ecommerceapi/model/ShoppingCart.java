@@ -22,19 +22,14 @@ public class ShoppingCart {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @NonNull
     private User user;
-    @ManyToMany
-    @JoinTable(
-            name = "cart_product",
-            joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> productList;
-    @Column(name = "Quantity")
-    private Long quantity;
+    @OneToMany(mappedBy = "shoppingCart")
+    private List<CartProduct> items;
     @CreationTimestamp
     @Column(name = "Created_Date", nullable = false, updatable = false)
     private LocalDateTime cartCreatedAt;
+
     @Column(name = "total_price")
     private double priceTotal;
+
 
 }
