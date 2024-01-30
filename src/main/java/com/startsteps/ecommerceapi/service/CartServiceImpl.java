@@ -51,7 +51,7 @@ public class CartServiceImpl implements CartService{
             CartProduct cartProduct = cartProductRepository.findCartProductByProductAndShoppingCart(product, cart)
                     .orElseThrow();
             cartProduct.setQuantity(cartProduct.getQuantity() + request.getQuantity());
-            cartProductRepository.save(cartProduct);
+            updateTotalCost(cartProduct, product, request.getQuantity());
 
         } else {
             addCartProduct(product, cart, request.getQuantity());
@@ -73,7 +73,19 @@ public class CartServiceImpl implements CartService{
     @Override
     public void addCartProduct(Product product, ShoppingCart cart, Long quantity){
         CartProduct newCartProduct = new CartProduct(product, cart, quantity);
+        newCartProduct.setTotalCost(calculateProductCost(product, quantity));
         cartProductRepository.save(newCartProduct);
+    }
+
+    public double calculateProductCost(Product product, Long quantity){
+        return product.getPrice() * quantity;
+    }
+
+    public double updateTotalCost(CartProduct cartProduct,
+                                  Product product,
+                                  Long quantity){
+        return cartProduct.getTotalCost() + calculateProductCost(product, quantity);
+
     }
 
     @Override
@@ -82,8 +94,12 @@ public class CartServiceImpl implements CartService{
         Product product = productRepository.findProductByProductId(productId).orElseThrow();
        return cartProductRepository.findCartProductByProductAndShoppingCart(product, shoppingCart)
                 .isPresent();
-
     }
+
+//    public List<CartProduct> viewProductsInCart(Long cartId){
+//
+//
+//    }
     public void clearCart(){
     }
     public void removeProductFromCart(){

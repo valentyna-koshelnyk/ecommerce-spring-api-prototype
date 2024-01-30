@@ -28,6 +28,9 @@ public class CartProduct {
     @Column(name = "quantity")
     private long quantity;
 
+    @Column(name = "total_cost")
+    private double totalCost;
+
     public CartProduct(Product product, ShoppingCart shoppingCart, Long quantity) {
         this.product = product;
         this.shoppingCart = shoppingCart;
