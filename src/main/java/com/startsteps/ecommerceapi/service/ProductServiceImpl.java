@@ -18,7 +18,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -27,7 +26,8 @@ public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
     private final EntitySpecification<Product> entitySpecification;
-    private ProductMapper productMapper;
+    @Autowired
+    private  ProductMapper productMapper;
     private final int MIN_STOCK = 1;
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository, EntitySpecification<Product> entitySpecification) {
@@ -103,16 +103,21 @@ public class ProductServiceImpl implements ProductService{
             if (product.getStock() > 0) {
                 product1.setStock(product.getStock());
             }
-            if (product.getProductCategory() != null) {
-                product1.setCategory(product.getProductCategory());
+            if (product.getCategory() != null) {
+                product1.setCategory(product.getCategory());
             }
         }
         productRepository.saveAll(productsToUpdate);
     }
 
     @Override
-    public Optional<ProductDTO> findProductByName(String productName) {
-        return productRepository.findByProductNameContainingIgnoreCaseAndStockGreaterThan(MIN_STOCK, productName)
-                .map(productMapper::toDTO);
+    public List<Product> findProductByName(String productName) {
+        List<Product> productList = productRepository.findAllByProductNameContainingIgnoreCaseAndStockGreaterThan(MIN_STOCK, productName);
+        if (productList.isEmpty()) {
+            throw new ProductNotFoundException("Product with such name " + productName + " not found");
+        } else {
+            return productList;
+
+        }
     }
 }
