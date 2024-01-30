@@ -1,15 +1,13 @@
 package com.startsteps.ecommerceapi.service;
 
-import com.startsteps.ecommerceapi.model.ShoppingCart;
-import com.startsteps.ecommerceapi.model.User;
-import com.startsteps.ecommerceapi.model.UserRoles;
+import com.startsteps.ecommerceapi.model.*;
 import com.startsteps.ecommerceapi.payload.request.SignupRequest;
+import com.startsteps.ecommerceapi.persistence.CartProductRepository;
 import com.startsteps.ecommerceapi.persistence.ShoppingCartRepository;
 import com.startsteps.ecommerceapi.persistence.UserRepository;
 import com.startsteps.ecommerceapi.persistence.PasswordResetTokenRepository;
 import com.startsteps.ecommerceapi.exceptions.UserAlreadyExistsException;
 import com.startsteps.ecommerceapi.exceptions.UserNotFoundException;
-import com.startsteps.ecommerceapi.model.PasswordResetToken;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ShoppingCartRepository shoppingCartRepository;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
+    private final CartProductRepository cartProductRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -42,10 +41,11 @@ public class UserServiceImpl implements UserService {
     final int PASS_THRESHOLD = 30;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, PasswordResetTokenRepository passwordResetTokenRepository, EmailService emailService) {
+    public UserServiceImpl(UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, PasswordResetTokenRepository passwordResetTokenRepository, CartProductRepository cartProductRepository, EmailService emailService) {
         this.userRepository = userRepository;
         this.shoppingCartRepository = shoppingCartRepository;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
+        this.cartProductRepository = cartProductRepository;
         this.emailService = emailService;
     }
 

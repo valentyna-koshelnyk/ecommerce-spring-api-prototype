@@ -113,9 +113,10 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public List<Product> findProductByName(String productName) {
         List<Product> productList = productRepository.findAllByProductNameContainingIgnoreCaseAndStockGreaterThan(MIN_STOCK, productName);
-        if (productList.isEmpty()) {
+        if(productRepository.findProductByProductNameContainingIgnoreCaseAndStockGreaterThan(MIN_STOCK, productName).isEmpty()){
             throw new ProductNotFoundException("Product with such name " + productName + " not found");
         } else {
+            productList  =  productRepository.findAllByProductNameContainingIgnoreCaseAndStockGreaterThan(MIN_STOCK, productName);
             return productList;
 
         }
