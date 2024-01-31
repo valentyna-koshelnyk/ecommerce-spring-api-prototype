@@ -1,5 +1,6 @@
 package com.startsteps.ecommerceapi.service;
 
+import com.startsteps.ecommerceapi.exceptions.CartIsEmptyException;
 import com.startsteps.ecommerceapi.exceptions.InsufficientStockException;
 import com.startsteps.ecommerceapi.exceptions.ProductNotFoundException;
 import com.startsteps.ecommerceapi.model.CartProduct;
@@ -10,13 +11,13 @@ import com.startsteps.ecommerceapi.persistence.CartProductRepository;
 import com.startsteps.ecommerceapi.persistence.ProductRepository;
 import com.startsteps.ecommerceapi.persistence.ShoppingCartRepository;
 import com.startsteps.ecommerceapi.persistence.UserRepository;
-import com.startsteps.ecommerceapi.service.dto.ProductDTO;
-import com.startsteps.ecommerceapi.service.dto.ProductMapper;
-import com.startsteps.ecommerceapi.service.dto.UserDTO;
+import com.startsteps.ecommerceapi.service.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -26,19 +27,24 @@ public class CartServiceImpl implements CartService{
     private final ShoppingCartRepository shoppingCartRepository;
     private final ProductRepository productRepository;
     private final CartProductRepository cartProductRepository;
+    private final CartProductMapper cartProductMapper;
     private final UserRepository userRepository;
+    private final ShoppingCartMapper shoppingCartMapper;
 
     private ProductDTO product;
     private UserDTO user;
     private ProductServiceImpl productService;
-    private  ProductMapper productMapper;
+    private final    ProductMapper productMapper;
     @Autowired
-    public CartServiceImpl(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CartProductRepository cartProductRepository, UserRepository userRepository, ProductServiceImpl productService, ProductMapper productMapper) {
+    public CartServiceImpl(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CartProductRepository cartProductRepository, CartProductMapper cartProductMapper, UserRepository userRepository, ShoppingCartMapper shoppingCartMapper, ProductServiceImpl productService, ProductMapper productMapper) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.productRepository = productRepository;
         this.cartProductRepository = cartProductRepository;
+        this.cartProductMapper = cartProductMapper;
         this.userRepository = userRepository;
+        this.shoppingCartMapper = shoppingCartMapper;
         this.productService = productService;
+        this.productMapper = productMapper;
     }
    @Override
    public void addProductToCart(ProductAddRequest request) {
@@ -77,10 +83,12 @@ public class CartServiceImpl implements CartService{
         cartProductRepository.save(newCartProduct);
     }
 
+    @Override
     public double calculateProductCost(Product product, Long quantity){
         return product.getPrice() * quantity;
     }
 
+    @Override
     public double updateTotalCost(CartProduct cartProduct,
                                   Product product,
                                   Long quantity){
@@ -95,11 +103,13 @@ public class CartServiceImpl implements CartService{
        return cartProductRepository.findCartProductByProductAndShoppingCart(product, shoppingCart)
                 .isPresent();
     }
+    public List<CartProductDTO> getProductsInCart(Long cartId) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
+                .orElseThrow(() -> new CartIsEmptyException("Shopping cart is empty"));
 
-//    public List<CartProduct> viewProductsInCart(Long cartId){
-//
-//
-//    }
+        List<CartProduct> cartProducts = shoppingCart.getProducts();
+        return cartProductMapper.toDto(cartProducts);
+    }
     public void clearCart(){
     }
     public void removeProductFromCart(){

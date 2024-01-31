@@ -45,7 +45,7 @@ public class ProductServiceImpl implements ProductService{
         Product product = productRepository.findProductByProductIdAndStockGreaterThanEqual(MIN_STOCK, productId)
                 .orElseThrow(() -> new ProductNotFoundException("Product with the id " + productId +
                         " has not been found"));
-        ProductDTO productDTO = productMapper.toDTO(product);
+        ProductDTO productDTO = productMapper.toDto(product);
 
         return productDTO;
     }
@@ -87,9 +87,10 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void updateProductByCriteria(SearchCriteria searchCriteria, ProductDTO product) {
+    public void updateProductByCriteria(SearchCriteria searchCriteria, ProductDTO productDTO) {
         Specification<Product> spec = entitySpecification.specificationBuilder(searchCriteria);
         List<Product> productsToUpdate = productRepository.findAll(spec);
+        Product product = productMapper.toEntity(productDTO);
         for (Product product1 : productsToUpdate) {
             if (product.getProductName() != null) {
                 product1.setProductName(product.getProductName());

@@ -8,7 +8,7 @@ public interface IEntityMapper<D, E> {
 
     E toEntity(D d);
 
-    List<D> toDto(List<E> eList);
+    List<D> toDto(List<E> shoppingCartList);
 
     List<E> toEntity(List<D> dList);
 
