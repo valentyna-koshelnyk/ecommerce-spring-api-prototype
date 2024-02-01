@@ -1,5 +1,6 @@
 package com.startsteps.ecommerceapi.model;
 
+import com.startsteps.ecommerceapi.utils.Default;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@ToString
 @Table(name="cart_product")
 public class CartProduct {
 
@@ -17,7 +19,7 @@ public class CartProduct {
     @Column(name = "cart_product_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
@@ -28,6 +30,12 @@ public class CartProduct {
     @Column(name = "quantity")
     private long quantity;
 
+    @Column(name = "total_cost")
+    private double totalCost;
+
+    @Column(name = "price_per_product")
+    private Double priceProduct;
+    @Default
     public CartProduct(Product product, ShoppingCart shoppingCart, Long quantity) {
         this.product = product;
         this.shoppingCart = shoppingCart;
@@ -37,4 +45,6 @@ public class CartProduct {
     public CartProduct(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
+
+
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ShoppingCart")
+@Table(name = "shopping_cart")
 public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +23,15 @@ public class ShoppingCart {
     @NonNull
     private User user;
     @OneToMany(mappedBy = "shoppingCart")
-    private List<CartProduct> items;
+    private List<CartProduct> products;
     @CreationTimestamp
     @Column(name = "Created_Date", nullable = false, updatable = false)
     private LocalDateTime cartCreatedAt;
 
     @Column(name = "total_price")
-    private double priceTotal;
+    private Double priceTotal;
+
+
 
 
 }

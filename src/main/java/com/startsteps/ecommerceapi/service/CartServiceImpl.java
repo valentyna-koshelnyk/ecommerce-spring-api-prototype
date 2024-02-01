@@ -1,5 +1,6 @@
 package com.startsteps.ecommerceapi.service;
 
+import com.startsteps.ecommerceapi.exceptions.CartIsEmptyException;
 import com.startsteps.ecommerceapi.exceptions.InsufficientStockException;
 import com.startsteps.ecommerceapi.exceptions.ProductNotFoundException;
 import com.startsteps.ecommerceapi.model.CartProduct;
@@ -10,13 +11,13 @@ import com.startsteps.ecommerceapi.persistence.CartProductRepository;
 import com.startsteps.ecommerceapi.persistence.ProductRepository;
 import com.startsteps.ecommerceapi.persistence.ShoppingCartRepository;
 import com.startsteps.ecommerceapi.persistence.UserRepository;
-import com.startsteps.ecommerceapi.service.dto.ProductDTO;
-import com.startsteps.ecommerceapi.service.dto.ProductMapper;
-import com.startsteps.ecommerceapi.service.dto.UserDTO;
+import com.startsteps.ecommerceapi.service.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -26,38 +27,52 @@ public class CartServiceImpl implements CartService{
     private final ShoppingCartRepository shoppingCartRepository;
     private final ProductRepository productRepository;
     private final CartProductRepository cartProductRepository;
+    private final CartProductMapper cartProductMapper;
     private final UserRepository userRepository;
+    private final ShoppingCartMapper shoppingCartMapper;
+    private final Long MIN_STOCK = 1L;
 
     private ProductDTO product;
     private UserDTO user;
     private ProductServiceImpl productService;
-    private  ProductMapper productMapper;
+    private final    ProductMapper productMapper;
     @Autowired
-    public CartServiceImpl(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CartProductRepository cartProductRepository, UserRepository userRepository, ProductServiceImpl productService, ProductMapper productMapper) {
+    public CartServiceImpl(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CartProductRepository cartProductRepository, CartProductMapper cartProductMapper, UserRepository userRepository, ShoppingCartMapper shoppingCartMapper, ProductServiceImpl productService, ProductMapper productMapper) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.productRepository = productRepository;
         this.cartProductRepository = cartProductRepository;
+        this.cartProductMapper = cartProductMapper;
         this.userRepository = userRepository;
+        this.shoppingCartMapper = shoppingCartMapper;
         this.productService = productService;
+        this.productMapper = productMapper;
     }
    @Override
    public void addProductToCart(ProductAddRequest request) {
-       Product product = productRepository.findProductByProductId(request.getProductId())
-               .orElseThrow(() -> new ProductNotFoundException("Product with ID " + request.getProductId() + " not found."));
-       ShoppingCart cart = shoppingCartRepository.findShoppingCartByCartId(request.getCartId());
-        boolean isProductInCart = isProductInUserCart(request.getProductId(), request.getCartId());
+       Product product = productRepository.findProductByProductIdAndStockGreaterThanEqual(
+                       request.getProductId(), MIN_STOCK)
+               .orElseThrow(() -> new ProductNotFoundException(
+                       "Product with ID " + request.getProductId() + " not found."
+               ));
 
-        if (isProductInCart) {
-            CartProduct cartProduct = cartProductRepository.findCartProductByProductAndShoppingCart(product, cart)
-                    .orElseThrow();
-            cartProduct.setQuantity(cartProduct.getQuantity() + request.getQuantity());
-            cartProductRepository.save(cartProduct);
+       ShoppingCart cart = shoppingCartRepository.findById(request.getCartId())
+               .orElseThrow(() -> new CartIsEmptyException("Shopping cart doesn't exist"));
 
-        } else {
-            addCartProduct(product, cart, request.getQuantity());
-        }
-        reduceProductStock(request.getQuantity(), request.getProductId());
-    }
+       if (isProductInUserCart(product, cart)) {
+           CartProduct cartProduct = cartProductRepository.findCartProductByProductAndShoppingCart(product, cart)
+                   .orElseThrow(() -> new CartIsEmptyException("CartProduct could not be fetched from the database"));
+
+           cartProduct.setQuantity(cartProduct.getQuantity() + request.getQuantity());
+           cartProduct.setPriceProduct(calculateProductCost(product, cartProduct.getQuantity()));
+           cartProduct.setTotalCost(updateTotalCost(cart));
+           cartProductRepository.save(cartProduct); // Ensure you save the updated cartProduct
+
+       } else {
+           addNewProductToCart(product, cart, request.getQuantity()); // Pass the Product entity, not DTO
+       }
+
+       reduceProductStock(request.getQuantity(), request.getProductId());
+   }
    @Override
    public void reduceProductStock(Long quantity, Long productId) {
         Product product = productRepository.findProductByProductId(productId)
@@ -70,21 +85,67 @@ public class CartServiceImpl implements CartService{
         product.setStock(product.getStock() - quantity);
         productRepository.save(product);
     }
+
     @Override
-    public void addCartProduct(Product product, ShoppingCart cart, Long quantity){
+    public void increaseStock(Long productId, Long quantity){
+        Product product = productRepository.findProductByProductId(productId).orElseThrow(()->
+                new ProductNotFoundException("Product cannot be returned"));
+        product.setStock(product.getStock() + quantity);
+        productRepository.save(product);
+    }
+    @Override
+    public void addNewProductToCart(Product product, ShoppingCart cart, Long quantity){
         CartProduct newCartProduct = new CartProduct(product, cart, quantity);
+        newCartProduct.setPriceProduct(calculateProductCost(product, quantity));
+        newCartProduct.setTotalCost(newCartProduct.getPriceProduct());
+        cart.setPriceTotal(newCartProduct.getPriceProduct());
         cartProductRepository.save(newCartProduct);
     }
 
     @Override
-    public boolean isProductInUserCart(Long productId, Long userId) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserId(userId);
-        Product product = productRepository.findProductByProductId(productId).orElseThrow();
+    public double calculateProductCost(Product product, Long quantity){
+
+        return product.getPrice() * quantity;
+    }
+
+    @Override
+    public double updateTotalCost(ShoppingCart shoppingCart){
+        List<CartProduct> allProductsPerCart = cartProductRepository.findProductsByShoppingCart(shoppingCart);
+        double totalCost = 0.0;
+        for(CartProduct cp : allProductsPerCart) {
+            totalCost += cp.getPriceProduct();
+        }
+        shoppingCart.setPriceTotal(totalCost);
+        shoppingCartRepository.save(shoppingCart);
+
+        return totalCost;
+    }
+
+
+    @Override
+    public boolean isProductInUserCart(Product product, ShoppingCart shoppingCart) {
        return cartProductRepository.findCartProductByProductAndShoppingCart(product, shoppingCart)
                 .isPresent();
-
     }
-    public void clearCart(){
+    @Override
+    public List<CartProductDTO> getProductsInCart(Long cartId) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
+                .orElseThrow(() -> new CartIsEmptyException("Shopping cart is empty"));
+        List<CartProduct> cartProducts = cartProductRepository.findAllByShoppingCart(shoppingCart);
+        return cartProductMapper.toDto(cartProducts);
+    }
+    public void removeProductFromCart(Long cartId, Long productId){ //removes entire product from the cart
+        Product product = productRepository.findProductByProductId(productId)
+                .orElseThrow(()-> new ProductNotFoundException("There's no product to return"));
+        ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
+                .orElseThrow(() -> new CartIsEmptyException("Shopping cart doesn't exist"));
+        CartProduct cartProduct = cartProductRepository.findCartProductByProductAndShoppingCart(product, shoppingCart)
+                .orElseThrow(() -> new ProductNotFoundException("The product is not present in the car"));
+        Long quantity = cartProduct.getQuantity();
+
+        cartProductRepository.deleteByShoppingCartAndProduct(shoppingCart, product);
+
+        increaseStock(productId,quantity);
     }
     public void removeProductFromCart(){
     }
