@@ -4,11 +4,13 @@ import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
+@RequiredArgsConstructor
 public class CartProductDTO {
     private ProductDTO product;
     private double totalCost;
+    private Double priceProduct;
     private  long quantity;
+    private ShoppingCartDTO shoppingCartDTO;
 }

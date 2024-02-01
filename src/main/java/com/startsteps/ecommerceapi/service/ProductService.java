@@ -20,5 +20,7 @@ public interface ProductService {
 
     void updateProductByCriteria(SearchCriteria searchCriteria, ProductDTO product);
 
+    ProductDTO findProductByProductId(Long productId);
+
     List<Product> findProductByName(String productName);
 }

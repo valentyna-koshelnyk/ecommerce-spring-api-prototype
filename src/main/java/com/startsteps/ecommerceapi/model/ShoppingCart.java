@@ -19,7 +19,7 @@ public class ShoppingCart {
     @Column(name = "CartID")
     private Long cartId;
     // One simple cart for one user, or a complex app multiple carts for one user (wishlist, favourite items etc)
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @NonNull
     private User user;
     @OneToMany(mappedBy = "shoppingCart")
@@ -29,7 +29,9 @@ public class ShoppingCart {
     private LocalDateTime cartCreatedAt;
 
     @Column(name = "total_price")
-    private double priceTotal;
+    private Double priceTotal;
+
+
 
 
 }

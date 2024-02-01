@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",  uses = ProductMapper.class)
+@Mapper(componentModel = "spring")
 public interface CartProductMapper extends IEntityMapper<CartProductDTO, CartProduct>{
 
     @Override

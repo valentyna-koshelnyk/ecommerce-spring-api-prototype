@@ -7,6 +7,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ApiResponse {
+public class JwtResponse {
     private String message;
+    private String jwt;
+
+    public JwtResponse(String message) {
+        this.message = message;
+    }
 }

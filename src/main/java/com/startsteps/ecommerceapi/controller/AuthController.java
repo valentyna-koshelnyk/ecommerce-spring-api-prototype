@@ -3,12 +3,11 @@ package com.startsteps.ecommerceapi.controller;
 import com.startsteps.ecommerceapi.model.User;
 import com.startsteps.ecommerceapi.payload.request.LoginRequest;
 import com.startsteps.ecommerceapi.payload.request.SignupRequest;
+import com.startsteps.ecommerceapi.payload.response.MessageResponse;
 import com.startsteps.ecommerceapi.payload.response.UserInfoResponse;
 import com.startsteps.ecommerceapi.security.jwt.JwtUtil;
 import com.startsteps.ecommerceapi.service.UserDetailsImpl;
-import com.startsteps.ecommerceapi.service.UserDetailsServiceImpl;
 import com.startsteps.ecommerceapi.service.UserServiceImpl;
-import com.startsteps.ecommerceapi.payload.response.MessageResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -44,13 +43,13 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+    public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
             User registeredUser = userService.registerUser(signUpRequest);
             return ResponseEntity.ok(new MessageResponse("User registered successfully! UserID: " + registeredUser.getUserId()));
     }
 
     @PostMapping("/registerAdmin")
-    public ResponseEntity<?> registerAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
+    public ResponseEntity<MessageResponse> registerAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
             User registeredAdmin = userService.registerUser(signUpRequest);
             return ResponseEntity.ok(new MessageResponse("Admin registered successfully! UserID: " + registeredAdmin.getUserId()));
     }

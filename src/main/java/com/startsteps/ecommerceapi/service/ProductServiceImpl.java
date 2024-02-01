@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductDTO findAvailableProductById(Long productId) {
-        Product product = productRepository.findProductByProductIdAndStockGreaterThanEqual(MIN_STOCK, productId)
+        Product product = productRepository.findProductByProductIdAndStockGreaterThanEqual(productId, MIN_STOCK)
                 .orElseThrow(() -> new ProductNotFoundException("Product with the id " + productId +
                         " has not been found"));
         ProductDTO productDTO = productMapper.toDto(product);
@@ -109,6 +109,13 @@ public class ProductServiceImpl implements ProductService{
             }
         }
         productRepository.saveAll(productsToUpdate);
+    }
+    @Override
+    public ProductDTO findProductByProductId(Long productId){
+        Product product = productRepository.findProductByProductId(productId).orElseThrow(()
+        -> new ProductNotFoundException("Product with id "
+                + productId + " not found"));
+        return productMapper.toDto(product);
     }
 
     @Override

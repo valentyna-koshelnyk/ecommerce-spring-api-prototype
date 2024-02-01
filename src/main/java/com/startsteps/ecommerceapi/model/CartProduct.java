@@ -19,7 +19,7 @@ public class CartProduct {
     @Column(name = "cart_product_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
@@ -32,6 +32,9 @@ public class CartProduct {
 
     @Column(name = "total_cost")
     private double totalCost;
+
+    @Column(name = "price_per_product")
+    private Double priceProduct;
     @Default
     public CartProduct(Product product, ShoppingCart shoppingCart, Long quantity) {
         this.product = product;
