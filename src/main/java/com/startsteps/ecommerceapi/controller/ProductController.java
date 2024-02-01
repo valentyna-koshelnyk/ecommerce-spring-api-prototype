@@ -13,8 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.Optional;
 
 /** for arrays use pagination
  * for identifiers use strings
@@ -58,8 +58,8 @@ public class ProductController {
 
     @GetMapping("/search/{productName}")
     public ResponseEntity<?> searchProduct(@PathVariable String productName) {
-       Optional<ProductDTO> product = productService.findProductByName(productName);
-        return ResponseEntity.ok(new MessageResponse("Product found: " + product.toString()));
+      List<Product> productList = productService.findProductByName(productName);
+        return ResponseEntity.ok(new MessageResponse("Product found: " + productList.toString()));
     }
 
     @PostMapping("/admin/add")

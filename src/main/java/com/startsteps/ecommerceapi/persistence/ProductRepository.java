@@ -9,17 +9,20 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
     boolean existsByProductName(@NonNull String productName);
 
     void deleteProductByProductName(String name);
-    Product findProductByProductId(long productId);
+    Optional<Product> findProductByProductId(Long productId);
     Page<Product> findAllByStockGreaterThanEqual(int amount, Pageable pageable);
-    Optional<Product> findProductByProductIdAndStockGreaterThanEqual(int amount, Long id);
+    Optional<Product> findProductByProductIdAndStockGreaterThanEqual(long amount, Long id);
 
     @Query("SELECT p FROM Product p WHERE LOWER(p.productName) LIKE LOWER(CONCAT('%', :name, '%')) AND p.stock > :stock")
+    List<Product> findAllByProductNameContainingIgnoreCaseAndStockGreaterThan(@Param("stock") long stock, @Param("name") String name);
+    @Query("SELECT p FROM Product p WHERE LOWER(p.productName) LIKE LOWER(CONCAT('%', :name, '%')) AND p.stock > :stock")
 
-    Optional<Product> findByProductNameContainingIgnoreCaseAndStockGreaterThan(@Param("stock") long stock, @Param("name") String name);
+    Optional<Product> findProductByProductNameContainingIgnoreCaseAndStockGreaterThan(@Param("stock") long stock, @Param("name") String name);
 }

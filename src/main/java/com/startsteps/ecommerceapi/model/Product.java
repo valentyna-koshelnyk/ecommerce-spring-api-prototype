@@ -1,14 +1,12 @@
 package com.startsteps.ecommerceapi.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -37,10 +35,7 @@ public class Product {
     @Column(name = "Product_Category", length = 255)
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
-    @OneToMany(mappedBy = "product")
-    private List<CartProduct> cartProducts;
-
-    public Product(String productName, double price, String description, long stock,  ProductCategory category) {
+    public Product(String productName, double price, String description, long stock, ProductCategory category) {
         this.productName = productName;
         this.price = price;
         this.description = description;

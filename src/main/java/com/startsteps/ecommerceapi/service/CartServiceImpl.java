@@ -2,11 +2,10 @@ package com.startsteps.ecommerceapi.service;
 
 import com.startsteps.ecommerceapi.exceptions.InsufficientStockException;
 import com.startsteps.ecommerceapi.exceptions.ProductNotFoundException;
-import com.startsteps.ecommerceapi.exceptions.UserNotFoundException;
-import com.startsteps.ecommerceapi.service.dto.CartItem;
 import com.startsteps.ecommerceapi.model.CartProduct;
 import com.startsteps.ecommerceapi.model.Product;
 import com.startsteps.ecommerceapi.model.ShoppingCart;
+import com.startsteps.ecommerceapi.payload.request.ProductAddRequest;
 import com.startsteps.ecommerceapi.persistence.CartProductRepository;
 import com.startsteps.ecommerceapi.persistence.ProductRepository;
 import com.startsteps.ecommerceapi.persistence.ShoppingCartRepository;
@@ -33,35 +32,35 @@ public class CartServiceImpl implements CartService{
     private UserDTO user;
     private ProductServiceImpl productService;
     private  ProductMapper productMapper;
-    private final long ITEM = 1;
     @Autowired
-    public CartServiceImpl(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CartProductRepository cartProductRepository, UserRepository userRepository) {
+    public CartServiceImpl(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CartProductRepository cartProductRepository, UserRepository userRepository, ProductServiceImpl productService, ProductMapper productMapper) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.productRepository = productRepository;
         this.cartProductRepository = cartProductRepository;
         this.userRepository = userRepository;
+        this.productService = productService;
     }
    @Override
-   public void addProductToCart(Long userId, Long productId, int quantity) {
-        CartItem cartItem = createCartItem(userId, productId, quantity);
-        ProductDTO product = cartItem.product();
-        ShoppingCart cart = cartItem.shoppingCart();
-
-        boolean isProductInCart = isProductInUserCart(productId, userId);
+   public void addProductToCart(ProductAddRequest request) {
+       Product product = productRepository.findProductByProductId(request.getProductId())
+               .orElseThrow(() -> new ProductNotFoundException("Product with ID " + request.getProductId() + " not found."));
+       ShoppingCart cart = shoppingCartRepository.findShoppingCartByCartId(request.getCartId());
+        boolean isProductInCart = isProductInUserCart(request.getProductId(), request.getCartId());
 
         if (isProductInCart) {
-            CartProduct cartProduct = cartProductRepository.findCartProductByProductAndShoppingCart(product, cart);
-            cartProduct.setQuantity(cartProduct.getQuantity() + quantity);
+            CartProduct cartProduct = cartProductRepository.findCartProductByProductAndShoppingCart(product, cart)
+                    .orElseThrow();
+            cartProduct.setQuantity(cartProduct.getQuantity() + request.getQuantity());
             cartProductRepository.save(cartProduct);
 
         } else {
-            addCartProduct(product, cart, quantity);
+            addCartProduct(product, cart, request.getQuantity());
         }
-        reduceProductStock(quantity, productId);
+        reduceProductStock(request.getQuantity(), request.getProductId());
     }
    @Override
-   public void reduceProductStock(int quantity, long productId) {
-        Product product = productRepository.findById(productId)
+   public void reduceProductStock(Long quantity, Long productId) {
+        Product product = productRepository.findProductByProductId(productId)
                 .orElseThrow(() -> new ProductNotFoundException("Product with ID " + productId + " not found."));
 
         if (product.getStock() < quantity) {
@@ -72,29 +71,18 @@ public class CartServiceImpl implements CartService{
         productRepository.save(product);
     }
     @Override
-    public void addCartProduct(ProductDTO productDTO, ShoppingCart cart, int quantity){
-        Product product = productMapper.toEntity(productDTO);
+    public void addCartProduct(Product product, ShoppingCart cart, Long quantity){
         CartProduct newCartProduct = new CartProduct(product, cart, quantity);
         cartProductRepository.save(newCartProduct);
     }
 
     @Override
-    public CartItem createCartItem(Long userId, Long productId, int quantity) {
-        ShoppingCart cart = userRepository.findShoppingCartByUserId(userId);
-        Product product = productRepository.findProductByProductIdAndStockGreaterThanEqual(quantity, productId)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found or insufficient stock"));
-        ProductDTO productDTO = productMapper.toDTO(product);
-        return new CartItem(cart, productDTO);
-    }
-    @Override
-    public boolean isProductInUserCart(Long productId, Long userId){
-        ProductDTO product = productService.findAvailableProductById(productId);
-        ShoppingCart cart = userRepository.findByUserId(userId).orElseThrow(() ->
-                        new UserNotFoundException("User not found"))
-                       .getShoppingCart();
-       return cartProductRepository.findAllByShoppingCart(cart)
-                .stream()
-                .anyMatch(cartProduct -> cartProduct.getProduct().equals(product));
+    public boolean isProductInUserCart(Long productId, Long userId) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserId(userId);
+        Product product = productRepository.findProductByProductId(productId).orElseThrow();
+       return cartProductRepository.findCartProductByProductAndShoppingCart(product, shoppingCart)
+                .isPresent();
+
     }
     public void clearCart(){
     }

@@ -1,7 +1,6 @@
 package com.startsteps.ecommerceapi.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import lombok.*;
 
 @Entity
@@ -10,10 +9,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Table(name="cart_product")
 public class CartProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart_product_id")
     private Long id;
 
     @ManyToOne
@@ -25,12 +26,15 @@ public class CartProduct {
     private ShoppingCart shoppingCart;
 
     @Column(name = "quantity")
-    @Min(1)
     private long quantity;
 
-    public CartProduct(Product product, ShoppingCart shoppingCart, long quantity) {
+    public CartProduct(Product product, ShoppingCart shoppingCart, Long quantity) {
         this.product = product;
         this.shoppingCart = shoppingCart;
         this.quantity = quantity;
+    }
+
+    public CartProduct(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 }
