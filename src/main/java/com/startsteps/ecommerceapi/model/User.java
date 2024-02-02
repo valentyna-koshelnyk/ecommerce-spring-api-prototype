@@ -5,9 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "user")
-@Component
 public class User{
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,6 +58,9 @@ public class User{
    @OneToOne
    @JoinColumn(name = "cart_id")
    private ShoppingCart shoppingCart;
+
+   @OneToMany(mappedBy = "user")
+   private List<Orders> orders;
    public User(@NonNull String username, @NonNull String email, @NonNull String password, @NonNull Boolean approved, Boolean pending) {
       this.username = username;
       this.email = email;

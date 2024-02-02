@@ -4,8 +4,8 @@ import com.startsteps.ecommerceapi.model.Product;
 import com.startsteps.ecommerceapi.model.ShoppingCart;
 import com.startsteps.ecommerceapi.payload.request.ProductAddRequest;
 import com.startsteps.ecommerceapi.service.dto.CartProductDTO;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface CartService {
     void addProductToCart(ProductAddRequest productAddRequest);
@@ -22,5 +22,5 @@ public interface CartService {
 
     boolean isProductInUserCart(Product product, ShoppingCart shoppingCart);
 
-    List<CartProductDTO> getProductsInCart(Long cartId);
+    Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable);
 }

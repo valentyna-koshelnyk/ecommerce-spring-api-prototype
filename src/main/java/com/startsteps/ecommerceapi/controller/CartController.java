@@ -36,13 +36,11 @@ public class CartController {
     public ResponseEntity<?> viewProductList(
             @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size,
-            @RequestParam(name = "sort", required = false, defaultValue = "productName") String sort,
             @RequestParam(name = "direction", required = false, defaultValue = "ASC") String direction,
             @RequestParam Long cartId
     ) {
-        var pageRequestData = PageRequest.of(pageNumber - 1, size, Sort.Direction.valueOf(direction), sort);
-        return ResponseEntity.ok(cartService.getProductsInCart(cartId));
-
+        PageRequest pageRequestData = PageRequest.of(pageNumber - 1, size, Sort.by(Sort.Direction.fromString(direction), "quantity"));
+        return ResponseEntity.ok(cartService.getProductsInCart(cartId, pageRequestData));
     }
 
     @DeleteMapping("/remove/{productId}")
@@ -54,7 +52,6 @@ public class CartController {
         return ResponseEntity.ok(response);
 
     }
-
 }
 
 

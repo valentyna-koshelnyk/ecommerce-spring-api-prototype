@@ -17,6 +17,4 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long
     Optional<ShoppingCart> findByIdWithProducts(@Param("cartId") Long cartId);
     Optional<List<Product>> findProductsByCartId(Long cartId);
     ShoppingCart findShoppingCartByCartId(Long cartId);
-   // @Query("SELECT sc.products FROM ShoppingCart sc WHERE sc.cartId = :cartId")
-  //  Optional<List<Product>> findProductsByCartId(@Param("cartId") Long cartId);
 }
