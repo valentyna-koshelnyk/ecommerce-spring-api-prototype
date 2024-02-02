@@ -23,7 +23,7 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "UserID")
     private User user;
-    @Column(name = "TotalPrice")
+    @Column(name = "Total_Price")
     private Long totalprice;
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
