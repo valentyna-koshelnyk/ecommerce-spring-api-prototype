@@ -31,5 +31,8 @@ public class Orders {
     @Column(name = "User_information")
     @Embedded
     private UserInformation userInformation;
+    @OneToOne
+    private ShoppingCart shoppingCart;
+
 
 }
