@@ -38,6 +38,27 @@ public class ControllerExceptionHandler {
                 ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<ErrorMessage>(message, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(CartIsEmptyException.class)
+    public ResponseEntity<ErrorMessage> handleCartIsEmptyException(CartIsEmptyException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT.value(), new Date(),
+                ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ProductAlreadyExistsException.class)
+    public ResponseEntity<ErrorMessage> handleProductAlreadyExists(ProductAlreadyExistsException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT.value(), new Date(),
+                ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(InsufficientStockException.class)
+    public ResponseEntity<ErrorMessage> handleInsufficientStockException(InsufficientStockException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT.value(), new Date(),
+                ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);
+    }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> globalExceptionHandler(Exception ex, WebRequest request) {
