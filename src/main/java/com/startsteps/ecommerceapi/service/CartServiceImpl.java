@@ -14,6 +14,8 @@ import com.startsteps.ecommerceapi.persistence.UserRepository;
 import com.startsteps.ecommerceapi.service.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -132,13 +134,24 @@ public class CartServiceImpl implements CartService{
        return cartProductRepository.findCartProductByProductAndShoppingCart(product, shoppingCart)
                 .isPresent();
     }
-    @Override
-    public List<CartProductDTO> getProductsInCart(Long cartId) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
-                .orElseThrow(() -> new CartIsEmptyException("Shopping cart is empty"));
-        List<CartProduct> cartProducts = cartProductRepository.findAllByShoppingCart(shoppingCart);
-        return cartProductMapper.toDto(cartProducts);
-    }
+//    @Override
+//    public Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable) {
+//        ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
+//                .orElseThrow(() -> new CartIsEmptyException("Shopping cart is empty"));
+//        Page<CartProduct> cartProducts = cartProductRepository.findAllByShoppingCart(shoppingCart, pageable);
+//        List<CartProductDTO> dtoList = cartProducts.getContent()
+//                .stream()
+//                .map(cartProductMapper::toDto)
+//                .collect(Collectors.toList());
+//        return new PageImpl<>(dtoList, pageable, cartProducts.getTotalElements());
+//    }
+@Override
+public Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable) {
+    ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
+            .orElseThrow(() -> new CartIsEmptyException("Shopping cart is empty"));
+    Page<CartProduct> cartProductsPage = cartProductRepository.findAllByShoppingCart(shoppingCart, pageable);
+    return cartProductMapper.toDtoPage(cartProductsPage);
+}
     public void removeProductFromCart(Long cartId, Long productId){ //removes entire product from the cart
         Product product = productRepository.findProductByProductId(productId)
                 .orElseThrow(()-> new ProductNotFoundException("There's no product to return"));
