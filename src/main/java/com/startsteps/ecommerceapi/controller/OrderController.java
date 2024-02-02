@@ -55,8 +55,8 @@ public class OrderController {
                 .build();
         return ResponseEntity.ok(new MessageResponse("Information was updated"));
     }
-    @RequestMapping(value = "/place/{cartId}") //TODO: create OrderDTO to represent just important data for the user
-    public ResponseEntity<?> placeOrder(@PathVariable("cartId") Long cartId, @RequestBody UserInformation userInformation) {
+    @RequestMapping(value = "/place/{cartId}")
+    public ResponseEntity<MessageResponse> placeOrder(@PathVariable("cartId") Long cartId, @RequestBody UserInformation userInformation) {
         ShoppingCart shoppingCart = cartService.findShoppingCartByCartId(cartId);
         User user = shoppingCart.getUser();
         Orders orders = new OrderBuilder()
@@ -68,6 +68,6 @@ public class OrderController {
                 .shoppingCartRepository(shoppingCartRepository)
                 .userRepository(userRepository)
                 .build();
-        return ResponseEntity.ok(orders);
+        return ResponseEntity.ok(new MessageResponse(orders.toString()));
     }
 }

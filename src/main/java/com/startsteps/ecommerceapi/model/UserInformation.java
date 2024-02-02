@@ -1,16 +1,14 @@
 package com.startsteps.ecommerceapi.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Embeddable
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class UserInformation {
     // TODO: add custom validations for all properties
     @Column(nullable = false, unique = false, name = "First_Name")
