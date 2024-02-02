@@ -41,7 +41,7 @@ public class CartController {
             @RequestParam Long cartId
     ) {
         var pageRequestData = PageRequest.of(pageNumber - 1, size, Sort.Direction.valueOf(direction), sort);
-        return ResponseEntity.ok(cartService.getProductsInCart(cartId));
+        return ResponseEntity.ok(cartService.getProductsInCart(cartId, pageRequestData));
 
     }
     @DeleteMapping("/remove/{productId}")

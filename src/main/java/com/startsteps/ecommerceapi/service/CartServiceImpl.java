@@ -14,6 +14,8 @@ import com.startsteps.ecommerceapi.persistence.UserRepository;
 import com.startsteps.ecommerceapi.service.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -128,11 +130,12 @@ public class CartServiceImpl implements CartService{
                 .isPresent();
     }
     @Override
-    public List<CartProductDTO> getProductsInCart(Long cartId) {
+    public Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable) {
         ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
                 .orElseThrow(() -> new CartIsEmptyException("Shopping cart is empty"));
-        List<CartProduct> cartProducts = cartProductRepository.findAllByShoppingCart(shoppingCart);
-        return cartProductMapper.toDto(cartProducts);
+        Page<CartProduct> cartProducts = cartProductRepository.findAllByShoppingCart(shoppingCart, pageable);
+        Page<CartProductDTO> dtoPage = cartProducts.map(cartProductMapper::toDto);
+        return dtoPage;
     }
     public void removeProductFromCart(Long cartId, Long productId){ //removes entire product from the cart
         Product product = productRepository.findProductByProductId(productId)
