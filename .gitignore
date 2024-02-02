@@ -7,7 +7,7 @@ target/
 .properties
 .yml
 ecom.log
-.gz
+*.gz
 ### STS ###
 .apt_generated
 .classpath

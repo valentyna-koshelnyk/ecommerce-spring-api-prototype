@@ -16,15 +16,13 @@ public class ProductDTO {
     private String productName;
     private double price;
     private String description;
-    private long stock;
     LocalDateTime addedAtDate;
     private ProductCategory category;
 
-    public ProductDTO(String productName, double price, String description, long stock, ProductCategory category) {
+    public ProductDTO(String productName, double price, String description, ProductCategory category) {
         this.productName = productName;
         this.price = price;
         this.description = description;
-        this.stock = stock;
         this.category = category;
     }
 }
