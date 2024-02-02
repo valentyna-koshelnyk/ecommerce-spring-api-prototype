@@ -1,26 +1,35 @@
 package com.startsteps.ecommerceapi.service.commands.builder;
 
-import com.startsteps.ecommerceapi.model.Orders;
-import com.startsteps.ecommerceapi.model.ShoppingCart;
-import com.startsteps.ecommerceapi.model.User;
-import com.startsteps.ecommerceapi.model.UserInformation;
+import com.startsteps.ecommerceapi.model.*;
+import com.startsteps.ecommerceapi.persistence.ShoppingCartRepository;
+import com.startsteps.ecommerceapi.persistence.UserRepository;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Slf4j
 public class OrderBuilder {
-    private OrderValidator orderValidator;
+    private OrderValidatorImpl orderValidator;
     private OrderService orderService;
     private ShoppingCart shoppingCart;
+    private ShoppingCartRepository shoppingCartRepository;
     private UserInformation userInformation;
     private User user;
+    private UserRepository userRepository;
 
-    public OrderBuilder orderValidator(OrderValidator orderValidator) {
+    public OrderBuilder orderValidator(OrderValidatorImpl orderValidator) {
         this.orderValidator = orderValidator;
         return this;
     }
 
+    public OrderBuilder shoppingCart(ShoppingCart shoppingCart){
+        this.shoppingCart = shoppingCart;
+        return this;
+    }
     public OrderBuilder orderService(OrderService orderService) {
         this.orderService = orderService;
         return this;
@@ -29,19 +38,34 @@ public class OrderBuilder {
         this.userInformation = userInformation;
         return this;
     }
+    public OrderBuilder user(User user) {
+        this.user = user;
+        return this;
+    }
+    public OrderBuilder shoppingCartRepository(ShoppingCartRepository shoppingCartRepository) {
+        this.shoppingCartRepository = shoppingCartRepository;
+        return this;
+    }
+    public OrderBuilder userRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        return this;
+    }
 
     public Orders build(){
         Orders orders = new Orders();
+        orders.setShoppingCart(shoppingCart);
         orders.setUser(user);
         orders.setUserInformation(userInformation);
-        orders.setShoppingCart(shoppingCart);
-        orders.setTotalprice(orders.getTotalprice());
+        orders.setTotalprice(shoppingCart.getPriceTotal());
+        orders.setOrderStatus(OrderStatus.IN_PROCESS);
+        orders.setOrderCreatedAt(LocalDateTime.now());
         if (!orderValidator.validateOrder(orders)) {
             throw new IllegalArgumentException("Invalid order");
         }
+        log.info("Order built: {}", orders);
+
         orderService.saveOrder(orders);
         return orders;
-
     }
 
 }

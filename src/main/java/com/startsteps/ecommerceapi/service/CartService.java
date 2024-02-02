@@ -16,6 +16,8 @@ public interface CartService {
 
     void addNewProductToCart(Product product, ShoppingCart cart, Long quantity);
 
+    ShoppingCart findShoppingCartByCartId(Long cartId);
+
     double calculateProductCost(Product product, Long quantity);
 
     double updateTotalCost(ShoppingCart shoppingCart);

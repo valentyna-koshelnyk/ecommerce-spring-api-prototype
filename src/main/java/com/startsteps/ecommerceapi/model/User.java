@@ -11,7 +11,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "user")
@@ -61,6 +60,9 @@ public class User{
 
    @OneToMany(mappedBy = "user")
    private List<Orders> orders;
+
+   @Embedded
+   private UserInformation userInformation;
    public User(@NonNull String username, @NonNull String email, @NonNull String password, @NonNull Boolean approved, Boolean pending) {
       this.username = username;
       this.email = email;

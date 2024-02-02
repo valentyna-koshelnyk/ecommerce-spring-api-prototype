@@ -103,6 +103,11 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
+    public ShoppingCart findShoppingCartByCartId(Long cartId){
+        return shoppingCartRepository.findShoppingCartByCartId(cartId).orElseThrow(()
+                -> new CartIsEmptyException("Cart is empty"));
+    }
+    @Override
     public double calculateProductCost(Product product, Long quantity){
 
         return product.getPrice() * quantity;

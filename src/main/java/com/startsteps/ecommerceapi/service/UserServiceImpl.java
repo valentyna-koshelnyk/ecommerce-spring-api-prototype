@@ -142,6 +142,11 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    public User findUserByUserId(Long id){
+        return userRepository.findUserByUserId(id)
+                .orElseThrow(() -> new UserNotFoundException("User was not found"));
+    }
+
     private String generateResetToken() {
         return UUID.randomUUID().toString();
     }

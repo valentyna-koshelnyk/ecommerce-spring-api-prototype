@@ -1,12 +1,13 @@
 package com.startsteps.ecommerceapi.model;
 
+import com.startsteps.ecommerceapi.utils.Default;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -35,6 +36,8 @@ public class Product {
     @Column(name = "Product_Category", length = 255)
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
+
+    @Default
     public Product(String productName, double price, String description, long stock, ProductCategory category) {
         this.productName = productName;
         this.price = price;
