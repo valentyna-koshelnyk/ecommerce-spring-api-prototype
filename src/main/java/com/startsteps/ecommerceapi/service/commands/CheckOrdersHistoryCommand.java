@@ -6,8 +6,4 @@ public class CheckOrdersHistoryCommand implements OrderCommand{
 
     }
 
-    @Override
-    public void unexecute() {
-
-    }
 }

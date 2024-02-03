@@ -14,8 +14,4 @@ public class TrackOrderCommand implements OrderCommand{
 
     }
 
-    @Override
-    public void unexecute() {
-
-    }
 }

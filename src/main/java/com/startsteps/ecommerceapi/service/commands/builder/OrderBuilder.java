@@ -6,12 +6,14 @@ import com.startsteps.ecommerceapi.persistence.UserRepository;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Slf4j
+@Service
 public class OrderBuilder {
     private OrderValidatorImpl orderValidator;
     private OrderService orderService;
