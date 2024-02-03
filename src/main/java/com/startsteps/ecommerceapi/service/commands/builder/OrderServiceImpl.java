@@ -1,10 +1,12 @@
 package com.startsteps.ecommerceapi.service.commands.builder;
 
+import com.startsteps.ecommerceapi.exceptions.CartIsEmptyException;
 import com.startsteps.ecommerceapi.model.Orders;
 import com.startsteps.ecommerceapi.model.ShoppingCart;
 import com.startsteps.ecommerceapi.model.UserInformation;
 import com.startsteps.ecommerceapi.persistence.OrderRepository;
 import com.startsteps.ecommerceapi.persistence.ShoppingCartRepository;
+import com.startsteps.ecommerceapi.persistence.UserRepository;
 import com.startsteps.ecommerceapi.service.CartServiceImpl;
 import com.startsteps.ecommerceapi.service.commands.OrderCommand;
 import com.startsteps.ecommerceapi.service.commands.OrderProcessor;
@@ -21,15 +23,17 @@ public class OrderServiceImpl implements OrderService {
     private final OrderBuilder orderBuilder;
     private final CartServiceImpl cartService;
     private final ShoppingCartRepository shoppingCartRepository;
+    private final UserRepository userRepository;
     private final OrderValidatorImpl orderValidator;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, OrderProcessor orderProcessor, OrderBuilder orderBuilder, ShoppingCartRepository shoppingCartRepository, CartServiceImpl cartService, OrderValidatorImpl orderValidator) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderProcessor orderProcessor, OrderBuilder orderBuilder, ShoppingCartRepository shoppingCartRepository, CartServiceImpl cartService, UserRepository userRepository, OrderValidatorImpl orderValidator) {
         this.orderRepository = orderRepository;
         this.orderProcessor = orderProcessor;
         this.orderBuilder = orderBuilder;
         this.cartService = cartService;
         this.shoppingCartRepository = shoppingCartRepository;
+        this.userRepository = userRepository;
         this.orderValidator = orderValidator;
     }
 
@@ -48,9 +52,19 @@ public class OrderServiceImpl implements OrderService {
                 .shoppingCart(shoppingCart)
                 .information(userInformation)
                 .orderValidator(orderValidator)
-                .orderService(this);
+                .orderService(this)
+                .shoppingCart(shoppingCart)
+                .shoppingCartRepository(shoppingCartRepository)
+                .userRepository(userRepository)
+                .user(shoppingCart.getUser());
         OrderCommand placeOrderCommand = new PlaceOrderCommand(builder);
         orderProcessor.processOrder(placeOrderCommand);
+    }
+
+    public String printOrder(Long shoppingCartId){
+        ShoppingCart shoppingCart = shoppingCartRepository.findById(shoppingCartId).orElseThrow(()-> new CartIsEmptyException("Cart not found"));
+        return orderRepository.findOrdersByShoppingCart(shoppingCart)
+                .toString();
     }
 
     public void cancelOrder(Orders orders){

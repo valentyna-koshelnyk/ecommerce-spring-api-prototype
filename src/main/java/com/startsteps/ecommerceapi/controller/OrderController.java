@@ -42,9 +42,9 @@ public class OrderController {
                 .build();
         return ResponseEntity.ok(new MessageResponse("Information was updated"));
     }
-    @PostMapping("/place/{shoppingCartId}")
+    @PostMapping("/place/{shoppingCartId}") //TODO: handle exception if order already exists
     public ResponseEntity<?> placeOrder(@PathVariable Long shoppingCartId) {
         orderService.placeOrder(shoppingCartId);
-        return ResponseEntity.ok(new MessageResponse("Order has been placed successfully"));
+        return ResponseEntity.ok(new MessageResponse(orderService.printOrder(shoppingCartId)));
     }
 }
