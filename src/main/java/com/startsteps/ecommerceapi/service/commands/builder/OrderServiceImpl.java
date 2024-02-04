@@ -1,6 +1,7 @@
 package com.startsteps.ecommerceapi.service.commands.builder;
 
 import com.startsteps.ecommerceapi.exceptions.CartIsEmptyException;
+import com.startsteps.ecommerceapi.exceptions.OrderNotFoundException;
 import com.startsteps.ecommerceapi.model.Orders;
 import com.startsteps.ecommerceapi.model.ShoppingCart;
 import com.startsteps.ecommerceapi.model.UserInformation;
@@ -67,7 +68,9 @@ public class OrderServiceImpl implements OrderService {
                 .toString();
     }
 
-    public void cancelOrder(Orders orders){
+    public void cancelOrder(Long orderId){ // might be better to keep the order but change status to CANCELED
+        Orders orders = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order not found"));
         orderRepository.delete(orders);
     }
+
 }

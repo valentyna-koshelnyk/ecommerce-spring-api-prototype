@@ -1,9 +1,7 @@
 package com.startsteps.ecommerceapi.service.commands;
 
 import com.startsteps.ecommerceapi.model.Orders;
-import com.startsteps.ecommerceapi.model.ShoppingCart;
 import com.startsteps.ecommerceapi.service.commands.builder.OrderBuilder;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +12,10 @@ public class PlaceOrderCommand implements OrderCommand{
 
     private final OrderBuilder orderBuilder;
     private  Orders order;
-
-    @Setter
-    private ShoppingCart shoppingCart;
     @Autowired
     public PlaceOrderCommand(OrderBuilder orderBuilder) {
         this.orderBuilder = orderBuilder;
     }
-
-
     @Override
     public void execute() {
         orderBuilder.build();

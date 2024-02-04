@@ -27,8 +27,6 @@ public class OrderController {
 
     private final ProvideUserInfoBuilderImpl provideUserInfoBuilder;
 
-
-
     @PostMapping("/{userId}/updateInformation")
     public ResponseEntity<MessageResponse> addUserInfo(@PathVariable Long userId,
                                         @RequestBody UserInformation userInformation) {
@@ -47,4 +45,12 @@ public class OrderController {
         orderService.placeOrder(shoppingCartId);
         return ResponseEntity.ok(new MessageResponse(orderService.printOrder(shoppingCartId)));
     }
+    @DeleteMapping("/cancel/{orderId}")
+    public ResponseEntity<?> cancelOrder(@PathVariable Long orderId) {
+        orderService.cancelOrder(orderId);
+        return ResponseEntity.ok(new MessageResponse("Order " + orderId + " has been cancelled"));
+    }
+
+
+
 }

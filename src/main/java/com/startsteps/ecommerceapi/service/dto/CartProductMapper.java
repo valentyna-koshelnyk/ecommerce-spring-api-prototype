@@ -2,13 +2,17 @@ package com.startsteps.ecommerceapi.service.dto;
 
 import com.startsteps.ecommerceapi.model.CartProduct;
 import org.mapstruct.Mapper;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        uses = {ProductMapper.class, ShoppingCartMapper.class})
+
 public interface CartProductMapper extends IEntityMapper<CartProductDTO, CartProduct> {
 
     @Override
@@ -16,10 +20,6 @@ public interface CartProductMapper extends IEntityMapper<CartProductDTO, CartPro
 
     @Override
     CartProductDTO toDto(CartProduct cartProduct);
-
-    @Override
-    List<CartProductDTO> toDto(List<CartProduct> cartProductList);
-
     default Page<CartProductDTO> toDtoPage(Page<CartProduct> entitiesPage) {
         List<CartProductDTO> dtoList = entitiesPage.getContent()
                 .stream()
