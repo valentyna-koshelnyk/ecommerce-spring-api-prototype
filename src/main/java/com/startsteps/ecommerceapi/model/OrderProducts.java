@@ -13,12 +13,10 @@ import java.util.List;
 public class OrderProducts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Order_ProductID")
+    @Column(name = "order_productid")
     private Long orderProductsId;
-    @ManyToOne
-    @JoinColumn(name = "UserID")
-    private User user;
-    @OneToMany(mappedBy = "orderProducts")
+    @OneToMany
+    @JoinColumn(name = "cart_product_id")
     private List<CartProduct> cartProduct;
     @OneToOne
     @JoinColumn(name = "OrderID")

@@ -29,7 +29,7 @@ public class Orders {
     private UserInformation userInformation;
     @OneToOne
     private ShoppingCart shoppingCart;
-    @OneToOne
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private OrderProducts orderProducts;
 
 
@@ -47,4 +47,14 @@ public class Orders {
                 ", User Information: " + userInformation;
     }
 
+    @OneToOne(mappedBy = "orders", optional = false)
+    private OrderProducts orderProducts2;
+
+    public OrderProducts getOrderProducts2() {
+        return orderProducts2;
+    }
+
+    public void setOrderProducts2(OrderProducts orderProducts2) {
+        this.orderProducts2 = orderProducts2;
+    }
 }
