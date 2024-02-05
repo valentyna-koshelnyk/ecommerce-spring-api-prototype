@@ -80,11 +80,7 @@ public class CartServiceImpl implements CartService{
        List<CartProduct> cartProducts = cartProductRepository.findCartProductByShoppingCart(shoppingCart);
        double totalCost = 0.0;
        for(CartProduct cp : cartProducts){
-           totalCost += cp.getTotalCost();
-       }
-       for(CartProduct cp : cartProducts){
-           cp.setTotalCost(totalCost);
-           cartProductRepository.save(cp);
+           totalCost += cp.getPriceProduct();
        }
        shoppingCart.setPriceTotal(totalCost);
        shoppingCartRepository.save(shoppingCart);
@@ -113,7 +109,6 @@ public class CartServiceImpl implements CartService{
     public void addNewProductToCart(Product product, ShoppingCart cart, Long quantity){
         CartProduct newCartProduct = new CartProduct(product, cart, quantity);
         newCartProduct.setPriceProduct(calculateProductCost(product, quantity));
-        newCartProduct.setTotalCost(newCartProduct.getPriceProduct());
         cart.setPriceTotal(newCartProduct.getPriceProduct());
         cartProductRepository.save(newCartProduct);
     }
