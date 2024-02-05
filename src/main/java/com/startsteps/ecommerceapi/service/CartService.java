@@ -10,16 +10,17 @@ import org.springframework.data.domain.Pageable;
 public interface CartService {
     void addProductToCart(ProductAddRequest productAddRequest);
 
+    void getTotalCost(Long shoppingCartId);
+
     void reduceProductStock(Long quantity, Long productId);
 
     void increaseStock(Long quantity, Long productId);
 
     void addNewProductToCart(Product product, ShoppingCart cart, Long quantity);
 
+    ShoppingCart findShoppingCartByCartId(Long cartId);
+
     double calculateProductCost(Product product, Long quantity);
-
-    double updateTotalCost(ShoppingCart shoppingCart);
-
     boolean isProductInUserCart(Product product, ShoppingCart shoppingCart);
 
     Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable);

@@ -66,14 +66,24 @@ public class CartServiceImpl implements CartService{
 
            cartProduct.setQuantity(cartProduct.getQuantity() + request.getQuantity());
            cartProduct.setPriceProduct(calculateProductCost(product, cartProduct.getQuantity()));
-           cartProduct.setTotalCost(updateTotalCost(cart));
            cartProductRepository.save(cartProduct); // Ensure you save the updated cartProduct
-
        } else {
            addNewProductToCart(product, cart, request.getQuantity()); // Pass the Product entity, not DTO
        }
-
        reduceProductStock(request.getQuantity(), request.getProductId());
+       getTotalCost(request.getCartId());
+   }
+   @Override
+   public void getTotalCost(Long shoppingCartId){
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByCartId(shoppingCartId)
+                .orElseThrow(()-> new CartIsEmptyException("Cart is not found"));
+       List<CartProduct> cartProducts = cartProductRepository.findCartProductByShoppingCart(shoppingCart);
+       double totalCost = 0.0;
+       for(CartProduct cp : cartProducts){
+           totalCost += cp.getPriceProduct();
+       }
+       shoppingCart.setPriceTotal(totalCost);
+       shoppingCartRepository.save(shoppingCart);
    }
    @Override
    public void reduceProductStock(Long quantity, Long productId) {
@@ -99,49 +109,27 @@ public class CartServiceImpl implements CartService{
     public void addNewProductToCart(Product product, ShoppingCart cart, Long quantity){
         CartProduct newCartProduct = new CartProduct(product, cart, quantity);
         newCartProduct.setPriceProduct(calculateProductCost(product, quantity));
-        newCartProduct.setTotalCost(newCartProduct.getPriceProduct());
         cart.setPriceTotal(newCartProduct.getPriceProduct());
         cartProductRepository.save(newCartProduct);
     }
 
     @Override
+    public ShoppingCart findShoppingCartByCartId(Long cartId){
+        return shoppingCartRepository.findShoppingCartByCartId(cartId).orElseThrow(()
+                -> new CartIsEmptyException("Cart is empty"));
+    }
+    @Override
     public double calculateProductCost(Product product, Long quantity){
-
         return product.getPrice() * quantity;
     }
-
-    @Override
-    public double updateTotalCost(ShoppingCart shoppingCart){
-        List<CartProduct> allProductsPerCart = cartProductRepository.findProductsByShoppingCart(shoppingCart);
-        double totalCost = 0.0;
-        for(CartProduct cp : allProductsPerCart) {
-            totalCost += cp.getPriceProduct();
-        }
-        shoppingCart.setPriceTotal(totalCost);
-        shoppingCartRepository.save(shoppingCart);
-
-        return totalCost;
-    }
-
 
     @Override
     public boolean isProductInUserCart(Product product, ShoppingCart shoppingCart) {
        return cartProductRepository.findCartProductByProductAndShoppingCart(product, shoppingCart)
                 .isPresent();
     }
-//    @Override
-//    public Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable) {
-//        ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
-//                .orElseThrow(() -> new CartIsEmptyException("Shopping cart is empty"));
-//        Page<CartProduct> cartProducts = cartProductRepository.findAllByShoppingCart(shoppingCart, pageable);
-//        List<CartProductDTO> dtoList = cartProducts.getContent()
-//                .stream()
-//                .map(cartProductMapper::toDto)
-//                .collect(Collectors.toList());
-//        return new PageImpl<>(dtoList, pageable, cartProducts.getTotalElements());
-//    }
-@Override
-public Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable) {
+    @Override
+    public Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable) {
     ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
             .orElseThrow(() -> new CartIsEmptyException("Shopping cart is empty"));
     Page<CartProduct> cartProductsPage = cartProductRepository.findAllByShoppingCart(shoppingCart, pageable);

@@ -1,10 +1,7 @@
 package com.startsteps.ecommerceapi.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 @Getter
@@ -23,13 +20,29 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "UserID")
     private User user;
-    @Column(name = "TotalPrice")
-    private Long totalprice;
+    @Column(name = "Total_Price")
+    private Double totalprice;
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    @Column(name = "User_information")
     @Embedded
     private UserInformation userInformation;
+    @OneToOne
+    private ShoppingCart shoppingCart;
+
+
+    public Orders(@NonNull UserInformation userInformation, @NonNull ShoppingCart shoppingCart) {
+        this.userInformation = userInformation;
+        this.shoppingCart = shoppingCart;
+    }
+    @Override
+    public String toString(){
+        return "Order ID: " + orderId +
+                ", Order Created At: " + orderCreatedAt +
+                ", User: " + user.getUsername() +
+                ", Total Price: " + totalprice +
+                ", Order Status: " + orderStatus +
+                ", User Information: " + userInformation;
+    }
 
 }

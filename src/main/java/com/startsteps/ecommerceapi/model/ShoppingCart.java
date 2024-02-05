@@ -22,7 +22,8 @@ public class ShoppingCart {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @NonNull
     private User user;
-    @OneToMany(mappedBy = "shoppingCart")
+    @OneToMany(mappedBy = "shoppingCart",
+            cascade = CascadeType.ALL)
     private List<CartProduct> products;
     @CreationTimestamp
     @Column(name = "Created_Date", nullable = false, updatable = false)
@@ -30,8 +31,5 @@ public class ShoppingCart {
 
     @Column(name = "total_price")
     private Double priceTotal;
-
-
-
 
 }

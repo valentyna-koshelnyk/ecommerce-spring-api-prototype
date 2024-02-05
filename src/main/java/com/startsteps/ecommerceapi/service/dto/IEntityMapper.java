@@ -4,12 +4,12 @@ import java.util.List;
 
 public interface IEntityMapper<D, E> {
 
-    D toDto(E e);
+    E toEntity(D dto);
 
-    E toEntity(D d);
+    D toDto(E entity);
 
-    List<D> toDto(List<E> shoppingCartList);
+    List<E> toEntity(List<D> dtoList);
 
-    List<E> toEntity(List<D> dList);
+    List<D> toDto(List<E> entityList);
 
 }

@@ -6,7 +6,7 @@ target/
 !**/src/test/**/target/
 .properties
 .yml
-ecom.log
+/src/ecom.log
 *.gz
 ### STS ###
 .apt_generated
