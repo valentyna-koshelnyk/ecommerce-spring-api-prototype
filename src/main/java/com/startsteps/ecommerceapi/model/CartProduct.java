@@ -35,6 +35,8 @@ public class CartProduct {
 
     @Column(name = "price_per_product")
     private Double priceProduct;
+    @ManyToOne
+    private OrderProducts orderProducts;
     @Default
     public CartProduct(Product product, ShoppingCart shoppingCart, Long quantity) {
         this.product = product;

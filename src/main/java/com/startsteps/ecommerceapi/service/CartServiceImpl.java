@@ -1,6 +1,6 @@
 package com.startsteps.ecommerceapi.service;
 
-import com.startsteps.ecommerceapi.exceptions.CartIsEmptyException;
+import com.startsteps.ecommerceapi.exceptions.CartIsNotFound;
 import com.startsteps.ecommerceapi.exceptions.InsufficientStockException;
 import com.startsteps.ecommerceapi.exceptions.ProductNotFoundException;
 import com.startsteps.ecommerceapi.model.CartProduct;
@@ -33,6 +33,7 @@ public class CartServiceImpl implements CartService{
     private final UserRepository userRepository;
     private final ShoppingCartMapper shoppingCartMapper;
     private final Long MIN_STOCK = 1L;
+    private final Double REMOVE_COST = 0D;
 
     private ProductDTO product;
     private UserDTO user;
@@ -58,11 +59,11 @@ public class CartServiceImpl implements CartService{
                ));
 
        ShoppingCart cart = shoppingCartRepository.findById(request.getCartId())
-               .orElseThrow(() -> new CartIsEmptyException("Shopping cart doesn't exist"));
+               .orElseThrow(() -> new CartIsNotFound("Shopping cart doesn't exist"));
 
        if (isProductInUserCart(product, cart)) {
            CartProduct cartProduct = cartProductRepository.findCartProductByProductAndShoppingCart(product, cart)
-                   .orElseThrow(() -> new CartIsEmptyException("CartProduct could not be fetched from the database"));
+                   .orElseThrow(() -> new CartIsNotFound("CartProduct could not be fetched from the database"));
 
            cartProduct.setQuantity(cartProduct.getQuantity() + request.getQuantity());
            cartProduct.setPriceProduct(calculateProductCost(product, cartProduct.getQuantity()));
@@ -76,7 +77,7 @@ public class CartServiceImpl implements CartService{
    @Override
    public void getTotalCost(Long shoppingCartId){
         ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByCartId(shoppingCartId)
-                .orElseThrow(()-> new CartIsEmptyException("Cart is not found"));
+                .orElseThrow(()-> new CartIsNotFound("Cart is not found"));
        List<CartProduct> cartProducts = cartProductRepository.findCartProductByShoppingCart(shoppingCart);
        double totalCost = 0.0;
        for(CartProduct cp : cartProducts){
@@ -121,7 +122,7 @@ public class CartServiceImpl implements CartService{
     @Override
     public ShoppingCart findShoppingCartByCartId(Long cartId){
         return shoppingCartRepository.findShoppingCartByCartId(cartId).orElseThrow(()
-                -> new CartIsEmptyException("Cart is empty"));
+                -> new CartIsNotFound("Cart is empty"));
     }
     @Override
     public double calculateProductCost(Product product, Long quantity){
@@ -136,15 +137,16 @@ public class CartServiceImpl implements CartService{
     @Override
     public Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable) {
     ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
-            .orElseThrow(() -> new CartIsEmptyException("Shopping cart is empty"));
+            .orElseThrow(() -> new CartIsNotFound("Shopping cart is empty"));
     Page<CartProduct> cartProductsPage = cartProductRepository.findAllByShoppingCart(shoppingCart, pageable);
     return cartProductMapper.toDtoPage(cartProductsPage);
 }
+    @Override
     public void removeProductFromCart(Long cartId, Long productId){ //removes entire product from the cart
         Product product = productRepository.findProductByProductId(productId)
                 .orElseThrow(()-> new ProductNotFoundException("There's no product to return"));
         ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
-                .orElseThrow(() -> new CartIsEmptyException("Shopping cart doesn't exist"));
+                .orElseThrow(() -> new CartIsNotFound("Shopping cart doesn't exist"));
         CartProduct cartProduct = cartProductRepository.findCartProductByProductAndShoppingCart(product, shoppingCart)
                 .orElseThrow(() -> new ProductNotFoundException("The product is not present in the car"));
         Long quantity = cartProduct.getQuantity();
@@ -153,7 +155,17 @@ public class CartServiceImpl implements CartService{
 
         increaseStock(productId,quantity);
     }
-    public void removeProductFromCart(){
+
+    @Override
+    public void emptyCart(Long cartId){
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByCartId(cartId)
+                .orElseThrow(()-> new CartIsNotFound("Cart doesn't exist"));
+       List<CartProduct> cartProduct = cartProductRepository.findCartProductByShoppingCart(shoppingCart);
+       for(CartProduct cp: cartProduct){
+           cartProductRepository.delete(cp);
+       }
+       shoppingCart.setPriceTotal(REMOVE_COST);
     }
+
 }
 

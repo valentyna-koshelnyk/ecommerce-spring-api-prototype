@@ -29,6 +29,8 @@ public class Orders {
     private UserInformation userInformation;
     @OneToOne
     private ShoppingCart shoppingCart;
+    @OneToOne
+    private OrderProducts orderProducts;
 
 
     public Orders(@NonNull UserInformation userInformation, @NonNull ShoppingCart shoppingCart) {
