@@ -2,9 +2,8 @@ package com.startsteps.ecommerceapi.service.dto;
 
 import com.startsteps.ecommerceapi.model.Product;
 import org.mapstruct.Mapper;
-import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring",  nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(componentModel = "spring")
 
 public interface ProductMapper extends IEntityMapper<ProductDTO, Product>{
     @Override
