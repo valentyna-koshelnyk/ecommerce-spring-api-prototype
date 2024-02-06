@@ -3,14 +3,15 @@ package com.startsteps.ecommerceapi.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @Table(name = "order_items")
 @Entity
 public class OrderProducts {
@@ -32,7 +33,19 @@ public class OrderProducts {
     private LocalDateTime orderCreatedAt;
     @Column(name = "orderId")
     private long orderId;
-    @ElementCollection
-    private List<CartProduct> cartProduct;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    private List<CartProduct> cartProduct = new ArrayList<>();;
+    @Column(name = "order_status")
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+    @Override
+    public String toString(){
+        return "Order Date: " + orderCreatedAt +
+                "\n Product Name: " + productName +
+                "\n Quantity: " + quantity +
+                "\n Price Product: " + priceProduct +
+                "\n Order Status: " + orderStatus;
+    }
 }
 

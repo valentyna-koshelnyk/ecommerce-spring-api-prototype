@@ -2,8 +2,11 @@ package com.startsteps.ecommerceapi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -31,8 +34,9 @@ public class Orders {
     private UserInformation userInformation;
     @OneToOne
     private ShoppingCart shoppingCart;
-    @ElementCollection
-    private List<OrderProducts> orderItems;
+    @OneToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    private List<OrderProducts> orderItems = new ArrayList<>();;
 
 
     public Orders(@NonNull UserInformation userInformation, @NonNull ShoppingCart shoppingCart) {

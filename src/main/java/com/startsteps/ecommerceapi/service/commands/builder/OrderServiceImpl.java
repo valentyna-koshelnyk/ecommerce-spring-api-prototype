@@ -1,6 +1,7 @@
 package com.startsteps.ecommerceapi.service.commands.builder;
 
 import com.startsteps.ecommerceapi.exceptions.CartIsNotFound;
+import com.startsteps.ecommerceapi.exceptions.OrderNotFoundException;
 import com.startsteps.ecommerceapi.model.*;
 import com.startsteps.ecommerceapi.persistence.*;
 import com.startsteps.ecommerceapi.service.CartServiceImpl;
@@ -83,15 +84,21 @@ public class OrderServiceImpl implements OrderService {
     //TODO: after canceling the order, products return back to the cart
     // add request validation from the user
     // better to put order status "canceled" and keep it for one month in a repo or create a repo with canceled orders
-//    public void cancelOrder(Long orderId){ // might be better to keep the order but change status to CANCELED
-//        Orders orders = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order not found"));
-//        List<CartProduct> productList = orderProductRepository.findC
-//        cartService.increaseStock(orders.getOrderItems());
-//
-//
-//        orderRepository.delete(orders);
-//        log.info("Order: " + orders + " was cancelled");
-//    }
+    public void cancelOrder(Long orderId){ // might be better to keep the order but change status to CANCELED
+        Orders orders = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order not found"));
+        List<OrderProducts> orderProductsList = orders.getOrderItems();
+        for(OrderProducts op: orderProductsList) {
+            op.setOrderStatus(OrderStatus.CANCELED);
+            cartService.increaseStock(op.getProductId(), op.getQuantity());
+        }
+        orderRepository.delete(orders);
+        log.info("Order: " + orders + " was cancelled");
+    }
+
+    //TODO: to adjust order history
+    public List<OrderProducts> getOrderHistory(Long shoppingCartId){
+        return orderProductRepository.findByShoppingCartId(shoppingCartId);
+    }
 
 
 
