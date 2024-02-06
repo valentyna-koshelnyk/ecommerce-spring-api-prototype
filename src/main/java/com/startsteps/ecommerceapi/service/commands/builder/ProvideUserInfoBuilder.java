@@ -8,6 +8,7 @@ public interface ProvideUserInfoBuilder {
     ProvideUserInfoBuilder lastName(String lastName);
     ProvideUserInfoBuilder address(String address);
     ProvideUserInfoBuilder phone(String phone);
+
     ProvideUserInfoBuilder user(User user);
 
     UserInformation build();

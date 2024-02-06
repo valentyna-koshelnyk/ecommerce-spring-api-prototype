@@ -30,7 +30,8 @@ public class Orders {
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    @Embedded
+    @ManyToOne
+    @JoinColumn(name = "UserInfoID")
     private UserInformation userInformation;
     @OneToOne
     private ShoppingCart shoppingCart;
@@ -39,7 +40,7 @@ public class Orders {
     private List<OrderProducts> orderItems = new ArrayList<>();;
 
 
-    public Orders(@NonNull UserInformation userInformation, @NonNull ShoppingCart shoppingCart) {
+    public Orders(UserInformation userInformation, @NonNull ShoppingCart shoppingCart) {
         this.userInformation = userInformation;
         this.shoppingCart = shoppingCart;
     }

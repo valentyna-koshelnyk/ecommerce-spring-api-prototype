@@ -3,22 +3,28 @@ package com.startsteps.ecommerceapi.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Embeddable
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Table(name = "user_information")
 public class UserInformation {
-    // TODO: add custom validations for all properties
-    @Column(unique = false, name = "First_Name")
+    // TODO: validation for properties:firstName and lastName is risky for validation, address require embedded class
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
+    @Column(unique = false, nullable = true, name = "First_Name")
     private String firstName;
-    @Column(unique = false, name = "Last_Name")
+    @Column(unique = false, name = "Last_Name", nullable = true)
     private String lastName;
-    @Column(unique = false, name = "Address")
+    @Column(unique = false, name = "Address", nullable = true)
     private String address;
-    @Column(unique = true, name = "Phone")
+    @Column(unique = true, name = "Phone", nullable = true)
     private String phone;
-
-
+    @OneToOne(mappedBy = "userInformation")
+    private User user;
 }
