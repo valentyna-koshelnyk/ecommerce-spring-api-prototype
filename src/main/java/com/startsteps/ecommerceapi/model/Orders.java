@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,14 +31,15 @@ public class Orders {
     private UserInformation userInformation;
     @OneToOne
     private ShoppingCart shoppingCart;
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-    private OrderProducts orderProducts;
+    @ElementCollection
+    private List<OrderProducts> orderItems;
 
 
     public Orders(@NonNull UserInformation userInformation, @NonNull ShoppingCart shoppingCart) {
         this.userInformation = userInformation;
         this.shoppingCart = shoppingCart;
     }
+
     @Override
     public String toString(){
         return "Order ID: " + orderId +
@@ -47,14 +50,4 @@ public class Orders {
                 ", User Information: " + userInformation;
     }
 
-    @OneToOne(mappedBy = "orders", optional = false)
-    private OrderProducts orderProducts2;
-
-    public OrderProducts getOrderProducts2() {
-        return orderProducts2;
-    }
-
-    public void setOrderProducts2(OrderProducts orderProducts2) {
-        this.orderProducts2 = orderProducts2;
-    }
 }

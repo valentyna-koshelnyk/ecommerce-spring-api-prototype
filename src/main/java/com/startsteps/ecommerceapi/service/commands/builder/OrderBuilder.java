@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Service
 public class OrderBuilder {
     private OrderValidatorImpl orderValidator;
-    private OrderService orderService;
+    private OrderServiceImpl orderService;
     private ShoppingCart shoppingCart;
     private ShoppingCartRepository shoppingCartRepository;
     private UserInformation userInformation;
@@ -32,7 +32,7 @@ public class OrderBuilder {
         this.shoppingCart = shoppingCart;
         return this;
     }
-    public OrderBuilder orderService(OrderService orderService) {
+    public OrderBuilder orderService(OrderServiceImpl orderService) {
         this.orderService = orderService;
         return this;
     }

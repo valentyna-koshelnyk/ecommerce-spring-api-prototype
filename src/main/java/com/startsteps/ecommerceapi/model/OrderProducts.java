@@ -3,23 +3,32 @@ package com.startsteps.ecommerceapi.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
-@Table(name = "orders_products")
+@ToString
+@Table(name = "order_items")
+@Entity
 public class OrderProducts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_productid")
-    private Long orderProductsId;
-    @OneToMany
-    @JoinColumn(name = "cart_product_id")
+    @Column(name = "order_item_id")
+    private Long orderProductId;
+    @Column(name = "product")
+    private String productName;
+    @Column (name = "quantity")
+    private long quantity;
+    @Column(name = "priceProduct")
+    private Double priceProduct;
+    @Column (name = "shoppingCartId")
+    private Long shoppingCartId;
+    @Column(name = "orderCreatedAt")
+    private LocalDateTime orderCreatedAt;
+    @ElementCollection
     private List<CartProduct> cartProduct;
-    @OneToOne
-    @JoinColumn(name = "OrderID")
-    private Orders orders;
-
 }
+

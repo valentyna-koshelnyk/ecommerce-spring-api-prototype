@@ -11,13 +11,13 @@ import lombok.*;
 @ToString
 public class UserInformation {
     // TODO: add custom validations for all properties
-    @Column(nullable = false, unique = false, name = "First_Name")
+    @Column(unique = false, name = "First_Name")
     private String firstName;
-    @Column(nullable = false, unique = false, name = "Last_Name")
+    @Column(unique = false, name = "Last_Name")
     private String lastName;
-    @Column(nullable = false, unique = false, name = "Address")
+    @Column(unique = false, name = "Address")
     private String address;
-    @Column(nullable = false, unique = true, name = "Phone")
+    @Column(unique = true, name = "Phone")
     private String phone;
 
 
