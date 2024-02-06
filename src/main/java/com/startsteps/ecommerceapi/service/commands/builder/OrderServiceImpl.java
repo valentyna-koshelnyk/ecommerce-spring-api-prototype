@@ -1,7 +1,6 @@
 package com.startsteps.ecommerceapi.service.commands.builder;
 
 import com.startsteps.ecommerceapi.exceptions.CartIsNotFound;
-import com.startsteps.ecommerceapi.exceptions.OrderNotFoundException;
 import com.startsteps.ecommerceapi.model.*;
 import com.startsteps.ecommerceapi.persistence.*;
 import com.startsteps.ecommerceapi.service.CartServiceImpl;
@@ -27,13 +26,14 @@ public class OrderServiceImpl implements OrderService {
     private final OrderValidatorImpl orderValidator;
     private final CartProductRepository cartProductRepository;
     private final ProductRepository productRepository;
+    private final OrderProductRepository orderProductRepository;
     private OrderProducts orderProducts;
     private final OrderProductsServiceImpl orderProductsService;
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository, OrderProcessor orderProcessor, OrderBuilder orderBuilder,
                             ShoppingCartRepository shoppingCartRepository, CartServiceImpl cartService,
                             UserRepository userRepository, OrderValidatorImpl orderValidator,
-                            CartProductRepository cartProductRepository, ProductRepository productRepository, OrderProductsServiceImpl orderProductsService) {
+                            CartProductRepository cartProductRepository, ProductRepository productRepository, OrderProductRepository orderProductRepository, OrderProductsServiceImpl orderProductsService) {
         this.orderRepository = orderRepository;
         this.orderProcessor = orderProcessor;
         this.orderBuilder = orderBuilder;
@@ -43,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
         this.orderValidator = orderValidator;
         this.cartProductRepository = cartProductRepository;
         this.productRepository = productRepository;
+        this.orderProductRepository = orderProductRepository;
         this.orderProductsService = orderProductsService;
     }
     public void saveOrder(Orders order) {
@@ -82,12 +83,16 @@ public class OrderServiceImpl implements OrderService {
     //TODO: after canceling the order, products return back to the cart
     // add request validation from the user
     // better to put order status "canceled" and keep it for one month in a repo or create a repo with canceled orders
-    public void cancelOrder(Long orderId){ // might be better to keep the order but change status to CANCELED
-        Orders orders = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order not found"));
-        List<CartProduct> products = orders.getShoppingCart().getProducts();
+//    public void cancelOrder(Long orderId){ // might be better to keep the order but change status to CANCELED
+//        Orders orders = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order not found"));
+//        List<CartProduct> productList = orderProductRepository.findC
+//        cartService.increaseStock(orders.getOrderItems());
+//
+//
+//        orderRepository.delete(orders);
+//        log.info("Order: " + orders + " was cancelled");
+//    }
 
-        orderRepository.delete(orders);
-        log.info("Order: " + orders + " was cancelled");
-    }
+
 
 }

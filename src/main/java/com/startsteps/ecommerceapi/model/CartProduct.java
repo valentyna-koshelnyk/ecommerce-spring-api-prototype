@@ -30,9 +30,6 @@ public class CartProduct {
     @Column(name = "quantity")
     private long quantity;
 
-    @Column(name = "total_cost")
-    private double totalCost;
-
     @Column(name = "price_per_product")
     private Double priceProduct;
     @ManyToOne

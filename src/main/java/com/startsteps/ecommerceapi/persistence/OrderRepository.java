@@ -9,4 +9,5 @@ public interface OrderRepository extends JpaRepository<Orders, Long> {
     Orders findOrdersByShoppingCart(ShoppingCart shoppingCartId);
     void delete(Orders entity);
     User findUserByOrderId(Long orderId);
+
 }

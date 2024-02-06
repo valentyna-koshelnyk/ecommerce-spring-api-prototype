@@ -18,8 +18,10 @@ public class OrderProducts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
     private Long orderProductId;
-    @Column(name = "product")
+    @Column(name = "product_name")
     private String productName;
+    @Column(name = "product_id")
+    private Long productId;
     @Column (name = "quantity")
     private long quantity;
     @Column(name = "priceProduct")
@@ -28,6 +30,8 @@ public class OrderProducts {
     private Long shoppingCartId;
     @Column(name = "orderCreatedAt")
     private LocalDateTime orderCreatedAt;
+    @Column(name = "orderId")
+    private long orderId;
     @ElementCollection
     private List<CartProduct> cartProduct;
 }
