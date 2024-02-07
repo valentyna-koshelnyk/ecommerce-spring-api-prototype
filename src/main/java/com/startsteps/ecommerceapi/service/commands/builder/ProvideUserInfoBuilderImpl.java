@@ -63,7 +63,10 @@ public class ProvideUserInfoBuilderImpl implements ProvideUserInfoBuilder {
     public UserInformation build() {
         User userBuilder = userRepository.findUserByUserId(user.getUserId()).orElseThrow(()->new UserNotFoundException("User was not found"));
         UserInformation userInformation = userBuilder.getUserInformation();
-        userInformation.setFirstName(firstName);
+        if (userInformation == null) {
+            userInformation = new UserInformation();
+            userBuilder.setUserInformation(userInformation);
+        }        userInformation.setFirstName(firstName);
         userInformation.setLastName(lastName);
         userInformation.setAddress(address);
         userInformation.setPhone(phone);

@@ -1,5 +1,6 @@
 package com.startsteps.ecommerceapi.controller;
 
+import com.startsteps.ecommerceapi.model.OrderProducts;
 import com.startsteps.ecommerceapi.model.User;
 import com.startsteps.ecommerceapi.model.UserInformation;
 import com.startsteps.ecommerceapi.payload.response.MessageResponse;
@@ -9,6 +10,8 @@ import com.startsteps.ecommerceapi.service.commands.builder.OrderServiceImpl;
 import com.startsteps.ecommerceapi.service.commands.builder.ProvideUserInfoBuilderImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user/orders")
@@ -46,11 +49,15 @@ public class OrderController {
         return ResponseEntity.ok(new MessageResponse(orderService.printOrder(shoppingCartId)));
     }
     @DeleteMapping("/cancel/{orderId}")
-    public ResponseEntity<?> cancelOrder(@PathVariable Long orderId) {
+    public ResponseEntity<MessageResponse> cancelOrder(@PathVariable Long orderId) {
         orderService.cancelOrder(orderId);
         return ResponseEntity.ok(new MessageResponse("Order " + orderId + " has been cancelled"));
     }
 
-
+    @GetMapping("/view/old/{shoppingCartId}")
+    public ResponseEntity<MessageResponse> getOrderHistory(@PathVariable Long shoppingCartId){
+        List<OrderProducts> orderProductsList = orderService.getOrderHistory(shoppingCartId);
+        return ResponseEntity.ok(new MessageResponse(orderProductsList.toString()));
+    }
 
 }

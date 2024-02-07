@@ -19,7 +19,7 @@ import java.util.Optional;
         List<CartProduct> findCartProductByShoppingCart(ShoppingCart shoppingCart);
 
         void deleteByShoppingCartAndProduct(ShoppingCart shoppingCart, Product product);
-        //double countPriceProductByShoppingCart(ShoppingCart shoppingCart);
+
 
 
  }

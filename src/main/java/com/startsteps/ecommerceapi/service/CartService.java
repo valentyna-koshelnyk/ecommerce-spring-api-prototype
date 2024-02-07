@@ -24,4 +24,8 @@ public interface CartService {
     boolean isProductInUserCart(Product product, ShoppingCart shoppingCart);
 
     Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable);
+
+    void removeProductFromCart(Long cartId, Long productId);
+
+    void emptyCart(Long cartId);
 }

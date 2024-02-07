@@ -2,8 +2,13 @@ package com.startsteps.ecommerceapi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,16 +30,21 @@ public class Orders {
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    @Embedded
+    @ManyToOne
+    @JoinColumn(name = "UserInfoID")
     private UserInformation userInformation;
     @OneToOne
     private ShoppingCart shoppingCart;
+    @OneToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    private List<OrderProducts> orderItems = new ArrayList<>();;
 
 
-    public Orders(@NonNull UserInformation userInformation, @NonNull ShoppingCart shoppingCart) {
+    public Orders(UserInformation userInformation, @NonNull ShoppingCart shoppingCart) {
         this.userInformation = userInformation;
         this.shoppingCart = shoppingCart;
     }
+
     @Override
     public String toString(){
         return "Order ID: " + orderId +
