@@ -1,6 +1,6 @@
 package com.startsteps.ecommerceapi.service.commands.builder;
 
-import com.startsteps.ecommerceapi.exceptions.CartIsNotFound;
+import com.startsteps.ecommerceapi.exceptions.CartNotFoundException;
 import com.startsteps.ecommerceapi.exceptions.OrderNotFoundException;
 import com.startsteps.ecommerceapi.model.*;
 import com.startsteps.ecommerceapi.persistence.*;
@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
     public void placeOrder(Long shoppingCartId) {
         ShoppingCart shoppingCart = cartService.findShoppingCartByCartId(shoppingCartId);
         if (shoppingCart == null) {
-            throw new CartIsNotFound("No cart found with id: " + shoppingCartId);
+            throw new CartNotFoundException("No cart found with id: " + shoppingCartId);
         }
         UserInformation userInformation = shoppingCart.getUser().getUserInformation();
         log.debug("Building order with ShoppingCart id: {}", shoppingCartId);
@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     public String printOrder(Long shoppingCartId){
-        ShoppingCart shoppingCart = shoppingCartRepository.findById(shoppingCartId).orElseThrow(()-> new CartIsNotFound("Cart not found"));
+        ShoppingCart shoppingCart = shoppingCartRepository.findById(shoppingCartId).orElseThrow(()-> new CartNotFoundException("Cart not found"));
         return orderRepository.findOrdersByShoppingCart(shoppingCart)
                 .toString();
     }
