@@ -20,6 +20,8 @@ public interface CartService {
 
     ShoppingCart findShoppingCartByCartId(Long cartId);
 
+    ShoppingCart findShoppingCartByUser(Long userId);
+
     double calculateProductCost(Product product, Long quantity);
     boolean isProductInUserCart(Product product, ShoppingCart shoppingCart);
 

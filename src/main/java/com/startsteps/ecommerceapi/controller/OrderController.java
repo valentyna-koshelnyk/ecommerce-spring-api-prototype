@@ -1,14 +1,17 @@
 package com.startsteps.ecommerceapi.controller;
 
 import com.startsteps.ecommerceapi.model.OrderProducts;
+import com.startsteps.ecommerceapi.model.ShoppingCart;
 import com.startsteps.ecommerceapi.model.User;
 import com.startsteps.ecommerceapi.model.UserInformation;
 import com.startsteps.ecommerceapi.payload.response.MessageResponse;
+import com.startsteps.ecommerceapi.service.CartServiceImpl;
 import com.startsteps.ecommerceapi.service.UserServiceImpl;
 import com.startsteps.ecommerceapi.service.commands.PlaceOrderCommand;
 import com.startsteps.ecommerceapi.service.commands.builder.OrderServiceImpl;
 import com.startsteps.ecommerceapi.service.commands.builder.ProvideUserInfoBuilderImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +20,11 @@ import java.util.List;
 @RequestMapping("/api/v1/user/orders")
 public class OrderController {
     private final UserServiceImpl userService;
+    private final CartServiceImpl cartService;
 
-    public OrderController(UserServiceImpl userService, PlaceOrderCommand placeOrder, OrderServiceImpl orderService, ProvideUserInfoBuilderImpl provideUserInfoBuilder) {
+    public OrderController(UserServiceImpl userService, CartServiceImpl cartService, PlaceOrderCommand placeOrder, OrderServiceImpl orderService, ProvideUserInfoBuilderImpl provideUserInfoBuilder) {
         this.userService = userService;
+        this.cartService = cartService;
         this.placeOrder = placeOrder;
         this.orderService = orderService;
         this.provideUserInfoBuilder = provideUserInfoBuilder;
@@ -30,6 +35,7 @@ public class OrderController {
 
     private final ProvideUserInfoBuilderImpl provideUserInfoBuilder;
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or #userId == principal.id")
     @PostMapping("/{userId}/updateInformation")
     public ResponseEntity<MessageResponse> addUserInfo(@PathVariable Long userId,
                                         @RequestBody UserInformation userInformation) {
@@ -43,19 +49,25 @@ public class OrderController {
                 .build();
         return ResponseEntity.ok(new MessageResponse("Information was updated"));
     }
-    @PostMapping("/place/{shoppingCartId}") //TODO: handle exception if order already exists
-    public ResponseEntity<?> placeOrder(@PathVariable Long shoppingCartId) {
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or #userId == principal.id")
+    @PostMapping("/place/{userId}") //TODO: handle exception if order already exists
+    public ResponseEntity<?> placeOrder(@PathVariable Long userId) {
+        Long shoppingCartId = cartService.findShoppingCartByUser(userId).getCartId();
         orderService.placeOrder(shoppingCartId);
         return ResponseEntity.ok(new MessageResponse(orderService.printOrder(shoppingCartId)));
     }
-    @DeleteMapping("/cancel/{orderId}")
-    public ResponseEntity<MessageResponse> cancelOrder(@PathVariable Long orderId) {
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or #userId == principal.id")
+    @DeleteMapping("/cancel/{userId}/{orderId}")
+    public ResponseEntity<MessageResponse> cancelOrder(@PathVariable Long userId,
+                                                       @PathVariable Long orderId ) {
         orderService.cancelOrder(orderId);
         return ResponseEntity.ok(new MessageResponse("Order " + orderId + " has been cancelled"));
     }
 
-    @GetMapping("/view/old/{shoppingCartId}")
-    public ResponseEntity<MessageResponse> getOrderHistory(@PathVariable Long shoppingCartId){
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or #userId == principal.id")
+    @GetMapping("/view/old/{userId}")
+    public ResponseEntity<MessageResponse> getOrderHistory(@PathVariable Long userId){
+        Long shoppingCartId = cartService.findShoppingCartByUser(userId).getCartId();
         List<OrderProducts> orderProductsList = orderService.getOrderHistory(shoppingCartId);
         return ResponseEntity.ok(new MessageResponse(orderProductsList.toString()));
     }

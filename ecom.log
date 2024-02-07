@@ -7682,3 +7682,1821 @@ Caused by: org.hibernate.MappingException: component: com.startsteps.ecommerceap
             on oi1_1.order_item_id=oi1_0.order_items_order_item_id 
     where
         oi1_0.orders_orderid=?
+2024-02-07T11:52:23.123+01:00  INFO 56124 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-02-07T11:52:23.269+01:00 TRACE 56124 --- [SpringApplicationShutdownHook] o.h.type.spi.TypeConfiguration$Scope     : Handling #sessionFactoryClosed from [org.hibernate.internal.SessionFactoryImpl@566dc0c3] for TypeConfiguration
+2024-02-07T11:52:23.270+01:00 DEBUG 56124 --- [SpringApplicationShutdownHook] o.h.type.spi.TypeConfiguration$Scope     : Un-scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration$Scope@3a3d9ead] from SessionFactory [org.hibernate.internal.SessionFactoryImpl@566dc0c3]
+2024-02-07T11:52:23.288+01:00  INFO 56124 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-02-07T11:52:23.358+01:00  INFO 56124 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-02-07T11:52:30.571+01:00  INFO 56581 --- [main] c.s.e.EcommerceApiApplication            : Starting EcommerceApiApplication using Java 17.0.9 with PID 56581 (/Users/valentynakoshelnyk/Downloads/ecommerce-api/target/classes started by valentynakoshelnyk in /Users/valentynakoshelnyk/Downloads/ecommerce-api)
+2024-02-07T11:52:30.572+01:00  INFO 56581 --- [main] c.s.e.EcommerceApiApplication            : The following 1 profile is active: "dev"
+2024-02-07T11:52:31.197+01:00  INFO 56581 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-02-07T11:52:31.236+01:00  INFO 56581 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 9 JPA repository interfaces.
+2024-02-07T11:52:31.646+01:00  INFO 56581 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-02-07T11:52:31.652+01:00  INFO 56581 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-02-07T11:52:31.652+01:00  INFO 56581 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-02-07T11:52:31.678+01:00  INFO 56581 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-02-07T11:52:31.679+01:00  INFO 56581 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1087 ms
+2024-02-07T11:52:31.849+01:00  INFO 56581 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-02-07T11:52:31.882+01:00  INFO 56581 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2024-02-07T11:52:31.899+01:00  INFO 56581 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration boolean -> org.hibernate.type.BasicTypeReference@1dbc607d
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration boolean -> org.hibernate.type.BasicTypeReference@1dbc607d
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Boolean -> org.hibernate.type.BasicTypeReference@1dbc607d
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration numeric_boolean -> org.hibernate.type.BasicTypeReference@62b42406
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.NumericBooleanConverter -> org.hibernate.type.BasicTypeReference@62b42406
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration true_false -> org.hibernate.type.BasicTypeReference@a0e33db
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.TrueFalseConverter -> org.hibernate.type.BasicTypeReference@a0e33db
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration yes_no -> org.hibernate.type.BasicTypeReference@3ef46749
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.YesNoConverter -> org.hibernate.type.BasicTypeReference@3ef46749
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration byte -> org.hibernate.type.BasicTypeReference@40b54762
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration byte -> org.hibernate.type.BasicTypeReference@40b54762
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Byte -> org.hibernate.type.BasicTypeReference@40b54762
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration binary -> org.hibernate.type.BasicTypeReference@362cf66
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration byte[] -> org.hibernate.type.BasicTypeReference@362cf66
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration [B -> org.hibernate.type.BasicTypeReference@362cf66
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration binary_wrapper -> org.hibernate.type.BasicTypeReference@fbe8fd3
+2024-02-07T11:52:31.932+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration wrapper-binary -> org.hibernate.type.BasicTypeReference@fbe8fd3
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration image -> org.hibernate.type.BasicTypeReference@1ab268bd
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration blob -> org.hibernate.type.BasicTypeReference@2fafa7b5
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Blob -> org.hibernate.type.BasicTypeReference@2fafa7b5
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_blob -> org.hibernate.type.BasicTypeReference@181098bf
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_blob_wrapper -> org.hibernate.type.BasicTypeReference@632b5c79
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration short -> org.hibernate.type.BasicTypeReference@6a552721
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration short -> org.hibernate.type.BasicTypeReference@6a552721
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Short -> org.hibernate.type.BasicTypeReference@6a552721
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration integer -> org.hibernate.type.BasicTypeReference@3815a7d1
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration int -> org.hibernate.type.BasicTypeReference@3815a7d1
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Integer -> org.hibernate.type.BasicTypeReference@3815a7d1
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration long -> org.hibernate.type.BasicTypeReference@24dc150c
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration long -> org.hibernate.type.BasicTypeReference@24dc150c
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Long -> org.hibernate.type.BasicTypeReference@24dc150c
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration float -> org.hibernate.type.BasicTypeReference@1d2d4d7a
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration float -> org.hibernate.type.BasicTypeReference@1d2d4d7a
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Float -> org.hibernate.type.BasicTypeReference@1d2d4d7a
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration double -> org.hibernate.type.BasicTypeReference@5e020dd1
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration double -> org.hibernate.type.BasicTypeReference@5e020dd1
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Double -> org.hibernate.type.BasicTypeReference@5e020dd1
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration big_integer -> org.hibernate.type.BasicTypeReference@4bbc02ef
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.math.BigInteger -> org.hibernate.type.BasicTypeReference@4bbc02ef
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration big_decimal -> org.hibernate.type.BasicTypeReference@f0c1ae1
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.math.BigDecimal -> org.hibernate.type.BasicTypeReference@f0c1ae1
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration character -> org.hibernate.type.BasicTypeReference@783dc0e7
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration char -> org.hibernate.type.BasicTypeReference@783dc0e7
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Character -> org.hibernate.type.BasicTypeReference@783dc0e7
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration character_nchar -> org.hibernate.type.BasicTypeReference@361f26b4
+2024-02-07T11:52:31.933+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration string -> org.hibernate.type.BasicTypeReference@1d9ff1e2
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.String -> org.hibernate.type.BasicTypeReference@1d9ff1e2
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration nstring -> org.hibernate.type.BasicTypeReference@722b3ba2
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration characters -> org.hibernate.type.BasicTypeReference@6487f7f8
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration char[] -> org.hibernate.type.BasicTypeReference@6487f7f8
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration [C -> org.hibernate.type.BasicTypeReference@6487f7f8
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration wrapper-characters -> org.hibernate.type.BasicTypeReference@2b62475a
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration text -> org.hibernate.type.BasicTypeReference@4990b335
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration ntext -> org.hibernate.type.BasicTypeReference@624d778e
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration clob -> org.hibernate.type.BasicTypeReference@39ae6408
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Clob -> org.hibernate.type.BasicTypeReference@39ae6408
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration nclob -> org.hibernate.type.BasicTypeReference@cfacf0
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.NClob -> org.hibernate.type.BasicTypeReference@cfacf0
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_clob -> org.hibernate.type.BasicTypeReference@4c8abec7
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_clob_char_array -> org.hibernate.type.BasicTypeReference@45f241df
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_clob_character_array -> org.hibernate.type.BasicTypeReference@f36f34d
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_nclob -> org.hibernate.type.BasicTypeReference@72e36677
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_nclob_character_array -> org.hibernate.type.BasicTypeReference@6b86826a
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_nclob_char_array -> org.hibernate.type.BasicTypeReference@3c2dda7c
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration Duration -> org.hibernate.type.BasicTypeReference@4b9fa2f
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.Duration -> org.hibernate.type.BasicTypeReference@4b9fa2f
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration LocalDateTime -> org.hibernate.type.BasicTypeReference@6d80e411
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.LocalDateTime -> org.hibernate.type.BasicTypeReference@6d80e411
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration LocalDate -> org.hibernate.type.BasicTypeReference@32caae19
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.LocalDate -> org.hibernate.type.BasicTypeReference@32caae19
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration LocalTime -> org.hibernate.type.BasicTypeReference@60e67c06
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.LocalTime -> org.hibernate.type.BasicTypeReference@60e67c06
+2024-02-07T11:52:31.934+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetDateTime -> org.hibernate.type.BasicTypeReference@2bc59ab7
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.OffsetDateTime -> org.hibernate.type.BasicTypeReference@2bc59ab7
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetDateTimeWithTimezone -> org.hibernate.type.BasicTypeReference@410f53b2
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetDateTimeWithoutTimezone -> org.hibernate.type.BasicTypeReference@265287ec
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetTime -> org.hibernate.type.BasicTypeReference@7507d96c
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.OffsetTime -> org.hibernate.type.BasicTypeReference@7507d96c
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetTimeUtc -> org.hibernate.type.BasicTypeReference@7210f559
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetTimeWithTimezone -> org.hibernate.type.BasicTypeReference@49b9ba6a
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetTimeWithoutTimezone -> org.hibernate.type.BasicTypeReference@7be62956
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration ZonedDateTime -> org.hibernate.type.BasicTypeReference@30e143ff
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.ZonedDateTime -> org.hibernate.type.BasicTypeReference@30e143ff
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration ZonedDateTimeWithTimezone -> org.hibernate.type.BasicTypeReference@452ec287
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration ZonedDateTimeWithoutTimezone -> org.hibernate.type.BasicTypeReference@41404aa2
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration date -> org.hibernate.type.BasicTypeReference@b267745
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Date -> org.hibernate.type.BasicTypeReference@b267745
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration time -> org.hibernate.type.BasicTypeReference@31e22365
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Time -> org.hibernate.type.BasicTypeReference@31e22365
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration timestamp -> org.hibernate.type.BasicTypeReference@2ebf524
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Timestamp -> org.hibernate.type.BasicTypeReference@2ebf524
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Date -> org.hibernate.type.BasicTypeReference@2ebf524
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration calendar -> org.hibernate.type.BasicTypeReference@41bdaa81
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Calendar -> org.hibernate.type.BasicTypeReference@41bdaa81
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.GregorianCalendar -> org.hibernate.type.BasicTypeReference@41bdaa81
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration calendar_date -> org.hibernate.type.BasicTypeReference@799971ac
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration calendar_time -> org.hibernate.type.BasicTypeReference@59c08cf1
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration instant -> org.hibernate.type.BasicTypeReference@45f0038
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.Instant -> org.hibernate.type.BasicTypeReference@45f0038
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration uuid -> org.hibernate.type.BasicTypeReference@289a4b90
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.UUID -> org.hibernate.type.BasicTypeReference@289a4b90
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration pg-uuid -> org.hibernate.type.BasicTypeReference@289a4b90
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration uuid-binary -> org.hibernate.type.BasicTypeReference@1a3c4b3e
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration uuid-char -> org.hibernate.type.BasicTypeReference@4746fb8c
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration class -> org.hibernate.type.BasicTypeReference@3be46d9c
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Class -> org.hibernate.type.BasicTypeReference@3be46d9c
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration currency -> org.hibernate.type.BasicTypeReference@41d877bb
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration Currency -> org.hibernate.type.BasicTypeReference@41d877bb
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Currency -> org.hibernate.type.BasicTypeReference@41d877bb
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration locale -> org.hibernate.type.BasicTypeReference@39c5a105
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Locale -> org.hibernate.type.BasicTypeReference@39c5a105
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration serializable -> org.hibernate.type.BasicTypeReference@492fa72a
+2024-02-07T11:52:31.935+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.io.Serializable -> org.hibernate.type.BasicTypeReference@492fa72a
+2024-02-07T11:52:31.936+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration timezone -> org.hibernate.type.BasicTypeReference@513fab1e
+2024-02-07T11:52:31.936+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.TimeZone -> org.hibernate.type.BasicTypeReference@513fab1e
+2024-02-07T11:52:31.936+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration ZoneOffset -> org.hibernate.type.BasicTypeReference@53d87b2d
+2024-02-07T11:52:31.936+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.ZoneOffset -> org.hibernate.type.BasicTypeReference@53d87b2d
+2024-02-07T11:52:31.936+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration url -> org.hibernate.type.BasicTypeReference@470135da
+2024-02-07T11:52:31.936+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.net.URL -> org.hibernate.type.BasicTypeReference@470135da
+2024-02-07T11:52:31.936+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration vector -> org.hibernate.type.BasicTypeReference@7323dce7
+2024-02-07T11:52:31.936+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration row_version -> org.hibernate.type.BasicTypeReference@5f68eec6
+2024-02-07T11:52:31.938+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration object -> org.hibernate.type.JavaObjectType@56f84c9b
+2024-02-07T11:52:31.938+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Object -> org.hibernate.type.JavaObjectType@56f84c9b
+2024-02-07T11:52:31.938+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration null -> org.hibernate.type.NullType@4cd8db31
+2024-02-07T11:52:31.938+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_date -> org.hibernate.type.BasicTypeReference@201a8ea7
+2024-02-07T11:52:31.938+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_time -> org.hibernate.type.BasicTypeReference@ecf028c
+2024-02-07T11:52:31.938+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_timestamp -> org.hibernate.type.BasicTypeReference@7b64bbad
+2024-02-07T11:52:31.938+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_calendar -> org.hibernate.type.BasicTypeReference@71eff6a3
+2024-02-07T11:52:31.938+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_calendar_date -> org.hibernate.type.BasicTypeReference@574218f
+2024-02-07T11:52:31.938+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_calendar_time -> org.hibernate.type.BasicTypeReference@735988cf
+2024-02-07T11:52:31.938+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_binary -> org.hibernate.type.BasicTypeReference@2d3eecda
+2024-02-07T11:52:31.938+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_serializable -> org.hibernate.type.BasicTypeReference@236a4d30
+2024-02-07T11:52:32.010+01:00  INFO 56581 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-02-07T11:52:32.023+01:00  INFO 56581 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-02-07T11:52:32.264+01:00  INFO 56581 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4c3d72fd
+2024-02-07T11:52:32.265+01:00  INFO 56581 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-02-07T11:52:32.329+01:00 DEBUG 56581 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(12, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@7fd32c56) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@b04a6a4)
+2024-02-07T11:52:32.330+01:00 DEBUG 56581 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(-9, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@3465edf9) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@51c4992e)
+2024-02-07T11:52:32.330+01:00 DEBUG 56581 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(-3, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@3713bedc) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@198c0f1c)
+2024-02-07T11:52:32.330+01:00 DEBUG 56581 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(4003, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@29d33f1) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@77e5c765)
+2024-02-07T11:52:32.330+01:00 DEBUG 56581 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(4001, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@5daa621b) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@24a7725d)
+2024-02-07T11:52:32.330+01:00 DEBUG 56581 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(4002, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@4fcedf83) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@16c9f7f0)
+2024-02-07T11:52:32.330+01:00 DEBUG 56581 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(2004, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@187df588) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@7d75940)
+2024-02-07T11:52:32.330+01:00 DEBUG 56581 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(2005, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@3e5cbcfe) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@6773bab2)
+2024-02-07T11:52:32.330+01:00 DEBUG 56581 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(2011, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@1055d261) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@2d758472)
+2024-02-07T11:52:32.330+01:00 DEBUG 56581 --- [main] o.h.t.d.jdbc.spi.JdbcTypeRegistry        : addDescriptor(NCharTypeDescriptor) replaced previous registration(CharTypeDescriptor)
+2024-02-07T11:52:32.330+01:00 DEBUG 56581 --- [main] o.h.t.d.jdbc.spi.JdbcTypeRegistry        : addDescriptor(NVarcharTypeDescriptor) replaced previous registration(VarcharTypeDescriptor)
+2024-02-07T11:52:32.331+01:00 DEBUG 56581 --- [main] o.h.t.d.jdbc.spi.JdbcTypeRegistry        : addDescriptor(LongNVarcharTypeDescriptor) replaced previous registration(LongVarcharTypeDescriptor)
+2024-02-07T11:52:32.331+01:00 DEBUG 56581 --- [main] o.h.t.d.jdbc.spi.JdbcTypeRegistry        : addDescriptor(NClobTypeDescriptor(DEFAULT)) replaced previous registration(ClobTypeDescriptor(DEFAULT))
+2024-02-07T11:52:32.331+01:00 DEBUG 56581 --- [main] o.h.t.d.jdbc.spi.JdbcTypeRegistry        : addDescriptor(2005, ClobTypeDescriptor(STREAM_BINDING)) replaced previous registration(ClobTypeDescriptor(DEFAULT))
+2024-02-07T11:52:32.332+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration null -> org.hibernate.type.NullType@2af3b054
+2024-02-07T11:52:32.332+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Type registration key [null] overrode previous entry : `org.hibernate.type.NullType@4cd8db31`
+2024-02-07T11:52:32.334+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.DurationType -> basicType@1(java.time.Duration,2)
+2024-02-07T11:52:32.334+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration Duration -> basicType@1(java.time.Duration,2)
+2024-02-07T11:52:32.334+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.Duration -> basicType@1(java.time.Duration,2)
+2024-02-07T11:52:32.335+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.OffsetDateTimeType -> basicType@2(java.time.OffsetDateTime,3003)
+2024-02-07T11:52:32.335+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetDateTime -> basicType@2(java.time.OffsetDateTime,3003)
+2024-02-07T11:52:32.335+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.OffsetDateTime -> basicType@2(java.time.OffsetDateTime,3003)
+2024-02-07T11:52:32.335+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.ZonedDateTimeType -> basicType@3(java.time.ZonedDateTime,3003)
+2024-02-07T11:52:32.335+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration ZonedDateTime -> basicType@3(java.time.ZonedDateTime,3003)
+2024-02-07T11:52:32.335+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.ZonedDateTime -> basicType@3(java.time.ZonedDateTime,3003)
+2024-02-07T11:52:32.335+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.OffsetTimeType -> basicType@4(java.time.OffsetTime,3007)
+2024-02-07T11:52:32.335+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetTime -> basicType@4(java.time.OffsetTime,3007)
+2024-02-07T11:52:32.336+01:00 DEBUG 56581 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.OffsetTime -> basicType@4(java.time.OffsetTime,3007)
+2024-02-07T11:52:32.336+01:00 DEBUG 56581 --- [main] o.h.type.spi.TypeConfiguration$Scope     : Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@46d18a33] to MetadataBuildingContext [org.hibernate.boot.internal.MetadataBuildingContextRootImpl@495f3965]
+2024-02-07T11:52:32.846+01:00  INFO 56581 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-02-07T11:52:32.846+01:00 DEBUG 56581 --- [main] o.h.type.spi.TypeConfiguration$Scope     : Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@46d18a33] to SessionFactoryImplementor [org.hibernate.internal.SessionFactoryImpl@47fb30ca]
+2024-02-07T11:52:33.006+01:00 TRACE 56581 --- [main] o.h.type.spi.TypeConfiguration$Scope     : Handling #sessionFactoryCreated from [org.hibernate.internal.SessionFactoryImpl@47fb30ca] for TypeConfiguration
+2024-02-07T11:52:33.007+01:00  INFO 56581 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-02-07T11:52:33.291+01:00  INFO 56581 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-02-07T11:52:34.041+01:00  INFO 56581 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-02-07T11:52:34.104+01:00  INFO 56581 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@be73bbd, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@223f8c82, org.springframework.security.web.context.SecurityContextHolderFilter@1c595228, org.springframework.security.web.header.HeaderWriterFilter@39008911, org.springframework.web.filter.CorsFilter@33d95295, org.springframework.security.web.authentication.logout.LogoutFilter@1140585, com.startsteps.ecommerceapi.security.jwt.AuthTokenFilter@5cdd5ff9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@49648d97, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@77eb383a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5e1fd72a, org.springframework.security.web.session.SessionManagementFilter@2ad51ba4, org.springframework.security.web.access.ExceptionTranslationFilter@5ce76938, org.springframework.security.web.access.intercept.AuthorizationFilter@13f05e8e]
+2024-02-07T11:52:34.537+01:00  INFO 56581 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-02-07T11:52:34.547+01:00  INFO 56581 --- [main] c.s.e.EcommerceApiApplication            : Started EcommerceApiApplication in 4.296 seconds (process running for 4.805)
+2024-02-07T11:52:35.234+01:00  INFO 56581 --- [RMI TCP Connection(3)-192.168.2.147] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-02-07T11:52:35.242+01:00  INFO 56581 --- [RMI TCP Connection(3)-192.168.2.147] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-02-07T11:52:35.244+01:00  INFO 56581 --- [RMI TCP Connection(3)-192.168.2.147] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-02-07T11:53:19.184+01:00 DEBUG 56581 --- [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/v1/user/orders/2/updateInformation
+2024-02-07T11:53:19.291+01:00 DEBUG 56581 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T11:53:19.329+01:00 DEBUG 56581 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T11:53:19.353+01:00 DEBUG 56581 --- [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/v1/user/orders/2/updateInformation
+2024-02-07T11:53:19.385+01:00 DEBUG 56581 --- [http-nio-8080-exec-2] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.startsteps.ecommerceapi.controller.OrderController.addUserInfo(java.lang.Long,com.startsteps.ecommerceapi.model.UserInformation); target is of class [com.startsteps.ecommerceapi.controller.OrderController]
+2024-02-07T11:53:19.395+01:00 DEBUG 56581 --- [http-nio-8080-exec-2] horizationManagerBeforeMethodInterceptor : Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.startsteps.ecommerceapi.controller.OrderController.addUserInfo(java.lang.Long,com.startsteps.ecommerceapi.model.UserInformation); target is of class [com.startsteps.ecommerceapi.controller.OrderController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@1c85b52e and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=#userId == principal.id]
+2024-02-07T11:53:50.383+01:00 DEBUG 56581 --- [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/signin
+2024-02-07T11:53:50.398+01:00 DEBUG 56581 --- [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T11:53:50.400+01:00 DEBUG 56581 --- [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T11:53:50.408+01:00 DEBUG 56581 --- [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/signin
+2024-02-07T11:53:50.561+01:00 DEBUG 56581 --- [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T11:53:50.562+01:00 DEBUG 56581 --- [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T11:53:50.649+01:00 DEBUG 56581 --- [http-nio-8080-exec-3] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2024-02-07T11:53:50.666+01:00 DEBUG 56581 --- [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T11:53:50.667+01:00 DEBUG 56581 --- [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T11:53:50.675+01:00 DEBUG 56581 --- [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T11:53:50.676+01:00 DEBUG 56581 --- [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T11:54:12.849+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /api/v1/user/orders/2/updateInformation
+2024-02-07T11:54:12.890+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T11:54:12.893+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T11:54:12.898+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /api/v1/user/orders/2/updateInformation
+2024-02-07T11:54:12.900+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.startsteps.ecommerceapi.controller.OrderController.addUserInfo(java.lang.Long,com.startsteps.ecommerceapi.model.UserInformation); target is of class [com.startsteps.ecommerceapi.controller.OrderController]
+2024-02-07T11:54:12.901+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.startsteps.ecommerceapi.controller.OrderController.addUserInfo(java.lang.Long,com.startsteps.ecommerceapi.model.UserInformation); target is of class [com.startsteps.ecommerceapi.controller.OrderController]
+2024-02-07T11:54:12.904+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.userid=?
+2024-02-07T11:54:12.905+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T11:54:12.913+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.userid=?
+2024-02-07T11:54:12.914+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T11:54:12.920+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone 
+    from
+        user_information ui1_0 
+    left join
+        user u1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        u1_0.userid=?
+2024-02-07T11:54:12.930+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        user_information_seq for update
+2024-02-07T11:54:12.936+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    update
+        user_information_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2024-02-07T11:54:12.973+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    insert 
+    into
+        user_information
+        (address, first_name, last_name, phone, id) 
+    values
+        (?, ?, ?, ?, ?)
+2024-02-07T11:54:12.983+01:00 DEBUG 56581 --- [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    update
+        user 
+    set
+        approved=?,
+        email=?,
+        password=?,
+        pending=?,
+        cart_id=?,
+        update_date=?,
+        user_info_id=?,
+        user_role=?,
+        username=? 
+    where
+        userid=?
+2024-02-07T12:13:58.952+01:00 DEBUG 56581 --- [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/signin
+2024-02-07T12:13:59.135+01:00 DEBUG 56581 --- [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T12:13:59.153+01:00 DEBUG 56581 --- [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:13:59.195+01:00 DEBUG 56581 --- [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/signin
+2024-02-07T12:13:59.253+01:00 DEBUG 56581 --- [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T12:13:59.255+01:00 DEBUG 56581 --- [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:13:59.361+01:00 DEBUG 56581 --- [http-nio-8080-exec-8] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2024-02-07T12:13:59.369+01:00 DEBUG 56581 --- [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T12:13:59.370+01:00 DEBUG 56581 --- [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:13:59.386+01:00 DEBUG 56581 --- [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T12:13:59.389+01:00 DEBUG 56581 --- [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:14:25.722+01:00 DEBUG 56581 --- [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/signin
+2024-02-07T12:14:25.749+01:00 DEBUG 56581 --- [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T12:14:25.753+01:00 DEBUG 56581 --- [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:14:25.759+01:00 DEBUG 56581 --- [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/signin
+2024-02-07T12:14:25.765+01:00 DEBUG 56581 --- [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T12:14:25.767+01:00 DEBUG 56581 --- [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:14:25.880+01:00 DEBUG 56581 --- [http-nio-8080-exec-9] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2024-02-07T12:14:25.881+01:00 DEBUG 56581 --- [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T12:14:25.885+01:00 DEBUG 56581 --- [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:14:25.890+01:00 DEBUG 56581 --- [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T12:14:25.891+01:00 DEBUG 56581 --- [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:15:47.306+01:00 DEBUG 56581 --- [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/v1/user/orders/1/updateInformation
+2024-02-07T12:15:47.336+01:00 DEBUG 56581 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T12:15:47.339+01:00 DEBUG 56581 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:15:47.345+01:00 DEBUG 56581 --- [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/v1/user/orders/1/updateInformation
+2024-02-07T12:15:47.351+01:00 DEBUG 56581 --- [http-nio-8080-exec-2] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.startsteps.ecommerceapi.controller.OrderController.addUserInfo(java.lang.Long,com.startsteps.ecommerceapi.model.UserInformation); target is of class [com.startsteps.ecommerceapi.controller.OrderController]
+2024-02-07T12:15:47.360+01:00 DEBUG 56581 --- [http-nio-8080-exec-2] horizationManagerBeforeMethodInterceptor : Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.startsteps.ecommerceapi.controller.OrderController.addUserInfo(java.lang.Long,com.startsteps.ecommerceapi.model.UserInformation); target is of class [com.startsteps.ecommerceapi.controller.OrderController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@1c85b52e and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=#userId == principal.id]
+2024-02-07T12:16:26.088+01:00 DEBUG 56581 --- [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /api/v1/user/orders/1/updateInformation
+2024-02-07T12:16:26.109+01:00 DEBUG 56581 --- [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T12:16:26.113+01:00 DEBUG 56581 --- [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:16:26.120+01:00 DEBUG 56581 --- [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /api/v1/user/orders/1/updateInformation
+2024-02-07T12:16:26.124+01:00 DEBUG 56581 --- [http-nio-8080-exec-4] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.startsteps.ecommerceapi.controller.OrderController.addUserInfo(java.lang.Long,com.startsteps.ecommerceapi.model.UserInformation); target is of class [com.startsteps.ecommerceapi.controller.OrderController]
+2024-02-07T12:16:26.125+01:00 DEBUG 56581 --- [http-nio-8080-exec-4] horizationManagerBeforeMethodInterceptor : Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.startsteps.ecommerceapi.controller.OrderController.addUserInfo(java.lang.Long,com.startsteps.ecommerceapi.model.UserInformation); target is of class [com.startsteps.ecommerceapi.controller.OrderController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@1c85b52e and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=#userId == principal.id]
+2024-02-07T12:16:33.730+01:00  INFO 56581 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-02-07T12:16:33.755+01:00 TRACE 56581 --- [SpringApplicationShutdownHook] o.h.type.spi.TypeConfiguration$Scope     : Handling #sessionFactoryClosed from [org.hibernate.internal.SessionFactoryImpl@47fb30ca] for TypeConfiguration
+2024-02-07T12:16:33.756+01:00 DEBUG 56581 --- [SpringApplicationShutdownHook] o.h.type.spi.TypeConfiguration$Scope     : Un-scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration$Scope@54ea9786] from SessionFactory [org.hibernate.internal.SessionFactoryImpl@47fb30ca]
+2024-02-07T12:16:33.768+01:00  INFO 56581 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-02-07T12:16:33.830+01:00  INFO 56581 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-02-07T12:16:47.417+01:00  INFO 56942 --- [main] c.s.e.EcommerceApiApplication            : Starting EcommerceApiApplication using Java 17.0.9 with PID 56942 (/Users/valentynakoshelnyk/Downloads/ecommerce-api/target/classes started by valentynakoshelnyk in /Users/valentynakoshelnyk/Downloads/ecommerce-api)
+2024-02-07T12:16:47.418+01:00  INFO 56942 --- [main] c.s.e.EcommerceApiApplication            : The following 1 profile is active: "dev"
+2024-02-07T12:16:47.950+01:00  INFO 56942 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-02-07T12:16:47.990+01:00  INFO 56942 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 9 JPA repository interfaces.
+2024-02-07T12:16:48.372+01:00  INFO 56942 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-02-07T12:16:48.379+01:00  INFO 56942 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-02-07T12:16:48.379+01:00  INFO 56942 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-02-07T12:16:48.406+01:00  INFO 56942 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-02-07T12:16:48.406+01:00  INFO 56942 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 971 ms
+2024-02-07T12:16:48.568+01:00  INFO 56942 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-02-07T12:16:48.598+01:00  INFO 56942 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2024-02-07T12:16:48.615+01:00  INFO 56942 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-02-07T12:16:48.646+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration boolean -> org.hibernate.type.BasicTypeReference@1dbc607d
+2024-02-07T12:16:48.646+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration boolean -> org.hibernate.type.BasicTypeReference@1dbc607d
+2024-02-07T12:16:48.646+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Boolean -> org.hibernate.type.BasicTypeReference@1dbc607d
+2024-02-07T12:16:48.646+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration numeric_boolean -> org.hibernate.type.BasicTypeReference@62b42406
+2024-02-07T12:16:48.646+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.NumericBooleanConverter -> org.hibernate.type.BasicTypeReference@62b42406
+2024-02-07T12:16:48.646+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration true_false -> org.hibernate.type.BasicTypeReference@a0e33db
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.TrueFalseConverter -> org.hibernate.type.BasicTypeReference@a0e33db
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration yes_no -> org.hibernate.type.BasicTypeReference@3ef46749
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.YesNoConverter -> org.hibernate.type.BasicTypeReference@3ef46749
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration byte -> org.hibernate.type.BasicTypeReference@40b54762
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration byte -> org.hibernate.type.BasicTypeReference@40b54762
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Byte -> org.hibernate.type.BasicTypeReference@40b54762
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration binary -> org.hibernate.type.BasicTypeReference@362cf66
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration byte[] -> org.hibernate.type.BasicTypeReference@362cf66
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration [B -> org.hibernate.type.BasicTypeReference@362cf66
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration binary_wrapper -> org.hibernate.type.BasicTypeReference@fbe8fd3
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration wrapper-binary -> org.hibernate.type.BasicTypeReference@fbe8fd3
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration image -> org.hibernate.type.BasicTypeReference@1ab268bd
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration blob -> org.hibernate.type.BasicTypeReference@2fafa7b5
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Blob -> org.hibernate.type.BasicTypeReference@2fafa7b5
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_blob -> org.hibernate.type.BasicTypeReference@181098bf
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_blob_wrapper -> org.hibernate.type.BasicTypeReference@632b5c79
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration short -> org.hibernate.type.BasicTypeReference@6a552721
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration short -> org.hibernate.type.BasicTypeReference@6a552721
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Short -> org.hibernate.type.BasicTypeReference@6a552721
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration integer -> org.hibernate.type.BasicTypeReference@3815a7d1
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration int -> org.hibernate.type.BasicTypeReference@3815a7d1
+2024-02-07T12:16:48.647+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Integer -> org.hibernate.type.BasicTypeReference@3815a7d1
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration long -> org.hibernate.type.BasicTypeReference@24dc150c
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration long -> org.hibernate.type.BasicTypeReference@24dc150c
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Long -> org.hibernate.type.BasicTypeReference@24dc150c
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration float -> org.hibernate.type.BasicTypeReference@1d2d4d7a
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration float -> org.hibernate.type.BasicTypeReference@1d2d4d7a
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Float -> org.hibernate.type.BasicTypeReference@1d2d4d7a
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration double -> org.hibernate.type.BasicTypeReference@5e020dd1
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration double -> org.hibernate.type.BasicTypeReference@5e020dd1
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Double -> org.hibernate.type.BasicTypeReference@5e020dd1
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration big_integer -> org.hibernate.type.BasicTypeReference@4bbc02ef
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.math.BigInteger -> org.hibernate.type.BasicTypeReference@4bbc02ef
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration big_decimal -> org.hibernate.type.BasicTypeReference@f0c1ae1
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.math.BigDecimal -> org.hibernate.type.BasicTypeReference@f0c1ae1
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration character -> org.hibernate.type.BasicTypeReference@783dc0e7
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration char -> org.hibernate.type.BasicTypeReference@783dc0e7
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Character -> org.hibernate.type.BasicTypeReference@783dc0e7
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration character_nchar -> org.hibernate.type.BasicTypeReference@361f26b4
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration string -> org.hibernate.type.BasicTypeReference@1d9ff1e2
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.String -> org.hibernate.type.BasicTypeReference@1d9ff1e2
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration nstring -> org.hibernate.type.BasicTypeReference@722b3ba2
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration characters -> org.hibernate.type.BasicTypeReference@6487f7f8
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration char[] -> org.hibernate.type.BasicTypeReference@6487f7f8
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration [C -> org.hibernate.type.BasicTypeReference@6487f7f8
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration wrapper-characters -> org.hibernate.type.BasicTypeReference@2b62475a
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration text -> org.hibernate.type.BasicTypeReference@4990b335
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration ntext -> org.hibernate.type.BasicTypeReference@624d778e
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration clob -> org.hibernate.type.BasicTypeReference@39ae6408
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Clob -> org.hibernate.type.BasicTypeReference@39ae6408
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration nclob -> org.hibernate.type.BasicTypeReference@cfacf0
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.NClob -> org.hibernate.type.BasicTypeReference@cfacf0
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_clob -> org.hibernate.type.BasicTypeReference@4c8abec7
+2024-02-07T12:16:48.648+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_clob_char_array -> org.hibernate.type.BasicTypeReference@45f241df
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_clob_character_array -> org.hibernate.type.BasicTypeReference@f36f34d
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_nclob -> org.hibernate.type.BasicTypeReference@72e36677
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_nclob_character_array -> org.hibernate.type.BasicTypeReference@6b86826a
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_nclob_char_array -> org.hibernate.type.BasicTypeReference@3c2dda7c
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration Duration -> org.hibernate.type.BasicTypeReference@4b9fa2f
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.Duration -> org.hibernate.type.BasicTypeReference@4b9fa2f
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration LocalDateTime -> org.hibernate.type.BasicTypeReference@6d80e411
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.LocalDateTime -> org.hibernate.type.BasicTypeReference@6d80e411
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration LocalDate -> org.hibernate.type.BasicTypeReference@32caae19
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.LocalDate -> org.hibernate.type.BasicTypeReference@32caae19
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration LocalTime -> org.hibernate.type.BasicTypeReference@60e67c06
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.LocalTime -> org.hibernate.type.BasicTypeReference@60e67c06
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetDateTime -> org.hibernate.type.BasicTypeReference@2bc59ab7
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.OffsetDateTime -> org.hibernate.type.BasicTypeReference@2bc59ab7
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetDateTimeWithTimezone -> org.hibernate.type.BasicTypeReference@410f53b2
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetDateTimeWithoutTimezone -> org.hibernate.type.BasicTypeReference@265287ec
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetTime -> org.hibernate.type.BasicTypeReference@7507d96c
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.OffsetTime -> org.hibernate.type.BasicTypeReference@7507d96c
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetTimeUtc -> org.hibernate.type.BasicTypeReference@7210f559
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetTimeWithTimezone -> org.hibernate.type.BasicTypeReference@49b9ba6a
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetTimeWithoutTimezone -> org.hibernate.type.BasicTypeReference@7be62956
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration ZonedDateTime -> org.hibernate.type.BasicTypeReference@30e143ff
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.ZonedDateTime -> org.hibernate.type.BasicTypeReference@30e143ff
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration ZonedDateTimeWithTimezone -> org.hibernate.type.BasicTypeReference@452ec287
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration ZonedDateTimeWithoutTimezone -> org.hibernate.type.BasicTypeReference@41404aa2
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration date -> org.hibernate.type.BasicTypeReference@b267745
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Date -> org.hibernate.type.BasicTypeReference@b267745
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration time -> org.hibernate.type.BasicTypeReference@31e22365
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Time -> org.hibernate.type.BasicTypeReference@31e22365
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration timestamp -> org.hibernate.type.BasicTypeReference@2ebf524
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Timestamp -> org.hibernate.type.BasicTypeReference@2ebf524
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Date -> org.hibernate.type.BasicTypeReference@2ebf524
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration calendar -> org.hibernate.type.BasicTypeReference@41bdaa81
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Calendar -> org.hibernate.type.BasicTypeReference@41bdaa81
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.GregorianCalendar -> org.hibernate.type.BasicTypeReference@41bdaa81
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration calendar_date -> org.hibernate.type.BasicTypeReference@799971ac
+2024-02-07T12:16:48.649+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration calendar_time -> org.hibernate.type.BasicTypeReference@59c08cf1
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration instant -> org.hibernate.type.BasicTypeReference@45f0038
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.Instant -> org.hibernate.type.BasicTypeReference@45f0038
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration uuid -> org.hibernate.type.BasicTypeReference@289a4b90
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.UUID -> org.hibernate.type.BasicTypeReference@289a4b90
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration pg-uuid -> org.hibernate.type.BasicTypeReference@289a4b90
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration uuid-binary -> org.hibernate.type.BasicTypeReference@1a3c4b3e
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration uuid-char -> org.hibernate.type.BasicTypeReference@4746fb8c
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration class -> org.hibernate.type.BasicTypeReference@3be46d9c
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Class -> org.hibernate.type.BasicTypeReference@3be46d9c
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration currency -> org.hibernate.type.BasicTypeReference@41d877bb
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration Currency -> org.hibernate.type.BasicTypeReference@41d877bb
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Currency -> org.hibernate.type.BasicTypeReference@41d877bb
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration locale -> org.hibernate.type.BasicTypeReference@39c5a105
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Locale -> org.hibernate.type.BasicTypeReference@39c5a105
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration serializable -> org.hibernate.type.BasicTypeReference@492fa72a
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.io.Serializable -> org.hibernate.type.BasicTypeReference@492fa72a
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration timezone -> org.hibernate.type.BasicTypeReference@513fab1e
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.TimeZone -> org.hibernate.type.BasicTypeReference@513fab1e
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration ZoneOffset -> org.hibernate.type.BasicTypeReference@53d87b2d
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.ZoneOffset -> org.hibernate.type.BasicTypeReference@53d87b2d
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration url -> org.hibernate.type.BasicTypeReference@470135da
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.net.URL -> org.hibernate.type.BasicTypeReference@470135da
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration vector -> org.hibernate.type.BasicTypeReference@7323dce7
+2024-02-07T12:16:48.650+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration row_version -> org.hibernate.type.BasicTypeReference@5f68eec6
+2024-02-07T12:16:48.652+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration object -> org.hibernate.type.JavaObjectType@56f84c9b
+2024-02-07T12:16:48.652+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Object -> org.hibernate.type.JavaObjectType@56f84c9b
+2024-02-07T12:16:48.652+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration null -> org.hibernate.type.NullType@4cd8db31
+2024-02-07T12:16:48.652+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_date -> org.hibernate.type.BasicTypeReference@201a8ea7
+2024-02-07T12:16:48.652+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_time -> org.hibernate.type.BasicTypeReference@ecf028c
+2024-02-07T12:16:48.652+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_timestamp -> org.hibernate.type.BasicTypeReference@7b64bbad
+2024-02-07T12:16:48.652+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_calendar -> org.hibernate.type.BasicTypeReference@71eff6a3
+2024-02-07T12:16:48.652+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_calendar_date -> org.hibernate.type.BasicTypeReference@574218f
+2024-02-07T12:16:48.652+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_calendar_time -> org.hibernate.type.BasicTypeReference@735988cf
+2024-02-07T12:16:48.652+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_binary -> org.hibernate.type.BasicTypeReference@2d3eecda
+2024-02-07T12:16:48.652+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_serializable -> org.hibernate.type.BasicTypeReference@236a4d30
+2024-02-07T12:16:48.719+01:00  INFO 56942 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-02-07T12:16:48.731+01:00  INFO 56942 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-02-07T12:16:48.961+01:00  INFO 56942 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4c3d72fd
+2024-02-07T12:16:48.964+01:00  INFO 56942 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-02-07T12:16:49.104+01:00 DEBUG 56942 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(12, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@7fd32c56) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@b04a6a4)
+2024-02-07T12:16:49.105+01:00 DEBUG 56942 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(-9, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@3465edf9) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@51c4992e)
+2024-02-07T12:16:49.105+01:00 DEBUG 56942 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(-3, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@3713bedc) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@198c0f1c)
+2024-02-07T12:16:49.105+01:00 DEBUG 56942 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(4003, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@29d33f1) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@77e5c765)
+2024-02-07T12:16:49.106+01:00 DEBUG 56942 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(4001, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@5daa621b) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@24a7725d)
+2024-02-07T12:16:49.106+01:00 DEBUG 56942 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(4002, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@4fcedf83) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@16c9f7f0)
+2024-02-07T12:16:49.106+01:00 DEBUG 56942 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(2004, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@187df588) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@7d75940)
+2024-02-07T12:16:49.106+01:00 DEBUG 56942 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(2005, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@3e5cbcfe) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@6773bab2)
+2024-02-07T12:16:49.106+01:00 DEBUG 56942 --- [main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(2011, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@1055d261) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@2d758472)
+2024-02-07T12:16:49.107+01:00 DEBUG 56942 --- [main] o.h.t.d.jdbc.spi.JdbcTypeRegistry        : addDescriptor(NCharTypeDescriptor) replaced previous registration(CharTypeDescriptor)
+2024-02-07T12:16:49.107+01:00 DEBUG 56942 --- [main] o.h.t.d.jdbc.spi.JdbcTypeRegistry        : addDescriptor(NVarcharTypeDescriptor) replaced previous registration(VarcharTypeDescriptor)
+2024-02-07T12:16:49.108+01:00 DEBUG 56942 --- [main] o.h.t.d.jdbc.spi.JdbcTypeRegistry        : addDescriptor(LongNVarcharTypeDescriptor) replaced previous registration(LongVarcharTypeDescriptor)
+2024-02-07T12:16:49.109+01:00 DEBUG 56942 --- [main] o.h.t.d.jdbc.spi.JdbcTypeRegistry        : addDescriptor(NClobTypeDescriptor(DEFAULT)) replaced previous registration(ClobTypeDescriptor(DEFAULT))
+2024-02-07T12:16:49.109+01:00 DEBUG 56942 --- [main] o.h.t.d.jdbc.spi.JdbcTypeRegistry        : addDescriptor(2005, ClobTypeDescriptor(STREAM_BINDING)) replaced previous registration(ClobTypeDescriptor(DEFAULT))
+2024-02-07T12:16:49.113+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration null -> org.hibernate.type.NullType@2af3b054
+2024-02-07T12:16:49.114+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Type registration key [null] overrode previous entry : `org.hibernate.type.NullType@4cd8db31`
+2024-02-07T12:16:49.122+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.DurationType -> basicType@1(java.time.Duration,2)
+2024-02-07T12:16:49.122+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration Duration -> basicType@1(java.time.Duration,2)
+2024-02-07T12:16:49.122+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.Duration -> basicType@1(java.time.Duration,2)
+2024-02-07T12:16:49.125+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.OffsetDateTimeType -> basicType@2(java.time.OffsetDateTime,3003)
+2024-02-07T12:16:49.125+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetDateTime -> basicType@2(java.time.OffsetDateTime,3003)
+2024-02-07T12:16:49.125+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.OffsetDateTime -> basicType@2(java.time.OffsetDateTime,3003)
+2024-02-07T12:16:49.125+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.ZonedDateTimeType -> basicType@3(java.time.ZonedDateTime,3003)
+2024-02-07T12:16:49.125+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration ZonedDateTime -> basicType@3(java.time.ZonedDateTime,3003)
+2024-02-07T12:16:49.125+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.ZonedDateTime -> basicType@3(java.time.ZonedDateTime,3003)
+2024-02-07T12:16:49.126+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration org.hibernate.type.OffsetTimeType -> basicType@4(java.time.OffsetTime,3007)
+2024-02-07T12:16:49.126+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetTime -> basicType@4(java.time.OffsetTime,3007)
+2024-02-07T12:16:49.126+01:00 DEBUG 56942 --- [main] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.OffsetTime -> basicType@4(java.time.OffsetTime,3007)
+2024-02-07T12:16:49.127+01:00 DEBUG 56942 --- [main] o.h.type.spi.TypeConfiguration$Scope     : Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@46d18a33] to MetadataBuildingContext [org.hibernate.boot.internal.MetadataBuildingContextRootImpl@495f3965]
+2024-02-07T12:16:49.861+01:00  INFO 56942 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-02-07T12:16:49.861+01:00 DEBUG 56942 --- [main] o.h.type.spi.TypeConfiguration$Scope     : Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@46d18a33] to SessionFactoryImplementor [org.hibernate.internal.SessionFactoryImpl@47fb30ca]
+2024-02-07T12:16:50.024+01:00 TRACE 56942 --- [main] o.h.type.spi.TypeConfiguration$Scope     : Handling #sessionFactoryCreated from [org.hibernate.internal.SessionFactoryImpl@47fb30ca] for TypeConfiguration
+2024-02-07T12:16:50.025+01:00  INFO 56942 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-02-07T12:16:50.309+01:00  INFO 56942 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-02-07T12:16:51.083+01:00  INFO 56942 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-02-07T12:16:51.140+01:00  INFO 56942 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@456b4892, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3385f1a8, org.springframework.security.web.context.SecurityContextHolderFilter@533c7a52, org.springframework.security.web.header.HeaderWriterFilter@40bf2ead, org.springframework.web.filter.CorsFilter@6de7c6bd, org.springframework.security.web.authentication.logout.LogoutFilter@7abdfd36, com.startsteps.ecommerceapi.security.jwt.AuthTokenFilter@24f8ff82, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@109f7381, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4d7143de, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4355f7b6, org.springframework.security.web.session.SessionManagementFilter@3f2f5454, org.springframework.security.web.access.ExceptionTranslationFilter@dfa6f48, org.springframework.security.web.access.intercept.AuthorizationFilter@1fd0f9dd]
+2024-02-07T12:16:51.596+01:00  INFO 56942 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-02-07T12:16:51.606+01:00  INFO 56942 --- [main] c.s.e.EcommerceApiApplication            : Started EcommerceApiApplication in 4.442 seconds (process running for 4.819)
+2024-02-07T12:16:52.224+01:00  INFO 56942 --- [RMI TCP Connection(4)-192.168.2.147] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-02-07T12:16:52.225+01:00  INFO 56942 --- [RMI TCP Connection(4)-192.168.2.147] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-02-07T12:16:52.227+01:00  INFO 56942 --- [RMI TCP Connection(4)-192.168.2.147] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-02-07T12:16:54.661+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/v1/user/orders/1/updateInformation
+2024-02-07T12:16:54.757+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T12:16:54.768+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:16:54.791+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/v1/user/orders/1/updateInformation
+2024-02-07T12:16:54.824+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.startsteps.ecommerceapi.controller.OrderController.addUserInfo(java.lang.Long,com.startsteps.ecommerceapi.model.UserInformation); target is of class [com.startsteps.ecommerceapi.controller.OrderController]
+2024-02-07T12:16:54.844+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.startsteps.ecommerceapi.controller.OrderController.addUserInfo(java.lang.Long,com.startsteps.ecommerceapi.model.UserInformation); target is of class [com.startsteps.ecommerceapi.controller.OrderController]
+2024-02-07T12:16:54.846+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.userid=?
+2024-02-07T12:16:54.848+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:16:54.857+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.userid=?
+2024-02-07T12:16:54.858+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:16:54.862+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone 
+    from
+        user_information ui1_0 
+    left join
+        user u1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        u1_0.userid=?
+2024-02-07T12:16:54.875+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        user_information_seq for update
+2024-02-07T12:16:54.879+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    update
+        user_information_seq 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2024-02-07T12:16:54.899+01:00 DEBUG 56942 --- [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    insert 
+    into
+        user_information
+        (address, first_name, last_name, phone, id) 
+    values
+        (?, ?, ?, ?, ?)
+2024-02-07T12:16:54.911+01:00  WARN 56942 --- [http-nio-8080-exec-2] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 1062, SQLState: 23000
+2024-02-07T12:16:54.911+01:00 ERROR 56942 --- [http-nio-8080-exec-2] o.h.engine.jdbc.spi.SqlExceptionHelper   : Duplicate entry '1234567891' for key 'user_information.UK_41ivqtoia3c52kovm35qqvg1k'
+2024-02-07T12:17:07.707+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /api/v1/user/orders/1/updateInformation
+2024-02-07T12:17:07.735+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.username=?
+2024-02-07T12:17:07.750+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:17:07.756+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /api/v1/user/orders/1/updateInformation
+2024-02-07T12:17:07.761+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.startsteps.ecommerceapi.controller.OrderController.addUserInfo(java.lang.Long,com.startsteps.ecommerceapi.model.UserInformation); target is of class [com.startsteps.ecommerceapi.controller.OrderController]
+2024-02-07T12:17:07.762+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.startsteps.ecommerceapi.controller.OrderController.addUserInfo(java.lang.Long,com.startsteps.ecommerceapi.model.UserInformation); target is of class [com.startsteps.ecommerceapi.controller.OrderController]
+2024-02-07T12:17:07.764+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.userid=?
+2024-02-07T12:17:07.765+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:17:07.774+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        u1_0.cart_id,
+        u1_0.update_date,
+        u1_0.user_info_id,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.userid=?
+2024-02-07T12:17:07.775+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        sc1_0.cartid,
+        sc1_0.created_date,
+        sc1_0.total_price,
+        u1_0.userid,
+        u1_0.approved,
+        u1_0.email,
+        u1_0.password,
+        u1_0.pending,
+        u1_0.registration_date,
+        sc2_0.cartid,
+        sc2_0.created_date,
+        sc2_0.total_price,
+        sc2_0.user_userid,
+        u1_0.update_date,
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone,
+        u1_0.user_role,
+        u1_0.username 
+    from
+        shopping_cart sc1_0 
+    left join
+        user u1_0 
+            on u1_0.userid=sc1_0.user_userid 
+    left join
+        shopping_cart sc2_0 
+            on sc2_0.cartid=u1_0.cart_id 
+    left join
+        user_information ui1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        sc1_0.cartid=?
+2024-02-07T12:17:07.778+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        ui1_0.id,
+        ui1_0.address,
+        ui1_0.first_name,
+        ui1_0.last_name,
+        ui1_0.phone 
+    from
+        user_information ui1_0 
+    left join
+        user u1_0 
+            on ui1_0.id=u1_0.user_info_id 
+    where
+        u1_0.userid=?
+2024-02-07T12:17:07.781+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    insert 
+    into
+        user_information
+        (address, first_name, last_name, phone, id) 
+    values
+        (?, ?, ?, ?, ?)
+2024-02-07T12:17:07.787+01:00 DEBUG 56942 --- [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    update
+        user 
+    set
+        approved=?,
+        email=?,
+        password=?,
+        pending=?,
+        cart_id=?,
+        update_date=?,
+        user_info_id=?,
+        user_role=?,
+        username=? 
+    where
+        userid=?
+2024-02-07T13:24:43.969+01:00  WARN 56942 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=24m24s517ms).
+2024-02-07T13:27:18.816+01:00  INFO 56942 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-02-07T13:27:18.838+01:00 TRACE 56942 --- [SpringApplicationShutdownHook] o.h.type.spi.TypeConfiguration$Scope     : Handling #sessionFactoryClosed from [org.hibernate.internal.SessionFactoryImpl@47fb30ca] for TypeConfiguration
+2024-02-07T13:27:18.838+01:00 DEBUG 56942 --- [SpringApplicationShutdownHook] o.h.type.spi.TypeConfiguration$Scope     : Un-scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration$Scope@5ffade60] from SessionFactory [org.hibernate.internal.SessionFactoryImpl@47fb30ca]
+2024-02-07T13:27:18.853+01:00  INFO 56942 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-02-07T13:27:18.940+01:00  INFO 56942 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
