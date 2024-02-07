@@ -2,6 +2,7 @@ package com.startsteps.ecommerceapi.service;
 
 import com.startsteps.ecommerceapi.exceptions.ProductAlreadyExistsException;
 import com.startsteps.ecommerceapi.exceptions.ProductNotFoundException;
+import com.startsteps.ecommerceapi.exceptions.StockCannotBeNegativeException;
 import com.startsteps.ecommerceapi.model.Product;
 import com.startsteps.ecommerceapi.payload.request.SearchCriteria;
 import com.startsteps.ecommerceapi.payload.response.ProductResponse;
@@ -72,13 +73,28 @@ public class ProductServiceImpl implements ProductService{
     public ProductDTO addProduct(ProductDTO productDTO) {
         if (productRepository.existsByProductName(productDTO.getProductName())){
             throw new ProductAlreadyExistsException("The product with the name \"" + productDTO.getProductName() +
-                    "\" already exists");
+                    "\" already exists, proceed with increase stock. ");
         }
         Product product = productMapper.toEntity(productDTO);
         Product savedProduct = productRepository.save(product);
         return productDTO;
     }
 
+    @Override
+    public  void increaseProductStock(Long productId, Long quantity){
+        Product product = productRepository.findProductByProductId(productId).orElseThrow(() -> new ProductNotFoundException("Product not found. Use add product"));
+        product.setStock(product.getStock() + quantity);
+    }
+
+    @Override
+    public void decreaseProductStock(Long productId, Long quantity){
+        Product product = productRepository.findProductByProductId(productId).orElseThrow(() -> new ProductNotFoundException("Product not found. Use add product"));
+        if(product.getStock() - quantity > 0){
+                throw new StockCannotBeNegativeException("Stock is lower than quantity. Impossible to decrease");
+        } else {
+            product.setStock(product.getStock() - quantity);
+        }
+    }
     @Override
     public void deleteProductByCriteria(SearchCriteria searchCriteria) {
         Specification<Product> spec = entitySpecification.specificationBuilder(searchCriteria);

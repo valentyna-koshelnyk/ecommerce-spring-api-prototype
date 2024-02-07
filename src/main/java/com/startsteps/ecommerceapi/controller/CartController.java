@@ -27,6 +27,10 @@ public class CartController {
 
     @PostMapping("/addProduct/")
     public ResponseEntity<MessageResponse> addProductToShoppingCart(@RequestBody ProductAddRequest request) {
+//        User user = getUserFromPrincipal(principal);
+//        if (!request.getUserId().equals(user.getId())) {
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+  //      }
         cartService.addProductToCart(request);
         MessageResponse response = new MessageResponse("Product added to the shopping cart");
         return ResponseEntity.ok(response);

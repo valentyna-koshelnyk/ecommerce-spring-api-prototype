@@ -2,10 +2,7 @@ package com.startsteps.ecommerceapi.service;
 
 import com.startsteps.ecommerceapi.model.*;
 import com.startsteps.ecommerceapi.payload.request.SignupRequest;
-import com.startsteps.ecommerceapi.persistence.CartProductRepository;
-import com.startsteps.ecommerceapi.persistence.ShoppingCartRepository;
-import com.startsteps.ecommerceapi.persistence.UserRepository;
-import com.startsteps.ecommerceapi.persistence.PasswordResetTokenRepository;
+import com.startsteps.ecommerceapi.persistence.*;
 import com.startsteps.ecommerceapi.exceptions.UserAlreadyExistsException;
 import com.startsteps.ecommerceapi.exceptions.UserNotFoundException;
 import jakarta.transaction.Transactional;
@@ -34,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final CartProductRepository cartProductRepository;
+    private final UserInformationRepository userInformationRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -41,11 +39,12 @@ public class UserServiceImpl implements UserService {
     final int PASS_THRESHOLD = 30;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, PasswordResetTokenRepository passwordResetTokenRepository, CartProductRepository cartProductRepository, EmailService emailService) {
+    public UserServiceImpl(UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, PasswordResetTokenRepository passwordResetTokenRepository, CartProductRepository cartProductRepository, UserInformationRepository userInformationRepository, EmailService emailService) {
         this.userRepository = userRepository;
         this.shoppingCartRepository = shoppingCartRepository;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
         this.cartProductRepository = cartProductRepository;
+        this.userInformationRepository = userInformationRepository;
         this.emailService = emailService;
     }
 
@@ -63,7 +62,6 @@ public class UserServiceImpl implements UserService {
     public User registerUser(SignupRequest user) {
         User newUser = createUser(user);
         newUser.setUserRoles(UserRoles.ROLE_USER);
-
         ShoppingCart shoppingCart = new ShoppingCart();
         userRepository.save(newUser);
         shoppingCart.setUser(newUser);
@@ -89,6 +87,7 @@ public class UserServiceImpl implements UserService {
         User newUser = new User(user.getUsername(),user.getEmail(), passwordEncoder.encode(user.getPassword())
                 , false, true);
         newUser.setRegistrationDate(LocalDateTime.now());
+
         return newUser;
     }
 

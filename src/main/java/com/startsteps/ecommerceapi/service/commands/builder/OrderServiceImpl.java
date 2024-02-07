@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
         List<CartProduct> cartProducts = cartProductRepository.findCartProductByShoppingCart(order.getShoppingCart());
         orderProductsService.addProductFromCart(cartProducts);
-      //  cartService.emptyCart(shoppingCart.getCartId());
+        cartService.emptyCart(order.getShoppingCart().getCartId());
 
     }
     public void placeOrder(Long shoppingCartId) {

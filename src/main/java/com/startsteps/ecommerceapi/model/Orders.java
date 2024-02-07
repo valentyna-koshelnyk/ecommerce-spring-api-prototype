@@ -38,7 +38,11 @@ public class Orders {
     @OneToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     private List<OrderProducts> orderItems = new ArrayList<>();;
+    @Column(name = "operation")
+    private String operation;
 
+    @Column(name = "timestamp")
+    private long timestamp;
 
     public Orders(UserInformation userInformation, @NonNull ShoppingCart shoppingCart) {
         this.userInformation = userInformation;

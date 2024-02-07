@@ -65,7 +65,14 @@ public class ProductController {
     @PostMapping("/admin/add")
     public ResponseEntity<?> addProduct(@Valid @RequestBody ProductDTO productDTO) {
         ProductDTO product = productService.addProduct(productDTO);
-        return ResponseEntity.ok(new MessageResponse("Product added successfully! ProductID: " + product.getProductId()));
+        return ResponseEntity.ok(new MessageResponse("Product " + product.getProductName()) + " added successfully");
+    }
+
+    @PostMapping("/admin/increaseStock/{productId}")
+    public ResponseEntity<MessageResponse> increaseProductStock(@PathVariable Long productId, Long quantity){
+        productService.increaseProductStock(productId, quantity);
+        return ResponseEntity.ok(new MessageResponse("Added " + quantity + " items to ProductID" + productId));
+
     }
 
     @DeleteMapping("/admin/delete")
@@ -104,8 +111,6 @@ public class ProductController {
         String criteriaString = searchCriteria.toString();
         return ResponseEntity.ok("Product matching criteria " + criteriaString + " has been updated.");
     }
-
-
 }
 
 

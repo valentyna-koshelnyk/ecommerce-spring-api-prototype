@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "user")
 public class User{
    @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.AUTO)
    @NonNull
    @Column(name = "UserID")
    private Long userId;
@@ -60,8 +60,8 @@ public class User{
 
    @OneToMany(mappedBy = "user")
    private List<Orders> orders;
-
-   @Embedded
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "user_info_id", referencedColumnName = "id")
    private UserInformation userInformation;
    public User(@NonNull String username, @NonNull String email, @NonNull String password, @NonNull Boolean approved, Boolean pending) {
       this.username = username;
@@ -75,8 +75,5 @@ public User(@NonNull String username, @NonNull String email, @NonNull String pas
       this.username = username;
       this.email = email;
       this.password = password;
-   }
-   public User(@NonNull Long userId) {
-      this.userId = userId;
    }
 }

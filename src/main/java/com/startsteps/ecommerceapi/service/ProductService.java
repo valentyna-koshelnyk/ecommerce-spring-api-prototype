@@ -16,6 +16,11 @@ public interface ProductService {
     ProductResponse findAllAvailableProducts(PageRequest pageable);
 
     ProductDTO addProduct(ProductDTO productDTO);
+
+    void increaseProductStock(Long productId, Long quantity);
+
+    void decreaseProductStock(Long productId, Long quantity);
+
     void deleteProductByCriteria(SearchCriteria searchCriteria);
 
     void updateProductByCriteria(SearchCriteria searchCriteria, ProductDTO product);
