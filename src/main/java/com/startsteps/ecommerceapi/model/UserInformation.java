@@ -11,8 +11,7 @@ import lombok.*;
 @ToString
 @Table(name = "user_information")
 public class UserInformation {
-    // TODO: validation for properties:firstName and lastName is risky for validation, address require embedded class
-
+    // TODO: add custom validations for all properties
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")

@@ -38,8 +38,8 @@ public class ControllerExceptionHandler {
                 ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<ErrorMessage>(message, HttpStatus.NOT_FOUND);
     }
-    @ExceptionHandler(CartIsNotFound.class)
-    public ResponseEntity<ErrorMessage> handleCartIsEmptyException(CartIsNotFound ex, WebRequest request) {
+    @ExceptionHandler(CartNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleCartIsEmptyException(CartNotFoundException ex, WebRequest request) {
         ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT.value(), new Date(),
                 ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);
