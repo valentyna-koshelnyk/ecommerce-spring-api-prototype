@@ -85,12 +85,5 @@ public class EcomSecurityConfiguration {
 
         return http.build();
     }
-
-//    public boolean isResourceOwner(Authentication authentication, String resourceId) {
-//        // Your logic to determine if the user is the owner of the resource
-//        // You might compare the authenticated user's details with the resourceId
-//        // Return true if the user is the owner; otherwise, return false
-//        return authentication.getName().equals(resourceId);
-//    }
 }
 
