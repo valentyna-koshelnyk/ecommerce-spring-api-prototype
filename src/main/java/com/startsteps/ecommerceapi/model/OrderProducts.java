@@ -1,6 +1,7 @@
 package com.startsteps.ecommerceapi.model;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,6 +17,7 @@ import java.util.List;
 @ToString
 @Table(name = "order_items")
 @Entity
+@EqualsAndHashCode
 public class OrderProducts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

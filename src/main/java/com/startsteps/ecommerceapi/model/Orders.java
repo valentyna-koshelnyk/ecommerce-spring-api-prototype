@@ -1,9 +1,11 @@
 package com.startsteps.ecommerceapi.model;
 
+import com.startsteps.ecommerceapi.state.*;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,15 +40,56 @@ public class Orders {
     @OneToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     private List<OrderProducts> orderItems = new ArrayList<>();;
-    @Column(name = "operation")
-    private String operation;
+    @Transient
+    private OrderState state = new OrderNotPaidState();
 
-    @Column(name = "timestamp")
-    private long timestamp;
 
     public Orders(UserInformation userInformation, @NonNull ShoppingCart shoppingCart) {
         this.userInformation = userInformation;
         this.shoppingCart = shoppingCart;
+        this.orderStatus = OrderStatus.NOT_PAID;
+        this.state = new OrderNotPaidState();
+    }
+
+    public void setStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public void updateState() {
+        switch (this.orderStatus) {
+            case NOT_PAID:
+                this.state = new OrderNotPaidState();
+                break;
+            case PAID:
+                this.state = new OrderPaidState();
+                break;
+            case IN_PROCESS:
+                this.state = new OrderInProcessState();
+                break;
+            case SHIPPED:
+                this.state = new OrderShippedState();
+                break;
+            case DELIVERED:
+                this.state = new OrderDelieveredState();
+                break;
+        }
+    }
+    @Transactional
+    public void nextState() {
+        state.next(this);
+    }
+
+    @Transactional
+    public void previousState() {
+        state.prev(this);
+    }
+    public void printState(){
+        state.printStatus(this);
+    }
+
+    @PostLoad
+    private void initializeState() {
+        updateState();
     }
 
     @Override

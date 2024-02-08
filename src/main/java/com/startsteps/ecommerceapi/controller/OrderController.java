@@ -1,7 +1,7 @@
 package com.startsteps.ecommerceapi.controller;
 
 import com.startsteps.ecommerceapi.model.OrderProducts;
-import com.startsteps.ecommerceapi.model.ShoppingCart;
+import com.startsteps.ecommerceapi.model.Orders;
 import com.startsteps.ecommerceapi.model.User;
 import com.startsteps.ecommerceapi.model.UserInformation;
 import com.startsteps.ecommerceapi.payload.response.MessageResponse;
@@ -71,5 +71,29 @@ public class OrderController {
         List<OrderProducts> orderProductsList = orderService.getOrderHistory(shoppingCartId);
         return ResponseEntity.ok(new MessageResponse(orderProductsList.toString()));
     }
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PutMapping("/status/{orderId}/next")
+    public ResponseEntity<MessageResponse> moveOrderStatusNext(@PathVariable Long orderId){
+        Orders updatedOrder = orderService.moveToNextState(orderId);
+        return ResponseEntity.ok(new MessageResponse("Order is " + updatedOrder.getOrderStatus()));
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PutMapping("/status/{orderId}/revert")
+    public ResponseEntity<MessageResponse> revertOrderStatus(@PathVariable Long orderId){
+        Orders revertedOrder = orderService.previousState(orderId);
+        return ResponseEntity.ok(new MessageResponse("Order is " + revertedOrder.getOrderStatus()));
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or #userId == principal.id")
+    @GetMapping("/check-status/{userId}/{orderId}")
+    public ResponseEntity<MessageResponse> checkOrderStatus(@PathVariable Long userId,
+                                                            @PathVariable Long orderId){
+            orderService.printOrder(orderId);
+            return ResponseEntity.ok((new MessageResponse("")));
+
+    }
+
 
 }

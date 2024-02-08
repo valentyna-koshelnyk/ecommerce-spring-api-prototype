@@ -19,9 +19,4 @@ public class ProductDTO {
     private Long Stock;
     private ProductCategory category;
 
-    public ProductDTO(String productName, double price, String description) {
-        this.productName = productName;
-        this.price = price;
-        this.description = description;
-    }
 }
