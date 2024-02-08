@@ -12,6 +12,7 @@ import com.startsteps.ecommerceapi.service.commands.PlaceOrderCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -93,6 +94,33 @@ public class OrderServiceImpl implements OrderService {
         }
         orderRepository.delete(orders);
         log.info("Order: " + orders + " was cancelled");
+    }
+
+
+    @Transactional
+    public Orders moveToNextState(Long orderId) {
+        Orders order = orderRepository.findById(orderId).orElseThrow(()
+                -> new OrderNotFoundException("Order not found"));
+        order.nextState();
+        orderRepository.save(order);
+        order.printState();
+        return order;
+    }
+
+    @Override
+    public  Orders previousState(Long orderId){
+        Orders order = orderRepository.findById(orderId).orElseThrow(()
+                -> new OrderNotFoundException("Order not found"));
+        order.previousState();
+        orderRepository.save(order);
+        order.printState();
+        return order;
+    }
+    @Override
+    public void checkOrderStatus(Long orderId){
+        Orders order = orderRepository.findById(orderId).orElseThrow(()
+                -> new OrderNotFoundException("Order not found"));
+         order.printState();
     }
 
     //TODO: to adjust order history

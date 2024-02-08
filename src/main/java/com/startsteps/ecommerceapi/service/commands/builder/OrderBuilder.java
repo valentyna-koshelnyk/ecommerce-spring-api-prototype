@@ -59,7 +59,7 @@ public class OrderBuilder {
         orders.setUser(user);
         orders.setUserInformation(userInformation);
         orders.setTotalprice(shoppingCart.getPriceTotal());
-        orders.setOrderStatus(OrderStatus.IN_PROCESS);
+        orders.setOrderStatus(OrderStatus.NOT_PAID);
         orders.setOrderCreatedAt(LocalDateTime.now());
         if (!orderValidator.validateOrder(orders)) {
             throw new IllegalArgumentException("Invalid order");

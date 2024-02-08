@@ -6,7 +6,10 @@ target/
 !**/src/test/**/target/
 .properties
 .yml
-/src/ecom.log
+**/src/ecom.log
+.log
+.gz
+
 *.gz
 ### STS ###
 .apt_generated
@@ -16,8 +19,8 @@ target/
 .settings
 .springBeans
 .sts4-cache
-/src/main/resources/application-dev.yml
-/src/main/resources/application-dev.properties
+**/src/main/resources/application-dev.yml
+**/src/main/resources/application-dev.properties
 
 node_modules/
 ### IntelliJ IDEA ###

@@ -134,6 +134,7 @@ public class CartServiceImpl implements CartService{
        return cartProductRepository.findCartProductByProductAndShoppingCart(product, shoppingCart)
                 .isPresent();
     }
+    @Transactional
     @Override
     public Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable) {
     ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)

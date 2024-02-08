@@ -9,10 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring",
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-        uses = {ProductMapper.class, ShoppingCartMapper.class})
-
+@Mapper(componentModel = "spring",  nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CartProductMapper extends IEntityMapper<CartProductDTO, CartProduct> {
 
     @Override
@@ -20,6 +17,8 @@ public interface CartProductMapper extends IEntityMapper<CartProductDTO, CartPro
 
     @Override
     CartProductDTO toDto(CartProduct cartProduct);
+
+    @Override
     default Page<CartProductDTO> toDtoPage(Page<CartProduct> entitiesPage) {
         List<CartProductDTO> dtoList = entitiesPage.getContent()
                 .stream()

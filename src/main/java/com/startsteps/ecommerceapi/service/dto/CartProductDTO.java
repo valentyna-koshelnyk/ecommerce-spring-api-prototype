@@ -18,7 +18,7 @@ public class CartProductDTO {
     @Override
     public String toString(){
         return "Product: " + this.product.getProductName() +
-        "Product price: " + this.product.getPrice() +
+                "Product price: " + this.product.getPrice() +
                 "Quantity: " + this.quantity +
                 "Total per Product: " + this.priceProduct;
     }

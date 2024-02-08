@@ -35,14 +35,15 @@ public class CartController {
     }
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or #userId == principal.id")
     @GetMapping("/{userId}/checkCart")
+
     public ResponseEntity<?> viewProductList(
             @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size,
             @RequestParam(name = "direction", required = false, defaultValue = "ASC") String direction,
-            @RequestParam Long cartId
-    ) {
+            @PathVariable Long userId) {
         PageRequest pageRequestData = PageRequest.of(pageNumber - 1, size, Sort.by(Sort.Direction.fromString(direction), "quantity"));
-        return ResponseEntity.ok(cartService.getProductsInCart(cartId, pageRequestData));
+        Long shoppingCartId = cartService.findShoppingCartByUser(userId).getCartId();
+        return ResponseEntity.ok(cartService.getProductsInCart(shoppingCartId, pageRequestData));
     }
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or #userId == principal.id")
     @DeleteMapping("/{userId}/remove/{productId}")
