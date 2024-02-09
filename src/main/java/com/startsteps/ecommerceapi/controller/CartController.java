@@ -47,7 +47,7 @@ public class CartController {
     }
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or #userId == principal.id")
     @DeleteMapping("/{userId}/remove/{productId}")
-    public ResponseEntity<MessageResponse> removeProductFromCart(@RequestParam Long cartId, @PathVariable("productId") Long productId){
+    public ResponseEntity<MessageResponse> removeProductFromCart(@PathVariable Long userId, @RequestParam Long cartId, @PathVariable("productId") Long productId){
         cartService.removeProductFromCart(cartId, productId);
         ProductDTO product = productService.findProductByProductId(productId);
         String productName = product.getProductName();

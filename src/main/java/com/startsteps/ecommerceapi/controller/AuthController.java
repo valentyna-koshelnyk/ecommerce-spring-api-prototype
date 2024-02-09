@@ -8,6 +8,7 @@ import com.startsteps.ecommerceapi.payload.response.UserInfoResponse;
 import com.startsteps.ecommerceapi.security.jwt.JwtUtil;
 import com.startsteps.ecommerceapi.service.UserDetailsImpl;
 import com.startsteps.ecommerceapi.service.UserServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +27,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "User Authentication controller", description = "Through this API user or admin can register and signin. Admin has the only authorization right to register another admin ")
+
 public class AuthController {
     private final UserServiceImpl userService;
     @Autowired
@@ -74,7 +77,7 @@ public class AuthController {
                 .body(new UserInfoResponse(userDetails.getId(),
                         userDetails.getUsername(),
                         userDetails.getEmail(),
-                        roles));
+                        "You successfully signed in"));
     }
 
     @GetMapping("/checkUser")

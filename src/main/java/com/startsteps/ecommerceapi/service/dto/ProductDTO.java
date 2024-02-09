@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString
 public class ProductDTO {
     private Long productId;
     private String productName;
@@ -19,4 +18,17 @@ public class ProductDTO {
     private Long Stock;
     private ProductCategory category;
 
+
+    @Override
+    public String toString(){
+        if(this.getStock() < 10 && this.getStock() > 2) {
+            System.out.println("Product is almost out of stock. Hurry up to order! ");
+        } else if (this.getStock() <= 2 && this.getStock() > 0) {
+            System.out.println("Last item");
+        }
+        return "Product Name: " + this.getProductName() +
+                " Product Price: " + this.getPrice() +
+                " Product Description: " + this.getDescription() +
+                " Product Category: " + this.getCategory();
+    }
 }

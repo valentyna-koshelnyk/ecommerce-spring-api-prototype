@@ -63,13 +63,13 @@ public class ProductController {
     }
 
     @PostMapping("/admin/add")
-    public ResponseEntity<?> addProduct(@Valid @RequestBody ProductDTO productDTO) {
+    public ResponseEntity<MessageResponse> addProduct(@Valid @RequestBody ProductDTO productDTO) {
         ProductDTO product = productService.addProduct(productDTO);
-        return ResponseEntity.ok(new MessageResponse("Product " + product.getProductName()) + " added successfully");
+        return ResponseEntity.ok(new MessageResponse("Product \" " + product.getProductName() + " \" has been added successfully"));
     }
 
     @PostMapping("/admin/increaseStock/{productId}")
-    public ResponseEntity<MessageResponse> increaseProductStock(@PathVariable Long productId, Long quantity){
+    public ResponseEntity<MessageResponse> increaseProductStock(@PathVariable Long productId, @RequestParam Long quantity){
         productService.increaseProductStock(productId, quantity);
         return ResponseEntity.ok(new MessageResponse("Added " + quantity + " items to ProductID" + productId));
 

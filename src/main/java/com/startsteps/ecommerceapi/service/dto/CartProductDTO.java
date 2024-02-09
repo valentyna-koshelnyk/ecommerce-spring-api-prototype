@@ -1,5 +1,6 @@
 package com.startsteps.ecommerceapi.service.dto;
 
+import com.startsteps.ecommerceapi.model.ShoppingCart;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ public class CartProductDTO {
     private double totalCost;
     private Double priceProduct;
     private  long quantity;
+    private ShoppingCart shoppingCart;
 
     @Override
     public String toString(){

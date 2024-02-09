@@ -151,10 +151,10 @@ public class CartServiceImpl implements CartService{
         CartProduct cartProduct = cartProductRepository.findCartProductByProductAndShoppingCart(product, shoppingCart)
                 .orElseThrow(() -> new ProductNotFoundException("The product is not present in the car"));
         Long quantity = cartProduct.getQuantity();
+        increaseStock(productId,quantity);
 
         cartProductRepository.deleteByShoppingCartAndProduct(shoppingCart, product);
 
-        increaseStock(productId,quantity);
     }
 
     @Override

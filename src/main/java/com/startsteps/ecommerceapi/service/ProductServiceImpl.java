@@ -3,9 +3,11 @@ package com.startsteps.ecommerceapi.service;
 import com.startsteps.ecommerceapi.exceptions.ProductAlreadyExistsException;
 import com.startsteps.ecommerceapi.exceptions.ProductNotFoundException;
 import com.startsteps.ecommerceapi.exceptions.StockCannotBeNegativeException;
+import com.startsteps.ecommerceapi.model.CartProduct;
 import com.startsteps.ecommerceapi.model.Product;
 import com.startsteps.ecommerceapi.payload.request.SearchCriteria;
 import com.startsteps.ecommerceapi.payload.response.ProductResponse;
+import com.startsteps.ecommerceapi.persistence.CartProductRepository;
 import com.startsteps.ecommerceapi.persistence.ProductRepository;
 import com.startsteps.ecommerceapi.service.dto.ProductDTO;
 import com.startsteps.ecommerceapi.service.dto.ProductMapper;
@@ -27,13 +29,15 @@ public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
     private final EntitySpecification<Product> entitySpecification;
-    @Autowired
-    private  ProductMapper productMapper;
+    private  final ProductMapper productMapper;
+    private final CartProductRepository cartProductRepository;
     private final int MIN_STOCK = 1;
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, EntitySpecification<Product> entitySpecification) {
+    public ProductServiceImpl(ProductRepository productRepository, EntitySpecification<Product> entitySpecification, ProductMapper productMapper, CartProductRepository cartProductRepository) {
         this.productRepository = productRepository;
         this.entitySpecification = entitySpecification;
+        this.productMapper = productMapper;
+        this.cartProductRepository = cartProductRepository;
     }
     @Override
     public ProductResponse findAllProducts(PageRequest pageable) {
@@ -70,15 +74,24 @@ public class ProductServiceImpl implements ProductService{
 
 
     @Override
+    @Transactional
     public ProductDTO addProduct(ProductDTO productDTO) {
+        log.info("Attempting to add product: {}", productDTO.getProductName());
         if (productRepository.existsByProductName(productDTO.getProductName())){
-            throw new ProductAlreadyExistsException("The product with the name \"" + productDTO.getProductName() +
-                    "\" already exists, proceed with increase stock. ");
+            throw new ProductAlreadyExistsException("Product already exists with name: " +
+                    productDTO.getProductName() + ". Use increase stock.");
         }
         Product product = productMapper.toEntity(productDTO);
-        Product savedProduct = productRepository.save(product);
-        return productDTO;
+        try {
+            Product saveProduct = productRepository.save(product);
+            log.info("Product added successfully: {}", saveProduct.getProductId());
+            return productMapper.toDto(saveProduct);
+        } catch (RuntimeException e) {
+            log.error("Error adding product: {}", e.getMessage(), e);
+            throw e;
+        }
     }
+
 
     @Override
     public  void increaseProductStock(Long productId, Long quantity){
@@ -99,8 +112,10 @@ public class ProductServiceImpl implements ProductService{
     public void deleteProductByCriteria(SearchCriteria searchCriteria) {
         Specification<Product> spec = entitySpecification.specificationBuilder(searchCriteria);
         List<Product> productsToDelete = productRepository.findAll(spec);
+        List<CartProduct> cartProductList =  cartProductRepository.findCartProductByProductIn(productsToDelete);
+        cartProductRepository.deleteAll(cartProductList);
         productRepository.deleteAll(productsToDelete);
-    }
+    } //TODO: to notify users that product is not available anymore
 
     @Override
     public void updateProductByCriteria(SearchCriteria searchCriteria, ProductDTO productDTO) {
