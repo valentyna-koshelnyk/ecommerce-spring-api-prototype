@@ -79,10 +79,10 @@ public class UserServiceImpl implements UserService {
 
     public User createUser(SignupRequest user){
         if(userRepository.existsByEmail(user.getEmail())){
-            throw new UserAlreadyExistsException("This email " + user.getEmail() + " already exists");
+            throw new UserAlreadyExistsException("The email " + user.getEmail() + " already exists");
         }
         else if(userRepository.existsByUsername(user.getUsername())){
-            throw new UserAlreadyExistsException("This username " + user.getUsername() + " is already used");
+            throw new UserAlreadyExistsException("The username " + user.getUsername() + " is already used");
         }
         User newUser = new User(user.getUsername(),user.getEmail(), passwordEncoder.encode(user.getPassword())
                 , false, true);

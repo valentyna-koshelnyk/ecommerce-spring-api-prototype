@@ -31,7 +31,9 @@ public class EcomSecurityConfiguration {
             "/api/auth/register/**",
             "/webjars/",
             "/api/v1/products",
-            "/api/v1/user/"
+            "/api/v1/user/",
+            "/bus/v3/api-docs/**"
+
     };
 
 
@@ -85,5 +87,6 @@ public class EcomSecurityConfiguration {
 
         return http.build();
     }
+
 }
 
