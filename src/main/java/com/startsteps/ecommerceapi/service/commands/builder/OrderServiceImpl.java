@@ -55,6 +55,7 @@ public class OrderServiceImpl implements OrderService {
         cartService.emptyCart(order.getShoppingCart().getCartId());
 
     }
+    @Transactional
     public void placeOrder(Long shoppingCartId) {
         ShoppingCart shoppingCart = cartService.findShoppingCartByCartId(shoppingCartId);
         if (shoppingCart == null) {
@@ -75,11 +76,16 @@ public class OrderServiceImpl implements OrderService {
         orderProcessor.processOrder(placeOrderCommand);
     }
 
-
+    @Transactional
     public String printOrder(Long shoppingCartId){
         ShoppingCart shoppingCart = shoppingCartRepository.findById(shoppingCartId).orElseThrow(()-> new CartNotFoundException("Cart not found"));
-        return orderRepository.findOrdersByShoppingCart(shoppingCart)
-                .toString();
+        List<Orders> orders = orderRepository.findOrdersByShoppingCartOrderByOrderCreatedAtDesc(shoppingCart);
+
+        if(orders.isEmpty()) {
+            throw new OrderNotFoundException("No orders found for this cart");
+        }
+        Orders lastOrder = orders.get(0);
+        return lastOrder.toString();
     }
 
     //TODO: after canceling the order, products return back to the cart
@@ -87,11 +93,13 @@ public class OrderServiceImpl implements OrderService {
     // better to put order status "canceled" and keep it for one month in a repo or create a repo with canceled orders
     public void cancelOrder(Long orderId){ // might be better to keep the order but change status to CANCELED
         Orders orders = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order not found"));
-        List<OrderProducts> orderProductsList = orders.getOrderItems();
+        List<OrderProducts> orderProductsList = orderProductRepository.findByOrderId(orderId);
         for(OrderProducts op: orderProductsList) {
             op.setOrderStatus(OrderStatus.CANCELED);
             cartService.increaseStock(op.getProductId(), op.getQuantity());
+            orderProductRepository.save(op);
         }
+
         orderRepository.delete(orders);
         log.info("Order: " + orders + " was cancelled");
     }
@@ -104,6 +112,12 @@ public class OrderServiceImpl implements OrderService {
         order.nextState();
         orderRepository.save(order);
         order.printState();
+        if(order.getOrderStatus() == OrderStatus.DELIVERED){
+            List<OrderProducts> orderProductsList = orderProductRepository.findByOrderId(orderId);
+            for(OrderProducts op : orderProductsList){
+                op.setOrderStatus(OrderStatus.DELIVERED);
+            }
+        }
         return order;
     }
 
@@ -125,9 +139,13 @@ public class OrderServiceImpl implements OrderService {
 
     //TODO: to adjust order history
     public List<OrderProducts> getOrderHistory(Long shoppingCartId){
-        return orderProductRepository.findByShoppingCartId(shoppingCartId);
+        List<OrderProducts> orderProductsList =  orderProductRepository.findByShoppingCartIdAndOrderStatus(shoppingCartId, OrderStatus.DELIVERED);
+        if(orderProductsList.isEmpty()){
+            throw new OrderNotFoundException
+                    ("There are no delivered orders for your account. " +
+                            "For the current order check its status.");
+        }
+        return orderProductsList;
     }
-
-
 
 }

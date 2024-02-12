@@ -9,58 +9,66 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 @Slf4j
 public class ControllerExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handleUserNotFoundException(UserNotFoundException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND.value(), new Date(), ex.getMessage(), request.getDescription(false));
-
-        return new ResponseEntity<ErrorMessage>(message, HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException ex, WebRequest request) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<ErrorMessage> handleUserAlreadyExistsException(UserAlreadyExistsException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT.value(), new Date(), ex.getMessage(), request.getDescription(false));
-
-        return new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);
+    public ResponseEntity<?> handleUserAlreadyExistsException(UserAlreadyExistsException ex, WebRequest request) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ErrorMessage> handleUnauthorizedException(UnauthorizedException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(HttpStatus.UNAUTHORIZED.value(), new Date(),
-                ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<ErrorMessage>(message, HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<?> handleUnauthorizedException(UnauthorizedException ex, WebRequest request) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handleProductNotFoundException(ProductNotFoundException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(HttpStatus.NO_CONTENT.value(), new Date(),
-                ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<ErrorMessage>(message, HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> handleProductNotFoundException(ProductNotFoundException ex, WebRequest request) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(CartNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handleCartIsEmptyException(CartNotFoundException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT.value(), new Date(),
-                ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);
-    }
+    public ResponseEntity<?> handleCartNotFoundException(CartNotFoundException ex, WebRequest request) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", ex.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
 
     @ExceptionHandler(ProductAlreadyExistsException.class)
-    public ResponseEntity<ErrorMessage> handleProductAlreadyExists(ProductAlreadyExistsException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT.value(), new Date(),
-                ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);
+    public ResponseEntity<?> handleProductAlreadyExists(ProductAlreadyExistsException ex, WebRequest request) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(InsufficientStockException.class)
-    public ResponseEntity<ErrorMessage> handleInsufficientStockException(InsufficientStockException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT.value(), new Date(),
-                ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);
+    public ResponseEntity<?> handleInsufficientStockException(InsufficientStockException ex, WebRequest request) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<?> handleOrderNotFoundException(OrderNotFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> globalExceptionHandler(Exception ex, WebRequest request) {

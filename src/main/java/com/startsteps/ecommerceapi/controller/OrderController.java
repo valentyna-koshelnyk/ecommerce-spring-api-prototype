@@ -51,7 +51,7 @@ public class OrderController {
     }
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or #userId == principal.id")
     @PostMapping("/place/{userId}") //TODO: handle exception if order already exists
-    public ResponseEntity<?> placeOrder(@PathVariable Long userId) {
+    public ResponseEntity<MessageResponse> placeOrder(@PathVariable Long userId) {
         Long shoppingCartId = cartService.findShoppingCartByUser(userId).getCartId();
         orderService.placeOrder(shoppingCartId);
         return ResponseEntity.ok(new MessageResponse(orderService.printOrder(shoppingCartId)));

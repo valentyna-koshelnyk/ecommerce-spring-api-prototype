@@ -1,6 +1,6 @@
 package com.startsteps.ecommerceapi.service.dto;
 
-import org.springframework.data.domain.Page;
+import java.util.List;
 
 public interface IEntityMapper<D, E> {
 
@@ -8,6 +8,5 @@ public interface IEntityMapper<D, E> {
 
     D toDto(E entity);
 
-    Page<D> toDtoPage(Page<E> entitiesPage);
-
+    List<D> listToDto(List<E> e);
 }

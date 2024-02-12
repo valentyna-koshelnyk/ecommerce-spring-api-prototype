@@ -4,12 +4,11 @@ import com.startsteps.ecommerceapi.model.Product;
 import com.startsteps.ecommerceapi.model.ShoppingCart;
 import com.startsteps.ecommerceapi.payload.request.ProductAddRequest;
 import com.startsteps.ecommerceapi.service.dto.CartProductDTO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface CartService {
-    void addProductToCart(ProductAddRequest productAddRequest);
-
+    void addProductToCart(ProductAddRequest request, Long userId);
     void getTotalCost(Long shoppingCartId);
 
     void reduceProductStock(Long quantity, Long productId);
@@ -25,7 +24,7 @@ public interface CartService {
     double calculateProductCost(Product product, Long quantity);
     boolean isProductInUserCart(Product product, ShoppingCart shoppingCart);
 
-    Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable);
+    List<CartProductDTO> getProductsInCart(Long cartId);
 
     void removeProductFromCart(Long cartId, Long productId);
 

@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
     private final EntitySpecification<Product> entitySpecification;
-    private  final ProductMapper productMapper;
+    private final ProductMapper productMapper;
     private final CartProductRepository cartProductRepository;
     private final int MIN_STOCK = 1;
     @Autowired
@@ -50,9 +50,8 @@ public class ProductServiceImpl implements ProductService{
         Product product = productRepository.findProductByProductIdAndStockGreaterThanEqual(productId, MIN_STOCK)
                 .orElseThrow(() -> new ProductNotFoundException("Product with the id " + productId +
                         " has not been found"));
-        ProductDTO productDTO = productMapper.toDto(product);
 
-        return productDTO;
+        return productMapper.toDto(product);
     }
 
     @Override
@@ -74,7 +73,6 @@ public class ProductServiceImpl implements ProductService{
 
 
     @Override
-    @Transactional
     public ProductDTO addProduct(ProductDTO productDTO) {
         log.info("Attempting to add product: {}", productDTO.getProductName());
         if (productRepository.existsByProductName(productDTO.getProductName())){
@@ -84,10 +82,13 @@ public class ProductServiceImpl implements ProductService{
         Product product = productMapper.toEntity(productDTO);
         try {
             Product saveProduct = productRepository.save(product);
+
             log.info("Product added successfully: {}", saveProduct.getProductId());
             return productMapper.toDto(saveProduct);
         } catch (RuntimeException e) {
             log.error("Error adding product: {}", e.getMessage(), e);
+            log.error("Error adding product with DTO: {}", productDTO, e);
+
             throw e;
         }
     }
@@ -152,14 +153,14 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public List<Product> findProductByName(String productName) {
         List<Product> productList = productRepository.findAllByProductNameContainingIgnoreCaseAndStockGreaterThan(MIN_STOCK, productName);
-        if(productRepository.findProductByProductNameContainingIgnoreCaseAndStockGreaterThan(MIN_STOCK, productName).isEmpty()){
+        if(productList.isEmpty()){
             throw new ProductNotFoundException("Product with such name " + productName + " not found");
         } else {
-            productList  =  productRepository.findAllByProductNameContainingIgnoreCaseAndStockGreaterThan(MIN_STOCK, productName);
             return productList;
-
         }
     }
 
+    }
 
-}
+
+

@@ -83,9 +83,9 @@ public class ProductController {
             @ApiResponse(responseCode = "401", description = "Access forbidden"),
             @ApiResponse(responseCode = "404", description = "Product not found")})
     @PostMapping("/admin/add")
-    public ResponseEntity<?> addProduct(@Valid @RequestBody ProductDTO productDTO) {
+    public ResponseEntity<MessageResponse> addProduct(@Valid @RequestBody ProductDTO productDTO) {
         ProductDTO product = productService.addProduct(productDTO);
-        return ResponseEntity.ok(new MessageResponse("Product " + product.getProductName()) + " added successfully");
+        return ResponseEntity.ok(new MessageResponse("Product " + product.getProductName() + " has been added successfully"));
     }
     @Operation(summary= "Increase products stock", description= "Allows admins to increase stock of existing products." )
     @ApiResponses(value = {
@@ -94,7 +94,8 @@ public class ProductController {
     @PostMapping("/admin/increaseStock/{productId}")
     public ResponseEntity<MessageResponse> increaseProductStock(@PathVariable Long productId, Long quantity){
         productService.increaseProductStock(productId, quantity);
-        return ResponseEntity.ok(new MessageResponse("Added " + quantity + " items to ProductID" + productId));
+        ProductDTO product = productService.findProductByProductId(productId);
+        return ResponseEntity.ok(new MessageResponse("Added " + quantity + " items to Product: " + product));
 
     }
     @Operation(summary= "Delete products using dynamic parameters", description= "Admin can remove product by specific field, keyword, or condition" )

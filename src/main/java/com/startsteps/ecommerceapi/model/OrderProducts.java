@@ -1,8 +1,9 @@
 package com.startsteps.ecommerceapi.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -12,7 +13,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @Table(name = "order_items")
 @Entity
 @EqualsAndHashCode
@@ -25,11 +25,11 @@ public class OrderProducts {
     private String productName;
     @Column(name = "product_id")
     private Long productId;
-    @Column (name = "quantity")
+    @Column(name = "quantity")
     private long quantity;
     @Column(name = "priceProduct")
     private Double priceProduct;
-    @Column (name = "shoppingCartId")
+    @Column(name = "shoppingCartId")
     private Long shoppingCartId;
     @Column(name = "orderCreatedAt")
     private LocalDateTime orderCreatedAt;
@@ -37,11 +37,23 @@ public class OrderProducts {
     private long orderId;
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
-    private List<CartProduct> cartProduct = new ArrayList<>();;
+    private List<CartProduct> cartProduct = new ArrayList<>();
+    ;
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-
+    @Override
+    public String toString() {
+        return " ******** " +
+                " | Order Date: " + orderCreatedAt +
+                " | Product Name: " + productName +
+                " | Quantity: " + quantity +
+                " | Price Product: " + priceProduct +
+                " | Status: " + orderStatus;
+    }
 }
+
+
+
 

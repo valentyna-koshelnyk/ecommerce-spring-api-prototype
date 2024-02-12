@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 @Service
 @Slf4j
@@ -27,10 +26,15 @@ public class OrderProductsServiceImpl {
     }
 
     @Transactional
-    public void addProductFromCart(List<CartProduct> cartProduct) {
-        List<OrderProducts> orderProductList = new ArrayList<>();
-        for(CartProduct cp: cartProduct){
-            Orders orders = orderRepository.findOrdersByShoppingCart(cp.getShoppingCart());
+    public void addProductFromCart(List<CartProduct> cartProducts) {
+        for (CartProduct cp : cartProducts) {
+            List<Orders> ordersList = orderRepository.findOrdersByShoppingCartOrderByOrderCreatedAtDesc(cp.getShoppingCart());
+            if (ordersList.isEmpty()) {
+                throw new IllegalStateException("No order found for shopping cart ID: " + cp.getShoppingCart().getCartId());
+            }
+
+            Orders orders = ordersList.get(0);
+
             OrderProducts orderProduct = new OrderProducts();
             orderProduct.setProductName(cp.getProduct().getProductName());
             orderProduct.setQuantity(cp.getQuantity());

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ public class Orders {
     @Column(name = "OrderID")
     private Long orderId;
     @Column(name = "order_date")
+    @DateTimeFormat
     private LocalDateTime orderCreatedAt;
     @ManyToOne
     @JoinColumn(name = "UserID")
@@ -35,13 +37,16 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "UserInfoID")
     private UserInformation userInformation;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "CartID")
     private ShoppingCart shoppingCart;
     @OneToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     private List<OrderProducts> orderItems = new ArrayList<>();;
     @Transient
     private OrderState state = new OrderNotPaidState();
+
+
 
 
     public Orders(UserInformation userInformation, @NonNull ShoppingCart shoppingCart) {
