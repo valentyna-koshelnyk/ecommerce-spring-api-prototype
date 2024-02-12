@@ -1,14 +1,14 @@
 package com.startsteps.ecommerceapi.service.dto;
 
-import lombok.*;
-
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
-@ToString
 public class ShoppingCartDTO {
-    private List<CartProductDTO> products;
-    private double priceTotal;
+
+    @JsonProperty("Price total: ")
+    private Double priceTotal;
 }

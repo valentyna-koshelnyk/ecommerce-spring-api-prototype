@@ -70,6 +70,8 @@ public class UserServiceImpl implements UserService {
 
         return newUser;
     }
+
+
     @Override
     public User registerAdmin(SignupRequest user) {
         User newUser = createUser(user);

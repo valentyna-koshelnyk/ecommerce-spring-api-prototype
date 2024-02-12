@@ -2,10 +2,12 @@ package com.startsteps.ecommerceapi.service.commands.builder;
 
 import com.startsteps.ecommerceapi.exceptions.CartNotFoundException;
 import com.startsteps.ecommerceapi.exceptions.OrderNotFoundException;
+import com.startsteps.ecommerceapi.exceptions.UserNotFoundException;
 import com.startsteps.ecommerceapi.model.*;
 import com.startsteps.ecommerceapi.persistence.*;
 import com.startsteps.ecommerceapi.service.CartServiceImpl;
 import com.startsteps.ecommerceapi.service.OrderProductsServiceImpl;
+import com.startsteps.ecommerceapi.service.UserServiceImpl;
 import com.startsteps.ecommerceapi.service.commands.OrderCommand;
 import com.startsteps.ecommerceapi.service.commands.OrderProcessor;
 import com.startsteps.ecommerceapi.service.commands.PlaceOrderCommand;
@@ -24,6 +26,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderBuilder orderBuilder;
     private final CartServiceImpl cartService;
     private final ShoppingCartRepository shoppingCartRepository;
+    private final UserServiceImpl userService;
     private final UserRepository userRepository;
     private final OrderValidatorImpl orderValidator;
     private final CartProductRepository cartProductRepository;
@@ -33,14 +36,15 @@ public class OrderServiceImpl implements OrderService {
     private final OrderProductsServiceImpl orderProductsService;
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository, OrderProcessor orderProcessor, OrderBuilder orderBuilder,
-                            ShoppingCartRepository shoppingCartRepository, CartServiceImpl cartService,
+                            ShoppingCartRepository shoppingCartRepository, CartServiceImpl cartService, UserServiceImpl userService,
                             UserRepository userRepository, OrderValidatorImpl orderValidator,
-                            CartProductRepository cartProductRepository, ProductRepository productRepository, OrderProductRepository orderProductRepository, OrderProductsServiceImpl orderProductsService) {
+                            CartProductRepository cartProductRepository, ProductRepository productRepository, OrderProductRepository orderProductRepository,  OrderProductsServiceImpl orderProductsService) {
         this.orderRepository = orderRepository;
         this.orderProcessor = orderProcessor;
         this.orderBuilder = orderBuilder;
         this.cartService = cartService;
         this.shoppingCartRepository = shoppingCartRepository;
+        this.userService = userService;
         this.userRepository = userRepository;
         this.orderValidator = orderValidator;
         this.cartProductRepository = cartProductRepository;
@@ -48,13 +52,15 @@ public class OrderServiceImpl implements OrderService {
         this.orderProductRepository = orderProductRepository;
         this.orderProductsService = orderProductsService;
     }
+    @Transactional
     public void saveOrder(Orders order) {
         orderRepository.save(order);
         List<CartProduct> cartProducts = cartProductRepository.findCartProductByShoppingCart(order.getShoppingCart());
-        orderProductsService.addProductFromCart(cartProducts);
+        orderProductsService.addProductFromCart(cartProducts, order);
         cartService.emptyCart(order.getShoppingCart().getCartId());
 
     }
+    @Transactional
     public void placeOrder(Long shoppingCartId) {
         ShoppingCart shoppingCart = cartService.findShoppingCartByCartId(shoppingCartId);
         if (shoppingCart == null) {
@@ -63,7 +69,6 @@ public class OrderServiceImpl implements OrderService {
         UserInformation userInformation = shoppingCart.getUser().getUserInformation();
         log.debug("Building order with ShoppingCart id: {}", shoppingCartId);
         OrderBuilder builder = new OrderBuilder()
-                .shoppingCart(shoppingCart)
                 .information(userInformation)
                 .orderValidator(orderValidator)
                 .orderService(this)
@@ -75,11 +80,10 @@ public class OrderServiceImpl implements OrderService {
         orderProcessor.processOrder(placeOrderCommand);
     }
 
-
-    public String printOrder(Long shoppingCartId){
-        ShoppingCart shoppingCart = shoppingCartRepository.findById(shoppingCartId).orElseThrow(()-> new CartNotFoundException("Cart not found"));
-        return orderRepository.findOrdersByShoppingCart(shoppingCart)
-                .toString();
+    @Transactional
+    public String printOrder(Long userId){
+        Orders orders =  findUserLastOrder(userId);
+        return orders.toString();
     }
 
     //TODO: after canceling the order, products return back to the cart
@@ -87,11 +91,13 @@ public class OrderServiceImpl implements OrderService {
     // better to put order status "canceled" and keep it for one month in a repo or create a repo with canceled orders
     public void cancelOrder(Long orderId){ // might be better to keep the order but change status to CANCELED
         Orders orders = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order not found"));
-        List<OrderProducts> orderProductsList = orders.getOrderItems();
+        List<OrderProducts> orderProductsList = orderProductRepository.findByOrderId(orderId);
         for(OrderProducts op: orderProductsList) {
             op.setOrderStatus(OrderStatus.CANCELED);
             cartService.increaseStock(op.getProductId(), op.getQuantity());
+            orderProductRepository.save(op);
         }
+
         orderRepository.delete(orders);
         log.info("Order: " + orders + " was cancelled");
     }
@@ -104,6 +110,12 @@ public class OrderServiceImpl implements OrderService {
         order.nextState();
         orderRepository.save(order);
         order.printState();
+        if(order.getOrderStatus() == OrderStatus.DELIVERED){
+            List<OrderProducts> orderProductsList = orderProductRepository.findByOrderId(orderId);
+            for(OrderProducts op : orderProductsList){
+                op.setOrderStatus(OrderStatus.DELIVERED);
+            }
+        }
         return order;
     }
 
@@ -123,11 +135,22 @@ public class OrderServiceImpl implements OrderService {
          order.printState();
     }
 
+    @Override
+    public Orders findUserLastOrder(Long userId){
+        User user = userService.findUserByUserId(userId);
+        Orders orders = orderRepository.findTopByUserOrderByOrderIdDesc(user)
+                .orElseThrow(() -> new UserNotFoundException("No user"));
+        return orders;
+    }
     //TODO: to adjust order history
     public List<OrderProducts> getOrderHistory(Long shoppingCartId){
-        return orderProductRepository.findByShoppingCartId(shoppingCartId);
+        List<OrderProducts> orderProductsList =  orderProductRepository.findByShoppingCartIdAndOrderStatus(shoppingCartId, OrderStatus.DELIVERED);
+        if(orderProductsList.isEmpty()){
+            throw new OrderNotFoundException
+                    ("There are no delivered orders for your account. " +
+                            "For the current order check its status.");
+        }
+        return orderProductsList;
     }
-
-
 
 }

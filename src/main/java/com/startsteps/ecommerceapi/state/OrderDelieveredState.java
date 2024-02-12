@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OrderDelieveredState implements OrderState{
 
-
     @Override
     public void next(Orders order) {
         order.setOrderStatus(OrderStatus.RETURNED);

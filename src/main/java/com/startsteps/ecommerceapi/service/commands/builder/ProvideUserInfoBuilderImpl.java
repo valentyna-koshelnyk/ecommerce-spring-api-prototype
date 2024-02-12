@@ -66,7 +66,6 @@ public class ProvideUserInfoBuilderImpl implements ProvideUserInfoBuilder {
 
 
     @Override
-    @Transactional
     public UserInformation build() {
         User userBuilder = userRepository.findUserByUserId(user.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("User was not found"));

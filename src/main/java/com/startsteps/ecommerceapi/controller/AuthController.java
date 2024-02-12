@@ -64,7 +64,7 @@ public class AuthController {
             @ApiResponse(responseCode = "500", description = "Validation failed for argument")})
     @PostMapping("/registerAdmin")
     public ResponseEntity<MessageResponse> registerAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
-            User registeredAdmin = userService.registerUser(signUpRequest);
+            User registeredAdmin = userService.registerAdmin(signUpRequest);
             return ResponseEntity.ok(new MessageResponse("Admin registered successfully! UserID: " + registeredAdmin.getUserId()));
     }
     @Operation(summary= "User authentication endpoint", description= "User signs in, JWT token generated")

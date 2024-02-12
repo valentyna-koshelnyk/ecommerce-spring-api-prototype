@@ -1,5 +1,6 @@
 package com.startsteps.ecommerceapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,9 +29,15 @@ public class ShoppingCart {
     private List<CartProduct> products;
     @CreationTimestamp
     @Column(name = "Created_Date", nullable = false, updatable = false)
+    @JsonIgnore
     private LocalDateTime cartCreatedAt;
 
     @Column(name = "total_price")
     private Double priceTotal;
+
+    @Override
+   public String toString(){
+        return "priceTotal " + priceTotal;
+    }
 
 }
