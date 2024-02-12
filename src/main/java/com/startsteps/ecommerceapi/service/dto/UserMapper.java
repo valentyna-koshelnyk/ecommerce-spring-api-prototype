@@ -9,14 +9,4 @@ public interface UserMapper extends IEntityMapper<UserDTO, User> {
     UserDTO toDto(User user);
 
     User toEntity(UserDTO userDTO);
-
-//    @Override
-//    default Page<UserDTO> toDtoPage(Page<User> entitiesPage) {
-//        List<UserDTO> dtoList = entitiesPage.getContent()
-//                .stream()
-//                .map(this::toDto)
-//                .collect(Collectors.toList());
-//        return new PageImpl<>(dtoList, entitiesPage.getPageable(), entitiesPage.getTotalElements());
-//    }
-
 }
