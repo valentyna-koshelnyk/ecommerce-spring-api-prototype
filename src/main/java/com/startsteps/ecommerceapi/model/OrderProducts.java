@@ -43,6 +43,21 @@ public class OrderProducts {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
+    public OrderProducts(CartProduct cartProduct, Orders orders) {
+        this.productName = cartProduct.getProduct().getProductName();
+        this.productId = cartProduct.getProduct().getProductId();
+        this.quantity = cartProduct.getQuantity();
+        this.priceProduct = cartProduct.getPriceProduct();
+        this.shoppingCartId = cartProduct.getShoppingCart().getCartId();
+        this.orderCreatedAt = LocalDateTime.now();
+        this.orderId = orders.getOrderId();
+        this.orderStatus = orders.getOrderStatus();
+    }
+
+    public OrderProducts() {
+    }
+
+
     @Override
     public String toString() {
         return " ******** " +
