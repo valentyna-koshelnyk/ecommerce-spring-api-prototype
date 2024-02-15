@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-alpine
+FROM eclipse-temurin:17-jdk-jammy
 
 LABEL maintainer="vakosheln@example.com"
 
@@ -14,8 +14,6 @@ ARG JAR_FILE=target/ecommerce-api-0.0.1-SNAPSHOT.jar
 
 ADD ${JAR_FILE} app.jar
 
-RUN apk --no-cache add curl
-RUN ./mvnw dependency:go-offline
 
 CMD ["./mvnw", "spring-boot:run"]
 
