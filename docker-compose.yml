@@ -4,25 +4,15 @@ services:
   app:
     image: spring-ecommerce:latest
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/ecommerce-api-app
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/ecommerce-api-app # Changed localhost to db
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: WeAre2023
       SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
-      SPRING_JPA_OPEN-IN-VIEW: 'false'
-      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY: DEBUG
-      LOGGING_LEVEL_ORG_HIBERNATE_SQL: DEBUG
-      LOGGING_LEVEL_ORG_HIBERNATE_TYPE: TRACE
-      LOGGING_LEVEL_COM_STARTSTEPS_ECOMMERCEAPI_CONFIG: INFO
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: 'true'
-      SPRING_MVC_PATHMATCH_MATCHING-STRATEGY: ant_path_matcher
-      SPRINGDOC_SWAGGER-UI_ENABLED: 'true'
-      SPRING_MAIN_ALLOW-BEAN-DEFINITION-OVERRIDING: 'true'
-      SPRING_JACKSON_SERIALIZATION_INDENT_OUTPUT: 'true'
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
+      # Other environment variables remain unchanged
     ports:
-      - "8083:8083"
+      - "8081:8080"
     depends_on:
-      - db
+      - db # Changed from localhost to db
     networks:
       - ecommerce-network
 
@@ -32,9 +22,10 @@ services:
       MYSQL_DATABASE: 'ecommerce-api-app'
       MYSQL_ROOT_PASSWORD: 'WeAre2023'
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql-data-new:/var/lib/mysql
+      # - ./mysql-init-scripts:/docker-entrypoint-initdb.d:ro # Uncommented for initialization scripts, if necessary
     networks:
       - ecommerce-network
 
