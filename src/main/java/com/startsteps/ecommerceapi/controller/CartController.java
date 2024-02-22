@@ -6,8 +6,6 @@ import com.startsteps.ecommerceapi.service.CartServiceImpl;
 import com.startsteps.ecommerceapi.service.ProductServiceImpl;
 import com.startsteps.ecommerceapi.service.dto.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -29,31 +27,30 @@ public class CartController {
     @PostMapping("/{userId}/addProduct/")
     public ResponseEntity<MessageResponse> addProductToShoppingCart(@PathVariable Long userId,
                                                                     @RequestBody ProductAddRequest request) {
-        cartService.addProductToCart(request);
-        MessageResponse response = new MessageResponse("Product added to the shopping cart");
+        String name = productService.findProductByProductId(request.getProductId()).getProductName();
+        cartService.addProductToCart(request, userId);
+        MessageResponse response = new MessageResponse("Product " + name + " added to the shopping cart");
         return ResponseEntity.ok(response);
     }
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or #userId == principal.id")
     @GetMapping("/{userId}/checkCart")
 
     public ResponseEntity<?> viewProductList(
-            @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
-            @RequestParam(name = "size", required = false, defaultValue = "10") int size,
-            @RequestParam(name = "direction", required = false, defaultValue = "ASC") String direction,
             @PathVariable Long userId) {
-        PageRequest pageRequestData = PageRequest.of(pageNumber - 1, size, Sort.by(Sort.Direction.fromString(direction), "quantity"));
         Long shoppingCartId = cartService.findShoppingCartByUser(userId).getCartId();
-        return ResponseEntity.ok(cartService.getProductsInCart(shoppingCartId, pageRequestData));
+        return ResponseEntity.ok(new MessageResponse(cartService.getProductsInCart(shoppingCartId).toString()));
     }
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or #userId == principal.id")
     @DeleteMapping("/{userId}/remove/{productId}")
-    public ResponseEntity<MessageResponse> removeProductFromCart(@RequestParam Long cartId, @PathVariable("productId") Long productId){
-        cartService.removeProductFromCart(cartId, productId);
+    public ResponseEntity<MessageResponse> removeProductFromCart(@PathVariable Long userId, @RequestParam Long cartId, @PathVariable("productId") Long productId){
         ProductDTO product = productService.findProductByProductId(productId);
         String productName = product.getProductName();
+        cartService.removeProductFromCart(cartId, productId);
         MessageResponse response = new MessageResponse("Product " + productName +  " removed from your shopping cart");
         return ResponseEntity.ok(response);
     }
+
+
 }
 
 

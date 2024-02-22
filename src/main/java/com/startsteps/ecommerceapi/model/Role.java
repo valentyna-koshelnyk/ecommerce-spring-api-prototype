@@ -25,7 +25,7 @@ public class Role {
     String description;
     @Column(name = "Permission")
     String permission;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "RoleID"),
             inverseJoinColumns = @JoinColumn(name = "UserID"))

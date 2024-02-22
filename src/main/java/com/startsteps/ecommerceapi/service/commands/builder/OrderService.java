@@ -7,4 +7,6 @@ public interface OrderService {
     void placeOrder(Long shoppingCartId);
     Orders previousState(Long orderId);
     void checkOrderStatus(Long orderId);
+
+    Orders findUserLastOrder(Long userId);
 }

@@ -1,5 +1,6 @@
 package com.startsteps.ecommerceapi.model;
 
+import com.startsteps.ecommerceapi.validation.ValidPhone;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,8 @@ import lombok.*;
 @ToString
 @Table(name = "user_information")
 public class UserInformation {
-    // TODO: add custom validations for all properties
+    // TODO: validation for properties:firstName and lastName is risky for validation, address require embedded class
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
@@ -23,6 +25,7 @@ public class UserInformation {
     @Column(unique = false, name = "Address", nullable = true)
     private String address;
     @Column(unique = true, name = "Phone", nullable = true)
+    @ValidPhone
     private String phone;
     @OneToOne(mappedBy = "userInformation")
     private User user;

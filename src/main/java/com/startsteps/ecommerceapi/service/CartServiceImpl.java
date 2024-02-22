@@ -14,8 +14,6 @@ import com.startsteps.ecommerceapi.persistence.UserRepository;
 import com.startsteps.ecommerceapi.service.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +36,7 @@ public class CartServiceImpl implements CartService{
     private ProductDTO product;
     private UserDTO user;
     private ProductServiceImpl productService;
-    private final    ProductMapper productMapper;
+    private final  ProductMapper productMapper;
     @Autowired
     public CartServiceImpl(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, CartProductRepository cartProductRepository, CartProductMapper cartProductMapper, UserRepository userRepository, ShoppingCartMapper shoppingCartMapper, ProductServiceImpl productService, ProductMapper productMapper) {
         this.shoppingCartRepository = shoppingCartRepository;
@@ -51,16 +49,14 @@ public class CartServiceImpl implements CartService{
         this.productMapper = productMapper;
     }
    @Override
-   public void addProductToCart(ProductAddRequest request) {
+   public void addProductToCart(ProductAddRequest request, Long userId) {
        Product product = productRepository.findProductByProductIdAndStockGreaterThanEqual(
                        request.getProductId(), MIN_STOCK)
                .orElseThrow(() -> new ProductNotFoundException(
                        "Product with ID " + request.getProductId() + " not found."
                ));
 
-       ShoppingCart cart = shoppingCartRepository.findById(request.getCartId())
-               .orElseThrow(() -> new CartNotFoundException("Shopping cart doesn't exist"));
-
+       ShoppingCart cart = shoppingCartRepository.findShoppingCartByUserId(userId);
        if (isProductInUserCart(product, cart)) {
            CartProduct cartProduct = cartProductRepository.findCartProductByProductAndShoppingCart(product, cart)
                    .orElseThrow(() -> new CartNotFoundException("CartProduct could not be fetched from the database"));
@@ -72,7 +68,7 @@ public class CartServiceImpl implements CartService{
            addNewProductToCart(product, cart, request.getQuantity()); // Pass the Product entity, not DTO
        }
        reduceProductStock(request.getQuantity(), request.getProductId());
-       getTotalCost(request.getCartId());
+       getTotalCost(cart.getCartId());
    }
    @Override
    public void getTotalCost(Long shoppingCartId){
@@ -136,11 +132,11 @@ public class CartServiceImpl implements CartService{
     }
     @Transactional
     @Override
-    public Page<CartProductDTO> getProductsInCart(Long cartId, Pageable pageable) {
-    ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
-            .orElseThrow(() -> new CartNotFoundException("Shopping cart is empty"));
-    Page<CartProduct> cartProductsPage = cartProductRepository.findAllByShoppingCart(shoppingCart, pageable);
-    return cartProductMapper.toDtoPage(cartProductsPage);
+    public List<CartProductDTO> getProductsInCart(Long cartId) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findById(cartId)
+                .orElseThrow(() -> new CartNotFoundException("Shopping cart is empty"));
+        List<CartProduct> cartProducts = cartProductRepository.findCartProductByShoppingCart(shoppingCart);
+        return cartProductMapper.listToDto(cartProducts);
 }
     @Override
     public void removeProductFromCart(Long cartId, Long productId){ //removes entire product from the cart
@@ -151,10 +147,10 @@ public class CartServiceImpl implements CartService{
         CartProduct cartProduct = cartProductRepository.findCartProductByProductAndShoppingCart(product, shoppingCart)
                 .orElseThrow(() -> new ProductNotFoundException("The product is not present in the car"));
         Long quantity = cartProduct.getQuantity();
+        increaseStock(productId,quantity);
 
         cartProductRepository.deleteByShoppingCartAndProduct(shoppingCart, product);
 
-        increaseStock(productId,quantity);
     }
 
     @Override
@@ -171,6 +167,7 @@ public class CartServiceImpl implements CartService{
        shoppingCart.setPriceTotal(REMOVE_COST);
        shoppingCartRepository.save(shoppingCart);
     }
+
 
 }
 

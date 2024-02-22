@@ -1,23 +1,23 @@
 package com.startsteps.ecommerceapi.model;
 
-import io.swagger.annotations.ApiModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.startsteps.ecommerceapi.utils.Default;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
-@ApiModel
 @Table(name = "user")
-@Component
 public class User{
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,35 +27,43 @@ public class User{
 
    @NonNull
    @Column(name = "Username", unique = true)
+   @JsonIgnore
    private String username;
 
    @NonNull
    @Column(name = "Email", unique = true)
+   @JsonIgnore
    private String email;
 
    @NonNull
    @Column(name = "Password")
+   @JsonIgnore
    private String password;
 
    @NonNull
    @Column(name = "User_Role")
+   @JsonIgnore
    @Enumerated(EnumType.STRING)
    private UserRoles userRoles;
 
    @CreationTimestamp
    @Column(name = "Registration_Date", nullable = false, updatable = false)
+   @JsonIgnore
    private LocalDateTime registrationDate;
 
    @UpdateTimestamp
    @Column(name = "Update_Date")
+   @JsonIgnore
    private LocalDateTime updateDate;
 
    @NonNull             //TODO: user confirmed email
    @Column(name = "Approved")
+   @JsonIgnore
    private Boolean approved;
 
    @NonNull
    @Column(name = "Pending")
+   @JsonIgnore
    private Boolean pending;
 
    @OneToOne

@@ -17,9 +17,8 @@ import java.util.Optional;
         Optional<CartProduct> findCartProductByProductAndShoppingCart(Product product, ShoppingCart shoppingCart);
         List<CartProduct> findProductsByShoppingCart(ShoppingCart shoppingCart);
         List<CartProduct> findCartProductByShoppingCart(ShoppingCart shoppingCart);
-
+        List<CartProduct> findCartProductByProductIn(List<Product> productList);
         void deleteByShoppingCartAndProduct(ShoppingCart shoppingCart, Product product);
-
 
 
  }

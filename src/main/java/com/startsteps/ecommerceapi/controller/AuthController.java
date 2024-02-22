@@ -8,6 +8,10 @@ import com.startsteps.ecommerceapi.payload.response.UserInfoResponse;
 import com.startsteps.ecommerceapi.security.jwt.JwtUtil;
 import com.startsteps.ecommerceapi.service.UserDetailsImpl;
 import com.startsteps.ecommerceapi.service.UserServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +30,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "User Authentication controller", description = "Through this API user or admin can register and signin. Admin has the only authorization right to register another admin ")
+
 public class AuthController {
     private final UserServiceImpl userService;
     @Autowired
@@ -41,20 +47,29 @@ public class AuthController {
     public AuthController(UserServiceImpl userService) {
         this.userService = userService;
     }
-
+    @Operation(summary= "Simple registration for users", description= "User sends registration" +
+            " request with unique username, email, password and matching password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "409", description = "User already exists"),
+            @ApiResponse(responseCode = "500", description = "Validation failed for argument")})
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
             User registeredUser = userService.registerUser(signUpRequest);
             return ResponseEntity.ok(new MessageResponse("User registered successfully! UserID: " + registeredUser.getUserId()));
     }
-
+    @Operation(summary= "Admin adds a new admin to the system", description= "Allows admins to register new administrators" +
+            " (request with unique username, email, password and matching password)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "409", description = "User already exists"),
+            @ApiResponse(responseCode = "500", description = "Validation failed for argument")})
     @PostMapping("/registerAdmin")
     public ResponseEntity<MessageResponse> registerAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
-            User registeredAdmin = userService.registerUser(signUpRequest);
+            User registeredAdmin = userService.registerAdmin(signUpRequest);
             return ResponseEntity.ok(new MessageResponse("Admin registered successfully! UserID: " + registeredAdmin.getUserId()));
     }
-
-
+    @Operation(summary= "User authentication endpoint", description= "User signs in, JWT token generated")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "500", description = "Bad credentials")})
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -74,9 +89,11 @@ public class AuthController {
                 .body(new UserInfoResponse(userDetails.getId(),
                         userDetails.getUsername(),
                         userDetails.getEmail(),
-                        roles));
+                        "You successfully signed in"));
     }
-
+    @Operation(summary= "Returns information on the current signed in user", description= "Check which username you're currently using")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "500", description = "Bad credentials")})
     @GetMapping("/checkUser")
     public String checkUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

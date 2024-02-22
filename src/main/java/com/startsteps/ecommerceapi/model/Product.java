@@ -1,9 +1,11 @@
 package com.startsteps.ecommerceapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.startsteps.ecommerceapi.utils.Default;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -23,36 +25,38 @@ public class Product {
     private String productName;
     @NonNull
     @Column(name = "Price")
-    private double price;
+    @DecimalMin("0.01")
+    private Double price;
     @Column(name = "Description", length = 255)
     private String description;
     @NonNull
     @Column(name = "Stock")
-    private long stock;
-    @CreationTimestamp
+    @JsonIgnore
+    private Long stock;
+    public void setAddedAtDate(LocalDateTime addedAtDate) {
+        this.addedAtDate = LocalDateTime.now();
+    }
+    @DateTimeFormat
     @Column(name = "Add_Date", nullable = false, updatable = false)
-    LocalDateTime addedAtDate;
+    @JsonIgnore
+    private LocalDateTime addedAtDate;
     @NonNull
     @Column(name = "Product_Category", length = 255)
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
 
     @Default
-    public Product(String productName, double price, String description, long stock, ProductCategory category) {
+    public Product(String productName, Double price, String description, Long stock, ProductCategory category) {
         this.productName = productName;
         this.price = price;
         this.description = description;
         this.stock = stock;
         this.category = category;
     }
+
     @Override
     public String toString(){
-        if(this.getStock() < 10 && this.getStock() > 2) {
-            System.out.println("Product is almost out of stock. Hurry up to order! ");
-        } else if (this.getStock() <= 2 && this.getStock() > 0) {
-            System.out.println("Last item");
-        }
-        return "Product Name: " + this.getProductName() +
+        return " Product Name: " + this.getProductName() +
                 " Product Price: " + this.getPrice() +
                 " Product Description: " + this.getDescription() +
                 " Product Category: " + this.getCategory();
