@@ -56,10 +56,10 @@ public class Product {
 
     @Override
     public String toString(){
-        return " \n oProduct Name: " + this.getProductName() +
-                "\n Product Price: " + this.getPrice() +
-                "\n Product Description: " + this.getDescription() +
-                "\n Product Category: " + this.getCategory();
+        return " Product Name: " + this.getProductName() +
+                " Product Price: " + this.getPrice() +
+                " Product Description: " + this.getDescription() +
+                " Product Category: " + this.getCategory();
                 }
     }
 
