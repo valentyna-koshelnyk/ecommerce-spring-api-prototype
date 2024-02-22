@@ -30,7 +30,7 @@ public class EcomSecurityConfiguration {
             "/api/auth/signin/**",
             "/api/auth/register/**",
             "/webjars/",
-            "/api/v1/products",
+            "/api/v1/products/",
             "/api/v1/user/"
     };
 
