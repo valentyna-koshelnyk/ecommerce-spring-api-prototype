@@ -1,4 +1,4 @@
-79# ecommerce-spring-api-prototype
+**ecommerce-spring-api-prototype**
 
 ![alt text](https://i.ibb.co/kxdPHRW/DALL-E-2024-01-08-15-48-09-A-modern-and-sleek-logo-for-an-ecommerce-app-The-logo-should-include-a-st.png)
 
