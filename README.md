@@ -291,7 +291,7 @@ Value:
 
 ## Automation
 
-To reduce boilerplate code were used Mapstruct and Lomboc annotations.
+To reduce boilerplate code we used Mapstruct and Lomboc annotations.
 Mapstruct helped us automatically map data transfer object to POJO.
 
 Lombok helped to generate getters/setters/constructor.
