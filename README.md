@@ -84,10 +84,10 @@ The app has been deployed on Google cloud Run, hereafter we'll use https://local
 
 Full documentation available at the following link:
 ```bash
-**Locally:** https://localhost:8080/swagger-ui/index.html
+https://localhost:8080/swagger-ui/index.html
 ```
 ```bash
-** GCP:**https://ecomapp-laowthm57a-oe.a.run.app/swagger-ui/index.html
+https://ecomapp-laowthm57a-oe.a.run.app/swagger-ui/index.html
 ```
 
 ## Usage/Examples/Flow
