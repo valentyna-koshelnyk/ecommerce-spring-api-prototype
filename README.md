@@ -78,13 +78,13 @@ docker stop ecommerce-api
 docker rm ecommerce-api
 ```
 
-The app has been deployed on Google cloud Run, hereafter we'll use https://http://localhost:8080/ and GCP hostname https://ecomapp-laowthm57a-oe.a.run.app/. 
+The app has been deployed on Google cloud Run, hereafter we'll use https://localhost:8080/ and GCP hostname https://ecomapp-laowthm57a-oe.a.run.app/. 
 
 ## API Reference
 
 Full documentation available at the following link:
 ```bash
-**Locally:** https://http://localhost:8080/swagger-ui/index.html
+**Locally:** https://localhost:8080/swagger-ui/index.html
 ```
 ```bash
 ** GCP:**https://ecomapp-laowthm57a-oe.a.run.app/swagger-ui/index.html
@@ -100,7 +100,7 @@ User flow:
 
 User signs up using the following link:
 ```bash
-https://http://localhost:8080/api/auth/register
+https://localhost:8080/api/auth/register
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/auth/register
@@ -125,7 +125,7 @@ User signs in using his username and password. JWT token is generated upon authe
 
 User can check all available products using the following link: 
 ```bash
-https://http://localhost:8080/api/v1/products/all
+https://localhost:8080/api/v1/products/all
 ```
 ```bash
 https://ecomapp-zalando-2-laowthm57a-oe.a.run.app/api/v1/products/all
@@ -133,7 +133,7 @@ https://ecomapp-zalando-2-laowthm57a-oe.a.run.app/api/v1/products/all
 Can search for particular product:
 (containsIgnoreCase):
 ```bash
-https://http://localhost:8080/api/v1/products/search/{searchWord}
+https://localhost:8080/api/v1/products/search/{searchWord}
 ```
 ```bash
 https://ecomapp-zalando-2-laowthm57a-oe.a.run.app/api/v1/products/search/{searchWord}
@@ -141,7 +141,7 @@ https://ecomapp-zalando-2-laowthm57a-oe.a.run.app/api/v1/products/search/{search
 
 Add products to his cart:
 ```bash
-https://http://localhost:8080/api/v1/user/cart/{userId}/addProduct/
+https://localhost:8080/api/v1/user/cart/{userId}/addProduct/
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/v1/user/cart/{userId}/addProduct/
@@ -151,7 +151,7 @@ product Id and quantity.
 
 Check products in cart: 
 ```bash
-https://http://localhost:8080/api/v1/user/cart/{userId}/checkCart
+https://localhost:8080/api/v1/user/cart/{userId}/checkCart
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/v1/user/cart/{userId}/checkCart
@@ -159,7 +159,7 @@ https://ecomapp-laowthm57a-oe.a.run.app/api/v1/user/cart/{userId}/checkCart
 
 And place order:
 ```bash
-https://http://localhost:8080/api/v1/user/orders/place/{userId}
+https://localhost:8080/api/v1/user/orders/place/{userId}
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/v1/user/orders/place/{userId}
@@ -175,7 +175,7 @@ phone
 
 on the following link: 
 ```bash
-https://http://localhost:8080/api/v1/user/orders/1/updateInformation
+https://localhost:8080/api/v1/user/orders/1/updateInformation
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/v1/user/orders/1/updateInformation
@@ -184,7 +184,7 @@ https://ecomapp-laowthm57a-oe.a.run.app/api/v1/user/orders/1/updateInformation
 User can cancel his order:
 
 ```bash
-https://http://localhost:8080/user/orders/cancel/{userId}/{orderId}
+https://localhost:8080/user/orders/cancel/{userId}/{orderId}
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/v1/user/orders/cancel/{userId}/{orderId}
@@ -192,7 +192,7 @@ https://ecomapp-laowthm57a-oe.a.run.app/api/v1/user/orders/cancel/{userId}/{orde
 
 and view his order history:
 ```bash
-https://http://localhost:8080/api/v1/user/orders/view/old/{userId}
+https://localhost:8080/api/v1/user/orders/view/old/{userId}
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/v1/user/orders/view/old/{userId}
@@ -201,21 +201,21 @@ Admin is authorized for all features of our app. Some features are available exc
 
 add another admin:
 ```bash
-https://http://localhost:8080/api/auth/registerAdmin
+https://localhost:8080/api/auth/registerAdmin
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/auth/registerAdmin
 ```
 Get the list of all products:
 ```bash
-https://http://localhost:8080/api/v1/products/admin/all?pageSize=3
+https://localhost:8080/api/v1/products/admin/all?pageSize=3
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/v1/products/admin/all?pageSize=3
 ```
 Add products to the system:
 ```bash
-https://http://localhost:8080/api/v1/products/admin/add
+https://localhost:8080/api/v1/products/admin/add
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/v1/products/admin/add
@@ -223,21 +223,21 @@ https://ecomapp-laowthm57a-oe.a.run.app/api/v1/products/admin/add
 
 Increase product stock:
 ```bash
-https://http://localhost:8080/api/v1/products/admin/increaseStock/{productId}?quantity=quantity
+https://localhost:8080/api/v1/products/admin/increaseStock/{productId}?quantity=quantity
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/v1/products/admin/increaseStock/{productId}?quantity=quantity
 ```
 Delete product using criteria API:
 ```bash
-https://http://localhost:8080/api/v1/products/admin/delete?operator=LIKE&value=jacket&field=productName
+https://localhost:8080/api/v1/products/admin/delete?operator=LIKE&value=jacket&field=productName
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/v1/products/admin/delete?operator=LIKE&value=jacket&field=productName
 ```
 Update produt using criteria API:
 ```bash
-https://http://localhost:8080/api/v1/products/admin/update?operator=EQUALS&field=fieldName&value=
+https://localhost:8080/api/v1/products/admin/update?operator=EQUALS&field=fieldName&value=
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/api/v1/products/admin/update?operator=EQUALS&field=fieldName&value=
@@ -245,7 +245,7 @@ https://ecomapp-laowthm57a-oe.a.run.app/api/v1/products/admin/update?operator=EQ
 
 Move order status based on State Design Pattern the admin is using the following link to move order one step further following the chain:
 ```bash
-https://http://localhost:8080/api/v1/user/orders/status/{orderId}/next
+https://localhost:8080/api/v1/user/orders/status/{orderId}/next
 ```
 
 ```bash
@@ -255,7 +255,7 @@ _NotPaid->Paid->InProcess->Shipped->Delivered->Returned;_
 
 Also it's possible to revert step n steps behind:
 ```bash
-https://http://localhost:8080/api/v1/user/orders/status/orderId/revert
+https://localhost:8080/api/v1/user/orders/status/orderId/revert
 ```
 ```bash
 https://ecomapp-laowthm57a-oe.a.run.app/status/{orderId}/revert
