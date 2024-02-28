@@ -100,4 +100,11 @@ public class AuthController {
         String currentPrincipalName = authentication.getName();
         return currentPrincipalName;
     }
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity<?> sendEmail(@RequestBody String email){
+        userService.resetPasswordSendEmail(email);
+        return ResponseEntity.ok(new MessageResponse("Email sent successfully"));
+
+    }
 }

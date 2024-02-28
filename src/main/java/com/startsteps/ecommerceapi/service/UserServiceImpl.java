@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User resetPasswordSendEmail(String userEmail) {
+    public void resetPasswordSendEmail(String userEmail) {
         if(!userRepository.existsByEmail(userEmail) ) {
             throw new UserNotFoundException("User with the email " + userEmail + " not found");
         }
@@ -107,7 +107,6 @@ public class UserServiceImpl implements UserService {
         email.setSubject("Reset your password");
         email.setText("To reset your password, click the link below:\n" +
                 "http://ecommerce-api/reset-password?token=" + resetToken);
-        return user;
     }
 
     @Override

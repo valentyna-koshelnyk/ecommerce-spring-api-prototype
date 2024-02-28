@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "`user`")
 public class User{
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
@@ -88,4 +88,6 @@ public User(@NonNull String username, @NonNull String email, @NonNull String pas
       this.email = email;
       this.password = password;
    }
+
+
 }

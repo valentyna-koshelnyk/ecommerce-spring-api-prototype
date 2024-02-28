@@ -13,7 +13,7 @@ public interface UserService {
     Optional<User> findUserByUsername(String username);
     User registerUser (SignupRequest user);
     User registerAdmin(SignupRequest user);
-    User resetPasswordSendEmail(String userEmail);
+    void resetPasswordSendEmail(String userEmail);
     void createPasswordResetTokenForUser(User user, String token);
     boolean changePassword(PasswordResetToken token, String newPassword);
     Optional<PasswordResetToken> getPasswordResetToken(PasswordResetToken token);
