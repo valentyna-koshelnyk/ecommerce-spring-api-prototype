@@ -44,6 +44,9 @@ public class Product {
     @Column(name = "Product_Category", length = 255)
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
+    @Version
+    @Column(name = "VERSION")
+    private long version;
 
     @Default
     public Product(String productName, Double price, String description, Long stock, ProductCategory category) {
